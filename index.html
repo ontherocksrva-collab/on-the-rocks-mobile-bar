@@ -13,6 +13,7 @@
   --wine: #671243;
   --tangelo: #EB5C0B;
   --white: #F6F6F6;
+  --photo-bg: #F6F6F6;
 }
 * { margin:0; padding:0; box-sizing:border-box; }
 body { font-family:'Montserrat',sans-serif; background:#002a35; color:#F6F6F6; overflow-x:hidden; }
@@ -87,17 +88,110 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:1rem 3rem 1re
 .tab { background:none; border:none; color:rgba(246,246,246,0.4); font-family:'Montserrat',sans-serif; font-size:0.7rem; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; padding:0.9rem 1.8rem; cursor:pointer; border-bottom:3px solid transparent; transition:all 0.3s; white-space:nowrap; }
 .tab.active { color:#F08100; border-bottom-color:#F08100; }
 .tab:hover { color:#F6F6F6; }
-.menu-panel { display:none; grid-template-columns:repeat(2,1fr); gap:1.5rem; }
+.menu-panel { display:none; grid-template-columns:repeat(3,1fr); gap:1.5rem; }
 .menu-panel.active { display:grid; }
 .menu-note { font-size:0.82rem; color:rgba(246,246,246,0.5); margin-bottom:2rem; }
 .menu-note strong { color:#F08100; }
+
+/* ✨ TARJETAS DEL MENÚ - NUEVO ESTILO E-BOOK ✨ */
+.drink-card {
+  background: #002a35;
+  overflow: hidden;
+  border-radius: 4px;
+  border: 1px solid rgba(240,129,0,0.12);
+  transition: transform 0.35s, border-color 0.35s, box-shadow 0.35s;
+  display: flex;
+  flex-direction: column;
+}
+.drink-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(240,129,0,0.4);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.35);
+}
+.drink-photo-wrapper {
+  background: var(--photo-bg);
+  aspect-ratio: 4 / 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px;
+  overflow: hidden;
+  position: relative;
+  border-bottom: 2px solid #F08100;
+}
+.drink-photo-wrapper img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  transition: transform 0.5s ease;
+}
+.drink-card:hover .drink-photo-wrapper img {
+  transform: scale(1.04);
+}
+.drink-body {
+  padding: 1.2rem 1.3rem 1.4rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.drink-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.5rem;
+  gap: 0.5rem;
+}
+.drink-name {
+  font-size: 1rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #F6F6F6;
+  line-height: 1.2;
+}
+.drink-desc {
+  color: rgba(246,246,246,0.6);
+  font-size: 0.83rem;
+  line-height: 1.6;
+  margin-bottom: 0.9rem;
+  flex: 1;
+}
+.drink-tags {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+.drink-tag {
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #F08100;
+  border: 1px solid rgba(240,129,0,0.35);
+  padding: 0.22rem 0.55rem;
+  border-radius: 2px;
+}
+.drink-badge-seasonal {
+  font-size: 0.55rem;
+  font-weight: 700;
+  background: #671243;
+  color: #F6F6F6;
+  padding: 0.2rem 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
 .mocktail-bar { margin-top:2.5rem; background:rgba(240,129,0,0.08); border:1px solid rgba(240,129,0,0.25); border-left:4px solid #F08100; padding:1.2rem 2rem; display:flex; align-items:center; gap:1.2rem; }
 .mocktail-bar h4 { font-size:0.78rem; font-weight:800; letter-spacing:0.15em; text-transform:uppercase; color:#F08100; margin-bottom:0.2rem; }
 .mocktail-bar p { color:rgba(246,246,246,0.6); font-size:0.82rem; }
-.base-info { grid-column:span 2; background:#003040; padding:1rem 1.5rem; border-left:3px solid #F08100; }
+.base-info { grid-column:span 3; background:#003040; padding:1rem 1.5rem; border-left:3px solid #F08100; border-radius:4px; }
 .base-info p { color:rgba(246,246,246,0.7); font-size:0.88rem; }
 .base-info p strong { color:#F08100; }
-.also-avail { grid-column:span 2; background:rgba(103,18,67,0.2); border:1px solid rgba(103,18,67,0.4); padding:2rem; }
+.also-avail { grid-column:span 3; background:rgba(103,18,67,0.2); border:1px solid rgba(103,18,67,0.4); padding:2rem; border-radius:4px; }
 .also-avail h4 { color:#F08100; font-size:0.9rem; font-weight:800; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:1.2rem; }
 .also-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.8rem; }
 .also-item strong { color:#F6F6F6; font-size:0.82rem; display:block; margin-bottom:0.2rem; }
@@ -159,6 +253,10 @@ footer { background:#000; border-top:1px solid rgba(240,129,0,0.15); padding:2.5
 #lang-hint { animation:fade-hint 4s ease forwards; animation-delay:1.5s; opacity:0; pointer-events:none; }
 
 /* RESPONSIVE */
+@media(max-width:1100px) {
+  .menu-panel { grid-template-columns:repeat(2,1fr); }
+  .base-info, .also-avail { grid-column:span 2; }
+}
 @media(max-width:900px) {
   nav { padding:1rem 1.5rem; }
   .nav-links { display:none; }
@@ -176,7 +274,6 @@ footer { background:#000; border-top:1px solid rgba(240,129,0,0.15); padding:2.5
 </head>
 <body>
 
-<!-- LANG HINT -->
 <!-- LANG TOGGLE - fixed in nav -->
 <div style="position:fixed;top:1.1rem;right:1.5rem;z-index:9999;">
   <div id="lang-toggle" style="display:flex;border:2px solid #F08100;overflow:hidden;border-radius:3px;box-shadow:0 0 15px rgba(240,129,0,0.35);">
@@ -272,7 +369,7 @@ footer { background:#000; border-top:1px solid rgba(240,129,0,0.15); padding:2.5
   </div>
 </section>
 
-<!-- MENU -->
+<!-- MENU - NUEVO ESTILO E-BOOK -->
 <section class="section menu-bg" id="menu">
   <div class="section-inner">
     <div class="section-label" data-i18n="menu-label">Carta de bebidas</div>
@@ -287,262 +384,201 @@ footer { background:#000; border-top:1px solid rgba(240,129,0,0.15); padding:2.5
       <button class="tab" onclick="showTab('more',this)">También disponible</button>
     </div>
 
+    <!-- MARGARITAS -->
     <div id="margaritas" class="menu-panel active">
-      <div style="background:#002a35;overflow:hidden;">
-  <div style="overflow:hidden;height:260px;"><img src="images/img_06.jpg" style="width:100%;height:260px;object-fit:cover;object-position:center;display:block;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-  </div>
-  <div style="padding:1.5rem;">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.5rem;">
-      <div style="font-size:1rem;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:#F6F6F6;">Raspberry Margarita</div>
-    </div>
-    <p style="color:rgba(246,246,246,0.55);font-size:0.85rem;line-height:1.6;margin-bottom:0.8rem;">Lime, raspberry purée, tequila, Cointreau.</p>
-    <div style="display:flex;gap:0.4rem;flex-wrap:wrap;"><span style="font-size:0.6rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#F08100;border:1px solid rgba(240,129,0,0.3);padding:0.2rem 0.5rem;">Cocktail</span><span style="font-size:0.6rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#F08100;border:1px solid rgba(240,129,0,0.3);padding:0.2rem 0.5rem;">Mocktail</span></div>
-  </div>
-</div>
-      <div style="background:#002a35;overflow:hidden;">
-  <div style="overflow:hidden;height:260px;"><img src="images/img_07.jpg" style="width:100%;height:260px;object-fit:cover;object-position:center;display:block;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-  </div>
-  <div style="padding:1.5rem;">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.5rem;">
-      <div style="font-size:1rem;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:#F6F6F6;">Passion Mango Margarita</div>
-    </div>
-    <p style="color:rgba(246,246,246,0.55);font-size:0.85rem;line-height:1.6;margin-bottom:0.8rem;">Tajin, chamoy, tequila, lime, peach schnapps, mango, passion fruit.</p>
-    <div style="display:flex;gap:0.4rem;flex-wrap:wrap;"><span style="font-size:0.6rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#F08100;border:1px solid rgba(240,129,0,0.3);padding:0.2rem 0.5rem;">Cocktail</span><span style="font-size:0.6rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#F08100;border:1px solid rgba(240,129,0,0.3);padding:0.2rem 0.5rem;">Mocktail</span></div>
-  </div>
-</div>
-      <div style="background:#002a35;overflow:hidden;">
-  <div style="overflow:hidden;height:260px;"><img src="images/img_08.jpg" style="width:100%;height:260px;object-fit:cover;object-position:center;display:block;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-  </div>
-  <div style="padding:1.5rem;">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.5rem;">
-      <div style="font-size:1rem;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:#F6F6F6;">Strawberry Mango Frozen Margarita</div>
-    </div>
-    <p style="color:rgba(246,246,246,0.55);font-size:0.85rem;line-height:1.6;margin-bottom:0.8rem;">Tequila, strawberry, mango, lime.</p>
-    <div style="display:flex;gap:0.4rem;flex-wrap:wrap;"><span style="font-size:0.6rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#F08100;border:1px solid rgba(240,129,0,0.3);padding:0.2rem 0.5rem;">Cocktail</span><span style="font-size:0.6rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#F08100;border:1px solid rgba(240,129,0,0.3);padding:0.2rem 0.5rem;">Mocktail</span></div>
-  </div>
-</div>
-      <div style="background:#002a35;overflow:hidden;">
-  <div style="overflow:hidden;height:260px;"><img src="images/img_09.jpg" style="width:100%;height:260px;object-fit:cover;object-position:center;display:block;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-  </div>
-  <div style="padding:1.5rem;">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.5rem;">
-      <div style="font-size:1rem;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:#F6F6F6;">Aperol Coconut Margarita</div>
-    </div>
-    <p style="color:rgba(246,246,246,0.55);font-size:0.85rem;line-height:1.6;margin-bottom:0.8rem;">Tequila, aperol, lime, cream of coconut.</p>
-    <div style="display:flex;gap:0.4rem;flex-wrap:wrap;"><span style="font-size:0.6rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#F08100;border:1px solid rgba(240,129,0,0.3);padding:0.2rem 0.5rem;">Cocktail</span><span style="font-size:0.6rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#F08100;border:1px solid rgba(240,129,0,0.3);padding:0.2rem 0.5rem;">Mocktail</span></div>
-  </div>
-</div>
-      <div style="background:#002a35;overflow:hidden;">
-  <div style="overflow:hidden;height:260px;"><img src="images/img_10.jpg" style="width:100%;height:260px;object-fit:cover;object-position:center 45%;display:block;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-  </div>
-  <div style="padding:1.5rem;">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.5rem;">
-      <div style="font-size:1rem;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:#F6F6F6;">Watermelon Margarita</div><span style="font-size:0.55rem;font-weight:700;background:#671243;color:#F6F6F6;padding:0.2rem 0.6rem;margin-left:0.5rem;">Seasonal</span>
-    </div>
-    <p style="color:rgba(246,246,246,0.55);font-size:0.85rem;line-height:1.6;margin-bottom:0.8rem;">Seasonal — disponible por temporada.</p>
-    <div style="display:flex;gap:0.4rem;flex-wrap:wrap;"><span style="font-size:0.6rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#F08100;border:1px solid rgba(240,129,0,0.3);padding:0.2rem 0.5rem;">Seasonal</span><span style="font-size:0.6rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#F08100;border:1px solid rgba(240,129,0,0.3);padding:0.2rem 0.5rem;">Cocktail</span><span style="font-size:0.6rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#F08100;border:1px solid rgba(240,129,0,0.3);padding:0.2rem 0.5rem;">Mocktail</span></div>
-  </div>
-</div>
+      <div class="drink-card">
+        <div class="drink-photo-wrapper"><img src="images/img_06.jpg" alt="Raspberry Margarita"></div>
+        <div class="drink-body">
+          <div class="drink-header"><div class="drink-name">Raspberry Margarita</div></div>
+          <p class="drink-desc">Lime, raspberry purée, tequila, Cointreau.</p>
+          <div class="drink-tags"><span class="drink-tag">Cocktail</span><span class="drink-tag">Mocktail</span></div>
+        </div>
+      </div>
+      <div class="drink-card">
+        <div class="drink-photo-wrapper"><img src="images/img_07.jpg" alt="Passion Mango Margarita"></div>
+        <div class="drink-body">
+          <div class="drink-header"><div class="drink-name">Passion Mango Margarita</div></div>
+          <p class="drink-desc">Tajin, chamoy, tequila, lime, peach schnapps, mango, passion fruit.</p>
+          <div class="drink-tags"><span class="drink-tag">Cocktail</span><span class="drink-tag">Mocktail</span></div>
+        </div>
+      </div>
+      <div class="drink-card">
+        <div class="drink-photo-wrapper"><img src="images/img_08.jpg" alt="Strawberry Mango Frozen Margarita"></div>
+        <div class="drink-body">
+          <div class="drink-header"><div class="drink-name">Strawberry Mango Frozen</div></div>
+          <p class="drink-desc">Tequila, strawberry, mango, lime.</p>
+          <div class="drink-tags"><span class="drink-tag">Cocktail</span><span class="drink-tag">Mocktail</span></div>
+        </div>
+      </div>
+      <div class="drink-card">
+        <div class="drink-photo-wrapper"><img src="images/img_09.jpg" alt="Aperol Coconut Margarita"></div>
+        <div class="drink-body">
+          <div class="drink-header"><div class="drink-name">Aperol Coconut Margarita</div></div>
+          <p class="drink-desc">Tequila, aperol, lime, cream of coconut.</p>
+          <div class="drink-tags"><span class="drink-tag">Cocktail</span><span class="drink-tag">Mocktail</span></div>
+        </div>
+      </div>
+      <div class="drink-card">
+        <div class="drink-photo-wrapper"><img src="images/img_10.jpg" alt="Watermelon Margarita"></div>
+        <div class="drink-body">
+          <div class="drink-header"><div class="drink-name">Watermelon Margarita</div><span class="drink-badge-seasonal">Seasonal</span></div>
+          <p class="drink-desc">Seasonal — disponible por temporada.</p>
+          <div class="drink-tags"><span class="drink-tag">Seasonal</span><span class="drink-tag">Cocktail</span><span class="drink-tag">Mocktail</span></div>
+        </div>
+      </div>
     </div>
 
+    <!-- FROZEN -->
     <div id="frozen" class="menu-panel">
-      <div style="background:#002a35;overflow:hidden;">
-  <div style="overflow:hidden;height:260px;"><img src="images/img_11.jpg" style="width:100%;height:260px;object-fit:cover;object-position:center;display:block;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-  </div>
-  <div style="padding:1.5rem;">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.5rem;">
-      <div style="font-size:1rem;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:#F6F6F6;">Frozen Mangoneada</div>
-    </div>
-    <p style="color:rgba(246,246,246,0.55);font-size:0.85rem;line-height:1.6;margin-bottom:0.8rem;">Mango, chamoy, tequila, tajín.</p>
-    <div style="display:flex;gap:0.4rem;flex-wrap:wrap;"><span style="font-size:0.6rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#F08100;border:1px solid rgba(240,129,0,0.3);padding:0.2rem 0.5rem;">Cocktail</span><span style="font-size:0.6rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#F08100;border:1px solid rgba(240,129,0,0.3);padding:0.2rem 0.5rem;">Mocktail</span></div>
-  </div>
-</div>
-      <div style="background:#002a35;overflow:hidden;">
-  <div style="overflow:hidden;height:260px;"><img src="images/img_12.jpg" style="width:100%;height:260px;object-fit:cover;object-position:center;display:block;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-  </div>
-  <div style="padding:1.5rem;">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.5rem;">
-      <div style="font-size:1rem;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:#F6F6F6;">Frozen Mango Colada</div>
-    </div>
-    <p style="color:rgba(246,246,246,0.55);font-size:0.85rem;line-height:1.6;margin-bottom:0.8rem;">Mango, cream of coconut, white rum, coconut rum.</p>
-    <div style="display:flex;gap:0.4rem;flex-wrap:wrap;"><span style="font-size:0.6rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#F08100;border:1px solid rgba(240,129,0,0.3);padding:0.2rem 0.5rem;">Cocktail</span><span style="font-size:0.6rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#F08100;border:1px solid rgba(240,129,0,0.3);padding:0.2rem 0.5rem;">Mocktail</span></div>
-  </div>
-</div>
-      <div style="background:#002a35;overflow:hidden;">
-  <div style="overflow:hidden;height:260px;"><img src="images/img_13.jpg" style="width:100%;height:260px;object-fit:cover;object-position:center;display:block;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-  </div>
-  <div style="padding:1.5rem;">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.5rem;">
-      <div style="font-size:1rem;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:#F6F6F6;">Piña Colada</div>
-    </div>
-    <p style="color:rgba(246,246,246,0.55);font-size:0.85rem;line-height:1.6;margin-bottom:0.8rem;">Pineapple, cream of coconut, coconut rum, spiced rum.</p>
-    <div style="display:flex;gap:0.4rem;flex-wrap:wrap;"><span style="font-size:0.6rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#F08100;border:1px solid rgba(240,129,0,0.3);padding:0.2rem 0.5rem;">Cocktail</span><span style="font-size:0.6rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#F08100;border:1px solid rgba(240,129,0,0.3);padding:0.2rem 0.5rem;">Mocktail</span></div>
-  </div>
-</div>
-      <div style="background:#002a35;overflow:hidden;">
-  <div style="overflow:hidden;height:260px;"><img src="images/img_14.jpg" style="width:100%;height:260px;object-fit:cover;object-position:center;display:block;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-  </div>
-  <div style="padding:1.5rem;">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.5rem;">
-      <div style="font-size:1rem;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:#F6F6F6;">Tequila Jungle Bird</div>
-    </div>
-    <p style="color:rgba(246,246,246,0.55);font-size:0.85rem;line-height:1.6;margin-bottom:0.8rem;">Coconut 1800, pineapple, blueberries, lime.</p>
-    <div style="display:flex;gap:0.4rem;flex-wrap:wrap;"><span style="font-size:0.6rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#F08100;border:1px solid rgba(240,129,0,0.3);padding:0.2rem 0.5rem;">Cocktail</span><span style="font-size:0.6rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#F08100;border:1px solid rgba(240,129,0,0.3);padding:0.2rem 0.5rem;">Mocktail</span></div>
-  </div>
-</div>
+      <div class="drink-card">
+        <div class="drink-photo-wrapper"><img src="images/img_11.jpg" alt="Frozen Mangoneada"></div>
+        <div class="drink-body">
+          <div class="drink-header"><div class="drink-name">Frozen Mangoneada</div></div>
+          <p class="drink-desc">Mango, chamoy, tequila, tajín.</p>
+          <div class="drink-tags"><span class="drink-tag">Cocktail</span><span class="drink-tag">Mocktail</span></div>
+        </div>
+      </div>
+      <div class="drink-card">
+        <div class="drink-photo-wrapper"><img src="images/img_12.jpg" alt="Frozen Mango Colada"></div>
+        <div class="drink-body">
+          <div class="drink-header"><div class="drink-name">Frozen Mango Colada</div></div>
+          <p class="drink-desc">Mango, cream of coconut, white rum, coconut rum.</p>
+          <div class="drink-tags"><span class="drink-tag">Cocktail</span><span class="drink-tag">Mocktail</span></div>
+        </div>
+      </div>
+      <div class="drink-card">
+        <div class="drink-photo-wrapper"><img src="images/img_13.jpg" alt="Piña Colada"></div>
+        <div class="drink-body">
+          <div class="drink-header"><div class="drink-name">Piña Colada</div></div>
+          <p class="drink-desc">Pineapple, cream of coconut, coconut rum, spiced rum.</p>
+          <div class="drink-tags"><span class="drink-tag">Cocktail</span><span class="drink-tag">Mocktail</span></div>
+        </div>
+      </div>
+      <div class="drink-card">
+        <div class="drink-photo-wrapper"><img src="images/img_14.jpg" alt="Tequila Jungle Bird"></div>
+        <div class="drink-body">
+          <div class="drink-header"><div class="drink-name">Tequila Jungle Bird</div></div>
+          <p class="drink-desc">Coconut 1800, pineapple, blueberries, lime.</p>
+          <div class="drink-tags"><span class="drink-tag">Cocktail</span><span class="drink-tag">Mocktail</span></div>
+        </div>
+      </div>
     </div>
 
+    <!-- PALOMAS -->
     <div id="palomas" class="menu-panel">
-      <div style="background:#002a35;overflow:hidden;">
-  <div style="overflow:hidden;height:260px;"><img src="images/img_15.jpg" style="width:100%;height:260px;object-fit:cover;object-position:center;display:block;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-  </div>
-  <div style="padding:1.5rem;">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.5rem;">
-      <div style="font-size:1rem;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:#F6F6F6;">Classic Paloma</div>
-    </div>
-    <p style="color:rgba(246,246,246,0.55);font-size:0.85rem;line-height:1.6;margin-bottom:0.8rem;">Lime, tequila, salt, orange, grapefruit, squirt, chamoy & tajín.</p>
-    <div style="display:flex;gap:0.4rem;flex-wrap:wrap;"><span style="font-size:0.6rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#F08100;border:1px solid rgba(240,129,0,0.3);padding:0.2rem 0.5rem;">Cocktail</span><span style="font-size:0.6rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#F08100;border:1px solid rgba(240,129,0,0.3);padding:0.2rem 0.5rem;">Mocktail</span></div>
-  </div>
-</div>
-      <div style="background:#002a35;overflow:hidden;">
-  <div style="overflow:hidden;height:260px;"><img src="images/img_16.jpg" style="width:100%;height:260px;object-fit:cover;object-position:center;display:block;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-  </div>
-  <div style="padding:1.5rem;">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.5rem;">
-      <div style="font-size:1rem;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:#F6F6F6;">Pineapple Paloma</div>
-    </div>
-    <p style="color:rgba(246,246,246,0.55);font-size:0.85rem;line-height:1.6;margin-bottom:0.8rem;">Tequila, lime, tajin, pineapple, grapefruit soda, chamoy rim.</p>
-    <div style="display:flex;gap:0.4rem;flex-wrap:wrap;"><span style="font-size:0.6rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#F08100;border:1px solid rgba(240,129,0,0.3);padding:0.2rem 0.5rem;">Cocktail</span><span style="font-size:0.6rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#F08100;border:1px solid rgba(240,129,0,0.3);padding:0.2rem 0.5rem;">Mocktail</span></div>
-  </div>
-</div>
-      <div style="background:#002a35;overflow:hidden;">
-  <div style="overflow:hidden;height:260px;"><img src="images/img_17.jpg" style="width:100%;height:260px;object-fit:cover;object-position:center;display:block;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-  </div>
-  <div style="padding:1.5rem;">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.5rem;">
-      <div style="font-size:1rem;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:#F6F6F6;">Strawberry Paloma</div>
-    </div>
-    <p style="color:rgba(246,246,246,0.55);font-size:0.85rem;line-height:1.6;margin-bottom:0.8rem;">Tequila, lime, tajin, strawberry, grapefruit soda, chamoy rim.</p>
-    <div style="display:flex;gap:0.4rem;flex-wrap:wrap;"><span style="font-size:0.6rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#F08100;border:1px solid rgba(240,129,0,0.3);padding:0.2rem 0.5rem;">Cocktail</span><span style="font-size:0.6rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#F08100;border:1px solid rgba(240,129,0,0.3);padding:0.2rem 0.5rem;">Mocktail</span></div>
-  </div>
-</div>
-      <div style="background:#002a35;overflow:hidden;">
-  <div style="overflow:hidden;height:260px;"><img src="images/img_18.jpg" style="width:100%;height:260px;object-fit:cover;object-position:center;display:block;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-  </div>
-  <div style="padding:1.5rem;">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.5rem;">
-      <div style="font-size:1rem;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:#F6F6F6;">Mango Paloma</div>
-    </div>
-    <p style="color:rgba(246,246,246,0.55);font-size:0.85rem;line-height:1.6;margin-bottom:0.8rem;">Tequila, lime, tajin, mango, grapefruit soda, chamoy rim.</p>
-    <div style="display:flex;gap:0.4rem;flex-wrap:wrap;"><span style="font-size:0.6rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#F08100;border:1px solid rgba(240,129,0,0.3);padding:0.2rem 0.5rem;">Cocktail</span><span style="font-size:0.6rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#F08100;border:1px solid rgba(240,129,0,0.3);padding:0.2rem 0.5rem;">Mocktail</span></div>
-  </div>
-</div>
-      <div style="background:#002a35;overflow:hidden;">
-  <div style="overflow:hidden;height:260px;"><img src="images/img_19.jpg" style="width:100%;height:260px;object-fit:cover;object-position:center;display:block;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-  </div>
-  <div style="padding:1.5rem;">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.5rem;">
-      <div style="font-size:1rem;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:#F6F6F6;">Watermelon Paloma</div><span style="font-size:0.55rem;font-weight:700;background:#671243;color:#F6F6F6;padding:0.2rem 0.6rem;margin-left:0.5rem;">Seasonal</span>
-    </div>
-    <p style="color:rgba(246,246,246,0.55);font-size:0.85rem;line-height:1.6;margin-bottom:0.8rem;">Lime, watermelon, agave nectar, tequila, squirt. *Seasonal</p>
-    <div style="display:flex;gap:0.4rem;flex-wrap:wrap;"><span style="font-size:0.6rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#F08100;border:1px solid rgba(240,129,0,0.3);padding:0.2rem 0.5rem;">Seasonal</span><span style="font-size:0.6rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#F08100;border:1px solid rgba(240,129,0,0.3);padding:0.2rem 0.5rem;">Cocktail</span><span style="font-size:0.6rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#F08100;border:1px solid rgba(240,129,0,0.3);padding:0.2rem 0.5rem;">Mocktail</span></div>
-  </div>
-</div>
+      <div class="drink-card">
+        <div class="drink-photo-wrapper"><img src="images/img_15.jpg" alt="Classic Paloma"></div>
+        <div class="drink-body">
+          <div class="drink-header"><div class="drink-name">Classic Paloma</div></div>
+          <p class="drink-desc">Lime, tequila, salt, orange, grapefruit, squirt, chamoy & tajín.</p>
+          <div class="drink-tags"><span class="drink-tag">Cocktail</span><span class="drink-tag">Mocktail</span></div>
+        </div>
+      </div>
+      <div class="drink-card">
+        <div class="drink-photo-wrapper"><img src="images/img_16.jpg" alt="Pineapple Paloma"></div>
+        <div class="drink-body">
+          <div class="drink-header"><div class="drink-name">Pineapple Paloma</div></div>
+          <p class="drink-desc">Tequila, lime, tajin, pineapple, grapefruit soda, chamoy rim.</p>
+          <div class="drink-tags"><span class="drink-tag">Cocktail</span><span class="drink-tag">Mocktail</span></div>
+        </div>
+      </div>
+      <div class="drink-card">
+        <div class="drink-photo-wrapper"><img src="images/img_17.jpg" alt="Strawberry Paloma"></div>
+        <div class="drink-body">
+          <div class="drink-header"><div class="drink-name">Strawberry Paloma</div></div>
+          <p class="drink-desc">Tequila, lime, tajin, strawberry, grapefruit soda, chamoy rim.</p>
+          <div class="drink-tags"><span class="drink-tag">Cocktail</span><span class="drink-tag">Mocktail</span></div>
+        </div>
+      </div>
+      <div class="drink-card">
+        <div class="drink-photo-wrapper"><img src="images/img_18.jpg" alt="Mango Paloma"></div>
+        <div class="drink-body">
+          <div class="drink-header"><div class="drink-name">Mango Paloma</div></div>
+          <p class="drink-desc">Tequila, lime, tajin, mango, grapefruit soda, chamoy rim.</p>
+          <div class="drink-tags"><span class="drink-tag">Cocktail</span><span class="drink-tag">Mocktail</span></div>
+        </div>
+      </div>
+      <div class="drink-card">
+        <div class="drink-photo-wrapper"><img src="images/img_19.jpg" alt="Watermelon Paloma"></div>
+        <div class="drink-body">
+          <div class="drink-header"><div class="drink-name">Watermelon Paloma</div><span class="drink-badge-seasonal">Seasonal</span></div>
+          <p class="drink-desc">Lime, watermelon, agave nectar, tequila, squirt.</p>
+          <div class="drink-tags"><span class="drink-tag">Seasonal</span><span class="drink-tag">Cocktail</span><span class="drink-tag">Mocktail</span></div>
+        </div>
+      </div>
     </div>
 
+    <!-- MOJITOS -->
     <div id="mojitos" class="menu-panel">
       <div class="base-info"><p><strong>Base:</strong> Lime, mint, white rum, el sabor de tu elección y soda water. &nbsp;|&nbsp; Flavors: Lime · Peach · Strawberry · Coconut · Watermelon · Blueberry</p></div>
-      <div style="background:#002a35;overflow:hidden;">
-  <div style="overflow:hidden;height:260px;"><img src="images/img_20.jpg" style="width:100%;height:260px;object-fit:cover;object-position:center;display:block;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-  </div>
-  <div style="padding:1.5rem;">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.5rem;">
-      <div style="font-size:1rem;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:#F6F6F6;">Strawberry Mojito</div>
-    </div>
-    <p style="color:rgba(246,246,246,0.55);font-size:0.85rem;line-height:1.6;margin-bottom:0.8rem;">Lime, mint, white rum, strawberry, soda water.</p>
-    <div style="display:flex;gap:0.4rem;flex-wrap:wrap;"><span style="font-size:0.6rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#F08100;border:1px solid rgba(240,129,0,0.3);padding:0.2rem 0.5rem;">Cocktail</span><span style="font-size:0.6rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#F08100;border:1px solid rgba(240,129,0,0.3);padding:0.2rem 0.5rem;">Mocktail</span></div>
-  </div>
-</div>
-      <div style="background:#002a35;overflow:hidden;">
-  <div style="overflow:hidden;height:260px;"><img src="images/img_21.jpg" style="width:100%;height:260px;object-fit:cover;object-position:center;display:block;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-  </div>
-  <div style="padding:1.5rem;">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.5rem;">
-      <div style="font-size:1rem;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:#F6F6F6;">Watermelon Mojito</div>
-    </div>
-    <p style="color:rgba(246,246,246,0.55);font-size:0.85rem;line-height:1.6;margin-bottom:0.8rem;">Lime, mint, white rum, watermelon, soda water. *Seasonal</p>
-    <div style="display:flex;gap:0.4rem;flex-wrap:wrap;"><span style="font-size:0.6rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#F08100;border:1px solid rgba(240,129,0,0.3);padding:0.2rem 0.5rem;">Cocktail</span><span style="font-size:0.6rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#F08100;border:1px solid rgba(240,129,0,0.3);padding:0.2rem 0.5rem;">Mocktail</span><span style="font-size:0.6rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#F08100;border:1px solid rgba(240,129,0,0.3);padding:0.2rem 0.5rem;">Seasonal</span></div>
-  </div>
-</div>
-      <div style="background:#002a35;overflow:hidden;">
-  <div style="overflow:hidden;height:260px;"><img src="images/img_22.jpg" style="width:100%;height:260px;object-fit:cover;object-position:center;display:block;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-  </div>
-  <div style="padding:1.5rem;">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.5rem;">
-      <div style="font-size:1rem;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:#F6F6F6;">Coconut Mojito</div>
-    </div>
-    <p style="color:rgba(246,246,246,0.55);font-size:0.85rem;line-height:1.6;margin-bottom:0.8rem;">Lime, mint, white rum, coconut, soda water.</p>
-    <div style="display:flex;gap:0.4rem;flex-wrap:wrap;"><span style="font-size:0.6rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#F08100;border:1px solid rgba(240,129,0,0.3);padding:0.2rem 0.5rem;">Cocktail</span><span style="font-size:0.6rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#F08100;border:1px solid rgba(240,129,0,0.3);padding:0.2rem 0.5rem;">Mocktail</span></div>
-  </div>
-</div>
-      <div style="background:#002a35;overflow:hidden;">
-  <div style="overflow:hidden;height:260px;"><img src="images/img_23.jpg" style="width:100%;height:260px;object-fit:cover;object-position:center;display:block;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-  </div>
-  <div style="padding:1.5rem;">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.5rem;">
-      <div style="font-size:1rem;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:#F6F6F6;">Blueberry Mojito</div>
-    </div>
-    <p style="color:rgba(246,246,246,0.55);font-size:0.85rem;line-height:1.6;margin-bottom:0.8rem;">Lime, mint, white rum, blueberry, soda water.</p>
-    <div style="display:flex;gap:0.4rem;flex-wrap:wrap;"><span style="font-size:0.6rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#F08100;border:1px solid rgba(240,129,0,0.3);padding:0.2rem 0.5rem;">Cocktail</span><span style="font-size:0.6rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#F08100;border:1px solid rgba(240,129,0,0.3);padding:0.2rem 0.5rem;">Mocktail</span></div>
-  </div>
-</div>
+      <div class="drink-card">
+        <div class="drink-photo-wrapper"><img src="images/img_20.jpg" alt="Strawberry Mojito"></div>
+        <div class="drink-body">
+          <div class="drink-header"><div class="drink-name">Strawberry Mojito</div></div>
+          <p class="drink-desc">Lime, mint, white rum, strawberry, soda water.</p>
+          <div class="drink-tags"><span class="drink-tag">Cocktail</span><span class="drink-tag">Mocktail</span></div>
+        </div>
+      </div>
+      <div class="drink-card">
+        <div class="drink-photo-wrapper"><img src="images/img_21.jpg" alt="Watermelon Mojito"></div>
+        <div class="drink-body">
+          <div class="drink-header"><div class="drink-name">Watermelon Mojito</div><span class="drink-badge-seasonal">Seasonal</span></div>
+          <p class="drink-desc">Lime, mint, white rum, watermelon, soda water.</p>
+          <div class="drink-tags"><span class="drink-tag">Cocktail</span><span class="drink-tag">Mocktail</span><span class="drink-tag">Seasonal</span></div>
+        </div>
+      </div>
+      <div class="drink-card">
+        <div class="drink-photo-wrapper"><img src="images/img_22.jpg" alt="Coconut Mojito"></div>
+        <div class="drink-body">
+          <div class="drink-header"><div class="drink-name">Coconut Mojito</div></div>
+          <p class="drink-desc">Lime, mint, white rum, coconut, soda water.</p>
+          <div class="drink-tags"><span class="drink-tag">Cocktail</span><span class="drink-tag">Mocktail</span></div>
+        </div>
+      </div>
+      <div class="drink-card">
+        <div class="drink-photo-wrapper"><img src="images/img_23.jpg" alt="Blueberry Mojito"></div>
+        <div class="drink-body">
+          <div class="drink-header"><div class="drink-name">Blueberry Mojito</div></div>
+          <p class="drink-desc">Lime, mint, white rum, blueberry, soda water.</p>
+          <div class="drink-tags"><span class="drink-tag">Cocktail</span><span class="drink-tag">Mocktail</span></div>
+        </div>
+      </div>
     </div>
 
+    <!-- MORE -->
     <div id="more" class="menu-panel">
-      <div style="background:#002a35;overflow:hidden;">
-  <div style="overflow:hidden;height:260px;"><img src="images/img_24.jpg" style="width:100%;height:260px;object-fit:cover;object-position:center;display:block;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-  </div>
-  <div style="padding:1.5rem;">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.5rem;">
-      <div style="font-size:1rem;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:#F6F6F6;">Ranch Water</div>
-    </div>
-    <p style="color:rgba(246,246,246,0.55);font-size:0.85rem;line-height:1.6;margin-bottom:0.8rem;">Tequila, lime, sea salt, Topo Chico.</p>
-    <div style="display:flex;gap:0.4rem;flex-wrap:wrap;"><span style="font-size:0.6rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#F08100;border:1px solid rgba(240,129,0,0.3);padding:0.2rem 0.5rem;">Cocktail</span><span style="font-size:0.6rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#F08100;border:1px solid rgba(240,129,0,0.3);padding:0.2rem 0.5rem;">Mocktail</span></div>
-  </div>
-</div>
-      <div style="background:#002a35;overflow:hidden;">
-  <div style="overflow:hidden;height:260px;"><img src="images/img_25.jpg" style="width:100%;height:260px;object-fit:cover;object-position:center;display:block;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-  </div>
-  <div style="padding:1.5rem;">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.5rem;">
-      <div style="font-size:1rem;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:#F6F6F6;">Cantarito</div>
-    </div>
-    <p style="color:rgba(246,246,246,0.55);font-size:0.85rem;line-height:1.6;margin-bottom:0.8rem;">Lime, tequila, salt, orange, grapefruit, squirt, chamoy & tajín.</p>
-    <div style="display:flex;gap:0.4rem;flex-wrap:wrap;"><span style="font-size:0.6rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#F08100;border:1px solid rgba(240,129,0,0.3);padding:0.2rem 0.5rem;">Cocktail</span><span style="font-size:0.6rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#F08100;border:1px solid rgba(240,129,0,0.3);padding:0.2rem 0.5rem;">Mocktail</span></div>
-  </div>
-</div>
-      <div style="background:#002a35;overflow:hidden;">
-  <div style="overflow:hidden;height:260px;"><img src="images/img_26.jpg" style="width:100%;height:260px;object-fit:cover;object-position:center;display:block;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-  </div>
-  <div style="padding:1.5rem;">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.5rem;">
-      <div style="font-size:1rem;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:#F6F6F6;">Malibú Sunrise</div>
-    </div>
-    <p style="color:rgba(246,246,246,0.55);font-size:0.85rem;line-height:1.6;margin-bottom:0.8rem;">Lime, pineapple, orange, white rum, coconut rum, peach schnapps, grenadine.</p>
-    <div style="display:flex;gap:0.4rem;flex-wrap:wrap;"><span style="font-size:0.6rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#F08100;border:1px solid rgba(240,129,0,0.3);padding:0.2rem 0.5rem;">Cocktail</span><span style="font-size:0.6rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#F08100;border:1px solid rgba(240,129,0,0.3);padding:0.2rem 0.5rem;">Mocktail</span></div>
-  </div>
-</div>
-      <div style="background:#002a35;overflow:hidden;">
-  <div style="overflow:hidden;height:260px;"><img src="images/img_27.jpg" style="width:100%;height:260px;object-fit:cover;object-position:center;display:block;transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-  </div>
-  <div style="padding:1.5rem;">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.5rem;">
-      <div style="font-size:1rem;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:#F6F6F6;">Blue Tiki</div>
-    </div>
-    <p style="color:rgba(246,246,246,0.55);font-size:0.85rem;line-height:1.6;margin-bottom:0.8rem;">Coconut 1800, Cointreau, lime, pineapple, agave.</p>
-    <div style="display:flex;gap:0.4rem;flex-wrap:wrap;"><span style="font-size:0.6rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#F08100;border:1px solid rgba(240,129,0,0.3);padding:0.2rem 0.5rem;">Cocktail</span><span style="font-size:0.6rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#F08100;border:1px solid rgba(240,129,0,0.3);padding:0.2rem 0.5rem;">Mocktail</span></div>
-  </div>
-</div>
+      <div class="drink-card">
+        <div class="drink-photo-wrapper"><img src="images/img_24.jpg" alt="Ranch Water"></div>
+        <div class="drink-body">
+          <div class="drink-header"><div class="drink-name">Ranch Water</div></div>
+          <p class="drink-desc">Tequila, lime, sea salt, Topo Chico.</p>
+          <div class="drink-tags"><span class="drink-tag">Cocktail</span><span class="drink-tag">Mocktail</span></div>
+        </div>
+      </div>
+      <div class="drink-card">
+        <div class="drink-photo-wrapper"><img src="images/img_25.jpg" alt="Cantarito"></div>
+        <div class="drink-body">
+          <div class="drink-header"><div class="drink-name">Cantarito</div></div>
+          <p class="drink-desc">Lime, tequila, salt, orange, grapefruit, squirt, chamoy & tajín.</p>
+          <div class="drink-tags"><span class="drink-tag">Cocktail</span><span class="drink-tag">Mocktail</span></div>
+        </div>
+      </div>
+      <div class="drink-card">
+        <div class="drink-photo-wrapper"><img src="images/img_26.jpg" alt="Malibú Sunrise"></div>
+        <div class="drink-body">
+          <div class="drink-header"><div class="drink-name">Malibú Sunrise</div></div>
+          <p class="drink-desc">Lime, pineapple, orange, white rum, coconut rum, peach schnapps, grenadine.</p>
+          <div class="drink-tags"><span class="drink-tag">Cocktail</span><span class="drink-tag">Mocktail</span></div>
+        </div>
+      </div>
+      <div class="drink-card">
+        <div class="drink-photo-wrapper"><img src="images/img_27.jpg" alt="Blue Tiki"></div>
+        <div class="drink-body">
+          <div class="drink-header"><div class="drink-name">Blue Tiki</div></div>
+          <p class="drink-desc">Coconut 1800, Cointreau, lime, pineapple, agave.</p>
+          <div class="drink-tags"><span class="drink-tag">Cocktail</span><span class="drink-tag">Mocktail</span></div>
+        </div>
+      </div>
       <div class="also-avail">
         <h4>Also Available</h4>
         <div class="also-grid">
@@ -613,99 +649,99 @@ footer { background:#000; border-top:1px solid rgba(240,129,0,0.15); padding:2.5
     </div>
 
     <!-- Menu Grid -->
-    <div id="menu-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1.5rem;">
+    <div id="menu-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.5rem;">
 
       <!-- MARGARITAS -->
       <div class="menu-item" data-cat="margarita" onclick="openDrink('Raspberry Margarita','Lime, raspberry purée, tequila, Cointreau.','Una margarita elegante con frambuesa fresca. El color rojo vibrante y el sabor cítrico hacen de esta una de las favoritas.',['Cocktail','Mocktail'],'images/img_40.jpg')">
-        <div class="menu-card"><img src="images/img_41.jpg" class="menu-img"><div class="menu-info"><span class="menu-cat">Margarita</span><div class="menu-name">Raspberry Margarita</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
+        <div class="menu-card"><div class="menu-img-wrapper"><img src="images/img_41.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Margarita</span><div class="menu-name">Raspberry Margarita</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
       </div>
 
       <div class="menu-item" data-cat="margarita" onclick="openDrink('Passion Mango Margarita','Tajin, chamoy, tequila, lime, peach schnapps, mango, passion fruit.','Tropical y audaz. El chamoy y tajin en el borde crean una experiencia única que nadie olvida.',['Cocktail','Mocktail'],'images/img_42.jpg')">
-        <div class="menu-card"><img src="images/img_43.jpg" class="menu-img"><div class="menu-info"><span class="menu-cat">Margarita</span><div class="menu-name">Passion Mango Margarita</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
+        <div class="menu-card"><div class="menu-img-wrapper"><img src="images/img_43.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Margarita</span><div class="menu-name">Passion Mango Margarita</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
       </div>
 
       <div class="menu-item" data-cat="margarita frozen" onclick="openDrink('Strawberry Mango Frozen Margarita','Tequila, strawberry, mango, lime.','El color en capas rojo y amarillo es visualmente espectacular. Frozen, frutal y refrescante.',['Cocktail','Mocktail'],'images/img_44.jpg')">
-        <div class="menu-card"><img src="images/img_45.jpg" class="menu-img"><div class="menu-info"><span class="menu-cat">Margarita · Frozen</span><div class="menu-name">Strawberry Mango Frozen</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
+        <div class="menu-card"><div class="menu-img-wrapper"><img src="images/img_45.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Margarita · Frozen</span><div class="menu-name">Strawberry Mango Frozen</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
       </div>
 
       <div class="menu-item" data-cat="margarita" onclick="openDrink('Aperol Coconut Margarita','Tequila, aperol, lime, cream of coconut.','La combinación de aperol y coco crea un balance perfecto entre lo amargo y lo tropical.',['Cocktail','Mocktail'],'images/img_46.jpg')">
-        <div class="menu-card"><img src="images/img_47.jpg" class="menu-img"><div class="menu-info"><span class="menu-cat">Margarita</span><div class="menu-name">Aperol Coconut Margarita</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
+        <div class="menu-card"><div class="menu-img-wrapper"><img src="images/img_47.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Margarita</span><div class="menu-name">Aperol Coconut Margarita</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
       </div>
 
       <div class="menu-item" data-cat="margarita" onclick="openDrink('Watermelon Margarita 🍉','Tequila, watermelon, lime, agave.','Refrescante y colorida. Solo disponible por temporada — cuando está, vuela.',['Seasonal','Cocktail','Mocktail'],'images/img_48.jpg')">
-        <div class="menu-card"><img src="images/img_49.jpg" class="menu-img" style="object-position:center 45%;"><div class="menu-info"><span class="menu-cat" style="background:#671243;">Seasonal</span><div class="menu-name">Watermelon Margarita</div><div class="menu-tags-sm"><span>Seasonal</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
+        <div class="menu-card"><div class="menu-img-wrapper"><img src="images/img_49.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat" style="background:#671243;color:#F6F6F6;">Seasonal</span><div class="menu-name">Watermelon Margarita</div><div class="menu-tags-sm"><span>Seasonal</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
       </div>
 
       <!-- FROZEN -->
       <div class="menu-item" data-cat="frozen" onclick="openDrink('Frozen Mangoneada','Mango, chamoy, tequila, tajín.','La mangoneada es un ícono. Mango frozen con chamoy y tajin — dulce, picante y completamente adictiva.',['Cocktail','Mocktail'],'images/img_50.jpg')">
-        <div class="menu-card"><img src="images/img_51.jpg" class="menu-img"><div class="menu-info"><span class="menu-cat">Frozen</span><div class="menu-name">Frozen Mangoneada</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
+        <div class="menu-card"><div class="menu-img-wrapper"><img src="images/img_51.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Frozen</span><div class="menu-name">Frozen Mangoneada</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
       </div>
 
       <div class="menu-item" data-cat="frozen" onclick="openDrink('Frozen Mango Colada','Mango, cream of coconut, white rum, coconut rum.','Tropical y cremosa. El mango y el coco frozen es la combinación perfecta para cualquier evento.',['Cocktail','Mocktail'],'images/img_52.jpg')">
-        <div class="menu-card"><img src="images/img_53.jpg" class="menu-img"><div class="menu-info"><span class="menu-cat">Frozen</span><div class="menu-name">Frozen Mango Colada</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
+        <div class="menu-card"><div class="menu-img-wrapper"><img src="images/img_53.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Frozen</span><div class="menu-name">Frozen Mango Colada</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
       </div>
 
       <div class="menu-item" data-cat="frozen" onclick="openDrink('Piña Colada','Pineapple, cream of coconut, coconut rum, spiced rum.','El clásico de siempre. Cremosa, tropical y perfecta para cualquier ocasión.',['Cocktail','Mocktail'],'images/img_54.jpg')">
-        <div class="menu-card"><img src="images/img_55.jpg" class="menu-img"><div class="menu-info"><span class="menu-cat">Frozen</span><div class="menu-name">Piña Colada</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
+        <div class="menu-card"><div class="menu-img-wrapper"><img src="images/img_55.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Frozen</span><div class="menu-name">Piña Colada</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
       </div>
 
       <div class="menu-item" data-cat="frozen" onclick="openDrink('Tequila Jungle Bird','Coconut 1800, pineapple, blueberries, lime.','Azul vibrante y tropical. El Coconut 1800 con piña y blueberries crea un sabor único e Instagram-worthy.',['Cocktail','Mocktail'],'images/img_56.jpg')">
-        <div class="menu-card"><img src="images/img_57.jpg" class="menu-img"><div class="menu-info"><span class="menu-cat">Frozen</span><div class="menu-name">Tequila Jungle Bird</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
+        <div class="menu-card"><div class="menu-img-wrapper"><img src="images/img_57.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Frozen</span><div class="menu-name">Tequila Jungle Bird</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
       </div>
 
       <!-- PALOMAS -->
       <div class="menu-item" data-cat="paloma" onclick="openDrink('Classic Paloma','Lime, tequila, salt, orange, grapefruit, squirt, chamoy & tajín.','La paloma clásica elevada. Con chamoy y tajin en el borde — auténtica y refrescante.',['Cocktail','Mocktail'],'images/img_58.jpg')">
-        <div class="menu-card"><img src="images/img_59.jpg" class="menu-img"><div class="menu-info"><span class="menu-cat">Paloma</span><div class="menu-name">Classic Paloma</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
+        <div class="menu-card"><div class="menu-img-wrapper"><img src="images/img_59.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Paloma</span><div class="menu-name">Classic Paloma</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
       </div>
 
       <div class="menu-item" data-cat="paloma" onclick="openDrink('Pineapple Paloma','Tequila, lime, tajin, pineapple, grapefruit soda, chamoy rim.','El toque tropical de la piña hace de esta paloma algo completamente diferente y adictivo.',['Cocktail','Mocktail'],'images/img_60.jpg')">
-        <div class="menu-card"><img src="images/img_61.jpg" class="menu-img"><div class="menu-info"><span class="menu-cat">Paloma</span><div class="menu-name">Pineapple Paloma</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
+        <div class="menu-card"><div class="menu-img-wrapper"><img src="images/img_61.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Paloma</span><div class="menu-name">Pineapple Paloma</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
       </div>
 
       <div class="menu-item" data-cat="paloma" onclick="openDrink('Strawberry Paloma','Tequila, lime, tajin, strawberry, grapefruit soda, chamoy rim.','Color rojo vibrante y sabor frutal. Una de las más pedidas en eventos.',['Cocktail','Mocktail'],'images/img_62.jpg')">
-        <div class="menu-card"><img src="images/img_63.jpg" class="menu-img"><div class="menu-info"><span class="menu-cat">Paloma</span><div class="menu-name">Strawberry Paloma</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
+        <div class="menu-card"><div class="menu-img-wrapper"><img src="images/img_63.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Paloma</span><div class="menu-name">Strawberry Paloma</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
       </div>
 
       <div class="menu-item" data-cat="paloma" onclick="openDrink('Mango Paloma','Tequila, lime, tajin, mango, grapefruit soda, chamoy rim.','Mango fresco con la base de paloma. Dulce, cítrico y con ese kick de tajin.',['Cocktail','Mocktail'],'images/img_64.jpg')">
-        <div class="menu-card"><img src="images/img_65.jpg" class="menu-img"><div class="menu-info"><span class="menu-cat">Paloma</span><div class="menu-name">Mango Paloma</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
+        <div class="menu-card"><div class="menu-img-wrapper"><img src="images/img_65.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Paloma</span><div class="menu-name">Mango Paloma</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
       </div>
 
       <div class="menu-item" data-cat="paloma" onclick="openDrink('Watermelon Paloma 🍉','Lime, watermelon, agave nectar, tequila, squirt.','Seasonal y especial. Sandía fresca con la base de paloma — verano en un vaso.',['Seasonal','Cocktail','Mocktail'],'images/img_66.jpg')">
-        <div class="menu-card"><img src="images/img_67.jpg" class="menu-img" style="object-position:center 45%;"><div class="menu-info"><span class="menu-cat" style="background:#671243;">Seasonal</span><div class="menu-name">Watermelon Paloma</div><div class="menu-tags-sm"><span>Seasonal</span></div></div><div class="menu-tap">Tap to explore →</div></div>
+        <div class="menu-card"><div class="menu-img-wrapper"><img src="images/img_67.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat" style="background:#671243;color:#F6F6F6;">Seasonal</span><div class="menu-name">Watermelon Paloma</div><div class="menu-tags-sm"><span>Seasonal</span></div></div><div class="menu-tap">Tap to explore →</div></div>
       </div>
 
       <!-- MOJITOS -->
       <div class="menu-item" data-cat="mojito" onclick="openDrink('Strawberry Mojito','Lime, mint, white rum, strawberry, soda water.','Fresa fresca, menta y ron blanco. Refrescante y elegante — perfecto para cualquier evento.',['Cocktail','Mocktail'],'images/img_68.jpg')">
-        <div class="menu-card"><img src="images/img_69.jpg" class="menu-img"><div class="menu-info"><span class="menu-cat">Mojito</span><div class="menu-name">Strawberry Mojito</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
+        <div class="menu-card"><div class="menu-img-wrapper"><img src="images/img_69.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Mojito</span><div class="menu-name">Strawberry Mojito</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
       </div>
 
       <div class="menu-item" data-cat="mojito" onclick="openDrink('Watermelon Mojito 🍉','Lime, mint, white rum, watermelon, soda water.','Sandía fresca con menta — verano en cada sorbo. Seasonal.',['Seasonal','Cocktail','Mocktail'],'images/img_70.jpg')">
-        <div class="menu-card"><img src="images/img_71.jpg" class="menu-img"><div class="menu-info"><span class="menu-cat" style="background:#671243;">Seasonal</span><div class="menu-name">Watermelon Mojito</div><div class="menu-tags-sm"><span>Seasonal</span></div></div><div class="menu-tap">Tap to explore →</div></div>
+        <div class="menu-card"><div class="menu-img-wrapper"><img src="images/img_71.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat" style="background:#671243;color:#F6F6F6;">Seasonal</span><div class="menu-name">Watermelon Mojito</div><div class="menu-tags-sm"><span>Seasonal</span></div></div><div class="menu-tap">Tap to explore →</div></div>
       </div>
 
       <div class="menu-item" data-cat="mojito" onclick="openDrink('Coconut Mojito','Lime, mint, white rum, coconut, soda water.','Coco tropical con la frescura de la menta. Suave y delicioso.',['Cocktail','Mocktail'],'images/img_72.jpg')">
-        <div class="menu-card"><img src="images/img_73.jpg" class="menu-img"><div class="menu-info"><span class="menu-cat">Mojito</span><div class="menu-name">Coconut Mojito</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
+        <div class="menu-card"><div class="menu-img-wrapper"><img src="images/img_73.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Mojito</span><div class="menu-name">Coconut Mojito</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
       </div>
 
       <div class="menu-item" data-cat="mojito" onclick="openDrink('Blueberry Mojito','Lime, mint, white rum, blueberry, soda water.','Color morado intenso y sabor frutal único. Uno de los más fotogénicos del menú.',['Cocktail','Mocktail'],'images/img_74.jpg')">
-        <div class="menu-card"><img src="images/img_75.jpg" class="menu-img"><div class="menu-info"><span class="menu-cat">Mojito</span><div class="menu-name">Blueberry Mojito</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
+        <div class="menu-card"><div class="menu-img-wrapper"><img src="images/img_75.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Mojito</span><div class="menu-name">Blueberry Mojito</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
       </div>
 
       <!-- OTHER -->
       <div class="menu-item" data-cat="other" onclick="openDrink('Ranch Water','Tequila, lime, sea salt, Topo Chico.','Simple, refrescante y perfecto. El tequila con Topo Chico es la combinación ideal para el verano.',['Cocktail','Mocktail'],'images/img_76.jpg')">
-        <div class="menu-card"><img src="images/img_77.jpg" class="menu-img"><div class="menu-info"><span class="menu-cat">Signature</span><div class="menu-name">Ranch Water</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
+        <div class="menu-card"><div class="menu-img-wrapper"><img src="images/img_77.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Signature</span><div class="menu-name">Ranch Water</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
       </div>
 
       <div class="menu-item" data-cat="other" onclick="openDrink('Cantarito','Lime, tequila, salt, orange, grapefruit, squirt, chamoy & tajín.','Servido en vasito personalizado de On The Rocks. Un ícono que todo el mundo quiere en su evento.',['Cocktail','Mocktail'],'images/img_78.jpg')">
-        <div class="menu-card"><img src="images/img_79.jpg" class="menu-img"><div class="menu-info"><span class="menu-cat">Signature</span><div class="menu-name">Cantarito</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
+        <div class="menu-card"><div class="menu-img-wrapper"><img src="images/img_79.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Signature</span><div class="menu-name">Cantarito</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
       </div>
 
       <div class="menu-item" data-cat="other" onclick="openDrink('Malibú Sunrise','Lime, pineapple, orange, white rum, coconut rum, peach schnapps, grenadine.','El degradado de colores hace de este un cóctel visualmente impresionante. Dulce y tropical.',['Cocktail','Mocktail'],'images/img_80.jpg')">
-        <div class="menu-card"><img src="images/img_81.jpg" class="menu-img" style="object-position:center top;"><div class="menu-info"><span class="menu-cat">Signature</span><div class="menu-name">Malibú Sunrise</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
+        <div class="menu-card"><div class="menu-img-wrapper"><img src="images/img_81.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Signature</span><div class="menu-name">Malibú Sunrise</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
       </div>
 
       <div class="menu-item" data-cat="other" onclick="openDrink('Blue Tiki','Coconut 1800, Cointreau, lime, pineapple, agave.','Azul tropical y refrescante. El Coconut 1800 con piña crea una experiencia única.',['Cocktail','Mocktail'],'images/img_82.jpg')">
-        <div class="menu-card"><img src="images/img_83.jpg" class="menu-img"><div class="menu-info"><span class="menu-cat">Signature</span><div class="menu-name">Blue Tiki</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
+        <div class="menu-card"><div class="menu-img-wrapper"><img src="images/img_83.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Signature</span><div class="menu-name">Blue Tiki</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
       </div>
 
     </div>
@@ -713,9 +749,11 @@ footer { background:#000; border-top:1px solid rgba(240,129,0,0.15); padding:2.5
 
   <!-- MODAL -->
   <div id="drink-modal" style="display:none;position:fixed;inset:0;z-index:9998;background:rgba(0,10,18,0.92);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:2rem;" onclick="closeModal(event)">
-    <div style="background:#002a35;max-width:600px;width:100%;border-top:3px solid #F08100;overflow:hidden;position:relative;animation:modal-in 0.35s ease;" onclick="event.stopPropagation()">
+    <div style="background:#002a35;max-width:600px;width:100%;border-top:3px solid #F08100;overflow:hidden;position:relative;animation:modal-in 0.35s ease;max-height:90vh;overflow-y:auto;" onclick="event.stopPropagation()">
       <button onclick="closeModal()" style="position:absolute;top:1rem;right:1rem;background:rgba(0,0,0,0.5);border:none;color:#F6F6F6;width:36px;height:36px;font-size:1.2rem;cursor:pointer;z-index:1;border-radius:50%;">×</button>
-      <img id="modal-img" src="" style="width:100%;height:320px;object-fit:cover;display:block;">
+      <div style="background:#F6F6F6;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;padding:16px;">
+        <img id="modal-img" src="" style="max-width:100%;max-height:100%;object-fit:contain;display:block;">
+      </div>
       <div style="padding:2rem;">
         <div id="modal-cat" style="font-size:0.6rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#F08100;margin-bottom:0.5rem;"></div>
         <div id="modal-name" style="font-size:1.6rem;font-weight:900;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.8rem;"></div>
@@ -734,8 +772,28 @@ footer { background:#000; border-top:1px solid rgba(240,129,0,0.15); padding:2.5
 .filter-btn:hover, .filter-active { background:#F08100;border-color:#F08100;color:#000; }
 .menu-card { background:#002030;overflow:hidden;cursor:pointer;transition:transform 0.3s,box-shadow 0.3s;border-bottom:2px solid transparent;position:relative; }
 .menu-card:hover { transform:translateY(-4px);box-shadow:0 12px 30px rgba(0,0,0,0.4);border-bottom-color:#F08100; }
-.menu-img { width:100%;height:220px;object-fit:cover;transition:transform 0.5s;display:block; }
+
+/* ✨ NUEVO: wrapper para mostrar fotos completas ✨ */
+.menu-img-wrapper {
+  background: #F6F6F6;
+  aspect-ratio: 4 / 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  overflow: hidden;
+}
+.menu-img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  transition: transform 0.5s;
+}
 .menu-card:hover .menu-img { transform:scale(1.06); }
+
 .menu-info { padding:1.2rem 1.2rem 0.8rem; }
 .menu-cat { font-size:0.58rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;background:#F08100;color:#000;padding:0.2rem 0.6rem;display:inline-block;margin-bottom:0.5rem; }
 .menu-name { font-size:1rem;font-weight:800;text-transform:uppercase;letter-spacing:0.04em;color:#F6F6F6;line-height:1.2; }
@@ -807,7 +865,7 @@ document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal();
         <p data-i18n="contact-p">Cuéntanos sobre tu evento y te preparamos una propuesta personalizada. Atendemos Richmond, Virginia y alrededores.</p>
         <div class="contact-items">
           <div class="contact-item"><div class="contact-icon">📱</div><a href="https://wa.me/18045026837">(804) 502-6837</a></div>
-          <div class="contact-item"><div class="contact-icon">📧</div><a href="/cdn-cgi/l/email-protection#bdd2d3c9d5d8cfd2ded6cecfcbdcfddad0dcd4d193ded2d0"><span class="__cf_email__" data-cfemail="741b1a001c11061b171f07060215341319151d185a171b19">[email&#160;protected]</span></a></div>
+          <div class="contact-item"><div class="contact-icon">📧</div><a href="mailto:ontherocksrva@gmail.com">ontherocksrva@gmail.com</a></div>
           <div class="contact-item"><div class="contact-icon">📍</div><span>Richmond, Virginia</span></div>
           <div class="contact-item"><div class="contact-icon">📸</div><a href="https://instagram.com/ontherocksrva" target="_blank">@ontherocksrva</a></div>
         </div>
@@ -831,17 +889,17 @@ document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal();
 <!-- FOOTER -->
 <footer>
   <img src="images/img_84.png" alt="On The Rocks" style="height:46px;opacity:0.85;">
-  <div class="footer-copy">© 2025 On The Rocks Mobile Bar · Richmond, VA</div>
+  <div class="footer-copy">© 2026 On The Rocks Mobile Bar · Richmond, VA</div>
   <div class="social-links">
     <a href="https://instagram.com/ontherocksrva" class="social-link" target="_blank">📸</a>
     <a href="https://wa.me/18045026837" class="social-link">💬</a>
-    <a href="/cdn-cgi/l/email-protection#afc0c1dbc7caddc0ccc4dcddd9ceefc8c2cec6c381ccc0c2" class="social-link">✉️</a>
+    <a href="mailto:ontherocksrva@gmail.com" class="social-link">✉️</a>
   </div>
 </footer>
 
 <a href="https://wa.me/18045026837" class="wa-float" target="_blank">💬</a>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 let currentLang = 'es';
 
 const t = {
@@ -918,10 +976,10 @@ document.addEventListener('DOMContentLoaded', function() {
 function showTab(id, btn) {
   ['margaritas','frozen','palomas','mojitos','more'].forEach(p => {
     const el = document.getElementById(p);
-    if (el) el.style.display = 'none';
+    if (el) { el.classList.remove('active'); el.style.display = 'none'; }
   });
   const active = document.getElementById(id);
-  if (active) active.style.display = 'grid';
+  if (active) { active.classList.add('active'); active.style.display = 'grid'; }
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   if (btn) btn.classList.add('active');
 }
