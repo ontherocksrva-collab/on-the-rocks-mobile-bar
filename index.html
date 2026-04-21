@@ -83,7 +83,7 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:1rem 3rem 1re
 .svc-desc { color:rgba(246,246,246,0.55); font-size:0.88rem; line-height:1.7; }
 
 /* MENU */
-.menu-bg { background:#001e28; }
+.menu-bg { background:transparent; }
 .menu-tabs { display:flex; border-bottom:1px solid rgba(240,129,0,0.2); margin-bottom:2rem; overflow-x:auto; gap:0; }
 .tab { background:none; border:none; color:rgba(246,246,246,0.4); font-family:'Montserrat',sans-serif; font-size:0.7rem; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; padding:0.9rem 1.8rem; cursor:pointer; border-bottom:3px solid transparent; transition:all 0.3s; white-space:nowrap; }
 .tab.active { color:#F08100; border-bottom-color:#F08100; }
@@ -93,31 +93,28 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:1rem 3rem 1re
 .menu-note { font-size:0.82rem; color:rgba(246,246,246,0.5); margin-bottom:2rem; }
 .menu-note strong { color:#F08100; }
 
-/* ✨ TARJETAS DEL MENÚ - NUEVO ESTILO E-BOOK ✨ */
+/* ✨ TARJETAS DEL MENÚ - FOTOS FLOTANTES LIBRES ✨ */
 .drink-card {
-  background: #002a35;
-  overflow: hidden;
-  border-radius: 4px;
-  border: 1px solid rgba(240,129,0,0.12);
-  transition: transform 0.35s, border-color 0.35s, box-shadow 0.35s;
+  background: transparent;
+  overflow: visible;
+  border: none;
+  transition: transform 0.35s;
   display: flex;
   flex-direction: column;
 }
 .drink-card:hover {
   transform: translateY(-4px);
-  border-color: rgba(240,129,0,0.4);
-  box-shadow: 0 10px 28px rgba(0,0,0,0.35);
 }
 .drink-photo-wrapper {
-  background: var(--photo-bg);
+  background: transparent;
   aspect-ratio: 4 / 5;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 14px;
+  padding: 0;
   overflow: hidden;
   position: relative;
-  border-bottom: 2px solid #F08100;
+  border: none;
 }
 .drink-photo-wrapper img {
   max-width: 100%;
@@ -132,17 +129,19 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:1rem 3rem 1re
   transform: scale(1.04);
 }
 .drink-body {
-  padding: 1.2rem 1.3rem 1.4rem;
+  padding: 1rem 0.3rem 0.5rem;
   flex: 1;
   display: flex;
   flex-direction: column;
+  text-align: center;
 }
 .drink-header {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
   margin-bottom: 0.5rem;
   gap: 0.5rem;
+  flex-wrap: wrap;
 }
 .drink-name {
   font-size: 1rem;
@@ -163,6 +162,7 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:1rem 3rem 1re
   display: flex;
   gap: 0.4rem;
   flex-wrap: wrap;
+  justify-content: center;
 }
 .drink-tag {
   font-size: 0.58rem;
@@ -602,31 +602,7 @@ footer { background:#000; border-top:1px solid rgba(240,129,0,0.15); padding:2.5
   </div>
 </section>
 
-<!-- GALLERY -->
-<section class="section gallery-bg" id="gallery">
-  <div class="section-inner">
-    <div class="section-label" data-i18n="gallery-label">Nuestras creaciones</div>
-    <h2 class="section-title"><span data-i18n="gallery-title1">Así se ve</span><br><span data-i18n="gallery-title2">On The Rocks.</span></h2>
-    <div class="gallery-grid">
-      <div class="gallery-wide gallery-tall"><img src="images/img_28.png" style="object-position:center 75%;"></div>
-      <div><img src="images/img_29.jpg"></div>
-      <div><img src="images/img_30.jpg"></div>
-      <div><img src="images/img_31.jpg"></div>
-      <div><img src="images/img_32.jpg"></div>
-      <div><img src="images/img_33.jpg"></div>
-      <div><img src="images/img_34.jpg"></div>
-      <div><img src="images/img_35.jpg"></div>
-      <div><img src="images/img_36.jpg"></div>
-      <div><img src="images/img_37.jpg" style="object-position:center top;"></div>
-      <div><img src="images/img_38.jpg"></div>
-      <div><img src="images/img_39.jpg"></div>
-    </div>
-    <div style="text-align:center;margin-top:2.5rem;">
-      <p style="color:rgba(246,246,246,0.45);font-size:0.8rem;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:1.2rem;" data-i18n="gallery-cta-text">¿Quieres esto en tu evento?</p>
-      <a href="#contact" class="btn btn-primary" data-i18n="gallery-cta-btn">Cotiza ahora</a>
-    </div>
-  </div>
-</section>
+<!-- GALLERY REMOVIDA -->
 
 
 <!-- INTERACTIVE MENU -->
@@ -751,7 +727,7 @@ footer { background:#000; border-top:1px solid rgba(240,129,0,0.15); padding:2.5
   <div id="drink-modal" style="display:none;position:fixed;inset:0;z-index:9998;background:rgba(0,10,18,0.92);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:2rem;" onclick="closeModal(event)">
     <div style="background:#002a35;max-width:600px;width:100%;border-top:3px solid #F08100;overflow:hidden;position:relative;animation:modal-in 0.35s ease;max-height:90vh;overflow-y:auto;" onclick="event.stopPropagation()">
       <button onclick="closeModal()" style="position:absolute;top:1rem;right:1rem;background:rgba(0,0,0,0.5);border:none;color:#F6F6F6;width:36px;height:36px;font-size:1.2rem;cursor:pointer;z-index:1;border-radius:50%;">×</button>
-      <div style="background:#002a35;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;padding:16px;">
+      <div style="background:transparent;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;padding:16px;">
         <img id="modal-img" src="" style="max-width:100%;max-height:100%;object-fit:contain;display:block;">
       </div>
       <div style="padding:2rem;">
@@ -770,17 +746,17 @@ footer { background:#000; border-top:1px solid rgba(240,129,0,0.15); padding:2.5
 @keyframes modal-in { from { opacity:0;transform:translateY(20px); } to { opacity:1;transform:translateY(0); } }
 .filter-btn { background:transparent;border:1px solid rgba(246,246,246,0.2);color:rgba(246,246,246,0.5);font-family:'Montserrat',sans-serif;font-size:0.68rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:0.55rem 1.2rem;cursor:pointer;transition:all 0.25s;border-radius:2px; }
 .filter-btn:hover, .filter-active { background:#F08100;border-color:#F08100;color:#000; }
-.menu-card { background:#002030;overflow:hidden;cursor:pointer;transition:transform 0.3s,box-shadow 0.3s;border-bottom:2px solid transparent;position:relative; }
-.menu-card:hover { transform:translateY(-4px);box-shadow:0 12px 30px rgba(0,0,0,0.4);border-bottom-color:#F08100; }
+.menu-card { background:transparent;overflow:visible;cursor:pointer;transition:transform 0.3s;border:none;position:relative; }
+.menu-card:hover { transform:translateY(-4px); }
 
-/* ✨ NUEVO: wrapper para mostrar fotos completas ✨ */
+/* ✨ Wrapper transparente - fotos flotan libres ✨ */
 .menu-img-wrapper {
-  background: #002a35;
+  background: transparent;
   aspect-ratio: 4 / 5;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 12px;
+  padding: 0;
   overflow: hidden;
 }
 .menu-img {
@@ -794,12 +770,12 @@ footer { background:#000; border-top:1px solid rgba(240,129,0,0.15); padding:2.5
 }
 .menu-card:hover .menu-img { transform:scale(1.06); }
 
-.menu-info { padding:1.2rem 1.2rem 0.8rem; }
+.menu-info { padding:1rem 0.3rem 0.5rem; text-align:center; }
 .menu-cat { font-size:0.58rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;background:#F08100;color:#000;padding:0.2rem 0.6rem;display:inline-block;margin-bottom:0.5rem; }
 .menu-name { font-size:1rem;font-weight:800;text-transform:uppercase;letter-spacing:0.04em;color:#F6F6F6;line-height:1.2; }
-.menu-tags-sm { display:flex;gap:0.3rem;flex-wrap:wrap;margin-top:0.5rem; }
+.menu-tags-sm { display:flex;gap:0.3rem;flex-wrap:wrap;margin-top:0.5rem;justify-content:center; }
 .menu-tags-sm span { font-size:0.58rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#F08100;border:1px solid rgba(240,129,0,0.3);padding:0.15rem 0.4rem; }
-.menu-tap { text-align:center;padding:0.7rem;font-size:0.62rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:rgba(246,246,246,0.25);border-top:1px solid rgba(255,255,255,0.05);transition:all 0.3s; }
+.menu-tap { text-align:center;padding:0.6rem 0;font-size:0.62rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:rgba(246,246,246,0.3);transition:all 0.3s; }
 .menu-card:hover .menu-tap { color:#F08100; }
 .menu-item { transition:opacity 0.3s,transform 0.3s; }
 .menu-item.hidden { display:none; }
