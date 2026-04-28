@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>On The Rocks Mobile Bar | Richmond, VA</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green: #004E5E;
+  --orange: #F08100;
+  --auburn: #A91821;
+  --wine: #671243;
+  --tangelo: #EB5C0B;
+  --white: #F6F6F6;
+  --photo-bg: #002a35;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Montserrat',sans-serif; background:#002a35; color:#F6F6F6; overflow-x:hidden; }
+a { text-decoration:none; }
+
+/* NAV */
+nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:1rem 3rem 1rem 3rem; display:flex; align-items:center; justify-content:space-between; background:rgba(0,20,28,0.85); backdrop-filter:blur(12px); border-bottom:1px solid rgba(240,129,0,0.2); padding-right:9rem; }
+.nav-logo img { height:48px; }
+.nav-links { display:flex; gap:2rem; list-style:none; }
+.nav-links a { color:rgba(246,246,246,0.8); font-size:0.72rem; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; transition:color 0.3s; }
+.nav-links a:hover { color:#F08100; }
+.nav-cta { background:#F08100 !important; color:#000 !important; padding:0.55rem 1.4rem; }
+
+/* LANG TOGGLE */
+#lang-toggle { display:flex; border:2px solid #F08100; overflow:hidden; border-radius:3px; box-shadow:0 0 15px rgba(240,129,0,0.35); }
+.lang-btn { background:transparent; color:#F08100; font-family:'Montserrat',sans-serif; font-size:0.7rem; font-weight:800; letter-spacing:0.1em; padding:0.45rem 0.85rem; border:none; cursor:pointer; transition:all 0.25s; }
+.lang-btn.active { background:#F08100; color:#000; }
+
+/* HERO */
+.hero { min-height:100vh; background:linear-gradient(135deg,#002030 0%,#004E5E 50%,#003040 100%); display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; padding-top:80px; }
+.hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 70% 50%,rgba(240,129,0,0.12),transparent 60%); }
+.hero-content { position:relative; z-index:2; text-align:center; padding:2rem; max-width:860px; }
+.hero-eyebrow { font-size:0.68rem; font-weight:700; letter-spacing:0.35em; text-transform:uppercase; color:#F08100; margin-bottom:1.5rem; }
+.hero-logo { width:260px; margin:0 auto 2rem; filter:drop-shadow(0 0 30px rgba(240,129,0,0.5)); animation:glow 3s ease-in-out infinite; }
+@keyframes glow { 0%,100% { filter:drop-shadow(0 0 25px rgba(240,129,0,0.4)); } 50% { filter:drop-shadow(0 0 55px rgba(240,129,0,0.7)); } }
+.hero-title { font-size:clamp(3rem,8vw,6rem); font-weight:900; line-height:0.9; text-transform:uppercase; letter-spacing:-0.02em; margin-bottom:1.2rem; }
+.hero-title .t1 { color:#F6F6F6; display:block; }
+.hero-title .t2 { color:#F08100; display:block; }
+.hero-sub { font-size:0.9rem; color:rgba(246,246,246,0.6); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:2.5rem; }
+.hero-btns { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; }
+.btn { font-family:'Montserrat',sans-serif; font-size:0.72rem; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; padding:0.9rem 2.2rem; cursor:pointer; border:none; transition:all 0.3s; clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%); }
+.btn-primary { background:#F08100; color:#000; }
+.btn-primary:hover { background:#EB5C0B; transform:translateY(-2px); }
+.btn-outline { background:transparent; color:#F6F6F6; border:1px solid rgba(246,246,246,0.35); }
+.btn-outline:hover { border-color:#F08100; color:#F08100; }
+
+/* SECTIONS */
+.section { padding:6rem 3rem; }
+.section-inner { max-width:1200px; margin:0 auto; }
+.section-label { font-size:0.65rem; font-weight:700; letter-spacing:0.3em; text-transform:uppercase; color:#F08100; margin-bottom:0.8rem; display:flex; align-items:center; gap:0.8rem; }
+.section-label::after { content:''; width:50px; height:1px; background:#F08100; }
+.section-title { font-size:clamp(2.2rem,5vw,4rem); font-weight:900; text-transform:uppercase; line-height:0.95; letter-spacing:-0.02em; margin-bottom:2.5rem; }
+.section-title span { color:#F08100; }
+
+/* ABOUT */
+.about-grid { display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center; }
+.about-text p { color:rgba(246,246,246,0.65); font-size:0.95rem; line-height:1.8; margin-bottom:1.2rem; }
+.stats { display:grid; grid-template-columns:1fr 1fr; gap:1.2rem; margin-top:2rem; }
+.stat { border-left:3px solid #F08100; padding-left:1rem; }
+.stat-num { font-size:2.2rem; font-weight:900; color:#F08100; line-height:1; }
+.stat-lbl { font-size:0.65rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:rgba(246,246,246,0.45); margin-top:0.2rem; }
+.gio-frame { position:relative; overflow:hidden; border-top:3px solid #F08100; }
+.gio-frame img { width:100%; display:block; }
+.gio-overlay { position:absolute; bottom:0; left:0; right:0; background:linear-gradient(to top,rgba(0,20,28,0.95),transparent); padding:1.5rem; }
+
+/* SERVICES */
+.services-bg { background:#004E5E; position:relative; overflow:hidden; }
+.services-bg::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 80% 20%,rgba(240,129,0,0.08),transparent 60%); }
+.services-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.5px; background:rgba(240,129,0,0.15); }
+.svc-card { background:#003a4a; overflow:hidden; transition:background 0.3s; }
+.svc-card:hover { background:#004558; }
+.svc-card img { width:100%; height:260px; object-fit:cover; object-position:center 75%; transition:transform 0.5s; }
+.svc-card:hover img { transform:scale(1.04); }
+.svc-body { padding:2rem; }
+.svc-num { font-size:4rem; font-weight:900; color:rgba(240,129,0,0.08); line-height:1; margin-bottom:0.8rem; }
+.svc-title { font-size:1.3rem; font-weight:900; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:0.8rem; }
+.svc-desc { color:rgba(246,246,246,0.55); font-size:0.88rem; line-height:1.7; }
+
+/* MENU */
+.menu-bg { background:transparent; }
+.menu-tabs { display:flex; border-bottom:1px solid rgba(240,129,0,0.2); margin-bottom:2rem; overflow-x:auto; gap:0; }
+.tab { background:none; border:none; color:rgba(246,246,246,0.4); font-family:'Montserrat',sans-serif; font-size:0.7rem; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; padding:0.9rem 1.8rem; cursor:pointer; border-bottom:3px solid transparent; transition:all 0.3s; white-space:nowrap; }
+.tab.active { color:#F08100; border-bottom-color:#F08100; }
+.tab:hover { color:#F6F6F6; }
+.menu-panel { display:none; grid-template-columns:repeat(3,1fr); gap:1.5rem; }
+.menu-panel.active { display:grid; }
+.menu-note { font-size:0.82rem; color:rgba(246,246,246,0.5); margin-bottom:2rem; }
+.menu-note strong { color:#F08100; }
+
+/* ✨ TARJETAS DEL MENÚ - FOTOS FLOTANTES LIBRES ✨ */
+.drink-card {
+  background: transparent;
+  overflow: visible;
+  border: none;
+  transition: transform 0.35s;
+  display: flex;
+  flex-direction: column;
+}
+.drink-card:hover {
+  transform: translateY(-4px);
+}
+.drink-photo-wrapper {
+  background: transparent;
+  aspect-ratio: 4 / 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  overflow: hidden;
+  position: relative;
+  border: none;
+}
+.drink-photo-wrapper img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  transition: transform 0.5s ease;
+}
+.drink-card:hover .drink-photo-wrapper img {
+  transform: scale(1.04);
+}
+.drink-body {
+  padding: 1rem 0.3rem 0.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+.drink-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.drink-name {
+  font-size: 1rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #F6F6F6;
+  line-height: 1.2;
+}
+.drink-desc {
+  color: rgba(246,246,246,0.6);
+  font-size: 0.83rem;
+  line-height: 1.6;
+  margin-bottom: 0.9rem;
+  flex: 1;
+}
+.drink-tags {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.drink-tag {
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #F08100;
+  border: 1px solid rgba(240,129,0,0.35);
+  padding: 0.22rem 0.55rem;
+  border-radius: 2px;
+}
+.drink-badge-seasonal {
+  font-size: 0.55rem;
+  font-weight: 700;
+  background: #671243;
+  color: #F6F6F6;
+  padding: 0.2rem 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+.mocktail-bar { margin-top:2.5rem; background:rgba(240,129,0,0.08); border:1px solid rgba(240,129,0,0.25); border-left:4px solid #F08100; padding:1.2rem 2rem; display:flex; align-items:center; gap:1.2rem; }
+.mocktail-bar h4 { font-size:0.78rem; font-weight:800; letter-spacing:0.15em; text-transform:uppercase; color:#F08100; margin-bottom:0.2rem; }
+.mocktail-bar p { color:rgba(246,246,246,0.6); font-size:0.82rem; }
+.base-info { grid-column:span 3; background:#003040; padding:1rem 1.5rem; border-left:3px solid #F08100; border-radius:4px; }
+.base-info p { color:rgba(246,246,246,0.7); font-size:0.88rem; }
+.base-info p strong { color:#F08100; }
+.also-avail { grid-column:span 3; background:rgba(103,18,67,0.2); border:1px solid rgba(103,18,67,0.4); padding:2rem; border-radius:4px; }
+.also-avail h4 { color:#F08100; font-size:0.9rem; font-weight:800; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:1.2rem; }
+.also-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.8rem; }
+.also-item strong { color:#F6F6F6; font-size:0.82rem; display:block; margin-bottom:0.2rem; }
+.also-item p { color:rgba(246,246,246,0.5); font-size:0.78rem; line-height:1.5; }
+
+/* GALLERY */
+.gallery-bg { background:#001820; }
+.gallery-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:4px; }
+.gallery-grid div { overflow:hidden; height:280px; }
+.gallery-grid img { width:100%; height:100%; object-fit:cover; transition:transform 0.5s; }
+.gallery-grid div:hover img { transform:scale(1.06); }
+.gallery-wide { grid-column:span 2 !important; }
+.gallery-tall { height:400px !important; }
+
+/* PACKAGES */
+.packages-bg { background:#A91821; position:relative; }
+.packages-bg::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg,#8a1018,#A91821,#7a1015); }
+.pkg-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.2rem; position:relative; }
+.pkg-card { background:rgba(0,0,0,0.3); border:1px solid rgba(246,246,246,0.12); padding:2rem; transition:all 0.35s; position:relative; overflow:hidden; }
+.pkg-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:#F08100; transform:scaleX(0); transition:transform 0.35s; }
+.pkg-card:hover { background:rgba(0,0,0,0.5); border-color:#F08100; transform:translateY(-3px); }
+.pkg-card:hover::before { transform:scaleX(1); }
+.pkg-icon { font-size:2rem; margin-bottom:1rem; }
+.pkg-name { font-size:1.1rem; font-weight:900; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:0.4rem; }
+.pkg-sub { font-size:0.65rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#F08100; margin-bottom:1rem; }
+.pkg-desc { color:rgba(246,246,246,0.6); font-size:0.82rem; line-height:1.65; }
+
+/* CONTACT */
+.contact-bg { background:#001820; }
+.contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center; }
+.contact-text p { color:rgba(246,246,246,0.6); margin:1.2rem 0 2rem; font-size:0.95rem; line-height:1.8; }
+.contact-items { display:flex; flex-direction:column; gap:1rem; margin-bottom:2rem; }
+.contact-item { display:flex; align-items:center; gap:0.9rem; color:rgba(246,246,246,0.7); font-size:0.88rem; }
+.contact-icon { width:38px; height:38px; background:#004E5E; border:1px solid rgba(240,129,0,0.3); display:flex; align-items:center; justify-content:center; font-size:1rem; flex-shrink:0; }
+.contact-item a { color:inherit; transition:color 0.3s; }
+.contact-item a:hover { color:#F08100; }
+.contact-form { background:#004E5E; padding:2.5rem; border-top:3px solid #F08100; }
+.form-title { font-size:1.4rem; font-weight:900; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:1.8rem; }
+.form-group { margin-bottom:1rem; }
+.form-group label { display:block; font-size:0.62rem; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; color:rgba(246,246,246,0.5); margin-bottom:0.4rem; }
+.form-group input, .form-group select, .form-group textarea { width:100%; background:rgba(0,0,0,0.3); border:1px solid rgba(246,246,246,0.1); color:#F6F6F6; font-family:'Montserrat',sans-serif; font-size:0.88rem; padding:0.8rem 1rem; outline:none; transition:border-color 0.3s; border-radius:0; }
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color:#F08100; }
+.form-group select option { background:#004E5E; }
+.form-group textarea { height:90px; resize:none; }
+
+/* FOOTER */
+footer { background:#000; border-top:1px solid rgba(240,129,0,0.15); padding:2.5rem 3rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1.5rem; }
+.footer-copy { color:rgba(246,246,246,0.3); font-size:0.72rem; text-align:center; }
+.social-links { display:flex; gap:0.8rem; }
+.social-link { width:38px; height:38px; border:1px solid rgba(246,246,246,0.15); display:flex; align-items:center; justify-content:center; color:rgba(246,246,246,0.5); font-size:1rem; transition:all 0.3s; }
+.social-link:hover { border-color:#F08100; color:#F08100; }
+
+/* WHATSAPP */
+.wa-float { position:fixed; bottom:2rem; right:2rem; z-index:999; width:54px; height:54px; background:#25D366; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.4rem; box-shadow:0 4px 18px rgba(37,211,102,0.4); transition:transform 0.3s; }
+.wa-float:hover { transform:scale(1.1); }
+
+/* LANG HINT */
+@keyframes fade-hint { 0% { opacity:0; transform:translateX(8px); } 15% { opacity:1; transform:translateX(0); } 80% { opacity:1; } 100% { opacity:0; } }
+#lang-hint { animation:fade-hint 4s ease forwards; animation-delay:1.5s; opacity:0; pointer-events:none; }
+
+/* RESPONSIVE */
+@media(max-width:1100px) {
+  .menu-panel { grid-template-columns:repeat(2,1fr); }
+  .base-info, .also-avail { grid-column:span 2; }
+}
+@media(max-width:900px) {
+  nav { padding:1rem 1.5rem; }
+  .nav-links { display:none; }
+  .section { padding:4rem 1.5rem; }
+  .about-grid, .contact-grid { grid-template-columns:1fr; gap:2.5rem; }
+  .services-grid { grid-template-columns:1fr; }
+  .pkg-grid { grid-template-columns:1fr; }
+  .menu-panel { grid-template-columns:1fr; }
+  .base-info, .also-avail { grid-column:span 1; }
+  .gallery-grid { grid-template-columns:repeat(2,1fr); }
+  .gallery-wide { grid-column:span 1 !important; }
+  footer { flex-direction:column; text-align:center; }
+}
+</style>
+</head>
+<body>
+
+<!-- LANG TOGGLE - fixed in nav -->
+<div style="position:fixed;top:1.1rem;right:1.5rem;z-index:9999;">
+  <div id="lang-toggle" style="display:flex;border:2px solid #F08100;overflow:hidden;border-radius:3px;box-shadow:0 0 15px rgba(240,129,0,0.35);">
+    <button class="lang-btn active" id="btn-es" onclick="setLang('es')">ES</button>
+    <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+  </div>
+</div>
+<!-- LANG HINT - appears below nav -->
+<div style="position:fixed;top:4rem;right:1.5rem;z-index:9999;">
+  <div id="lang-hint" style="background:rgba(0,20,28,0.9);border:1px solid rgba(240,129,0,0.4);color:#F6F6F6;font-family:'Montserrat',sans-serif;font-size:0.62rem;font-weight:600;letter-spacing:0.08em;padding:0.38rem 0.75rem;border-radius:2px;white-space:nowrap;">🌐 Switch language</div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo"><img src="img_01.png" alt="On The Rocks"></div>
+  <ul class="nav-links">
+    <li><a href="#about" data-i18n="nav-about">Nosotros</a></li>
+    <li><a href="#services" data-i18n="nav-services">Servicios</a></li>
+    <li><a href="#menu" data-i18n="nav-menu">Menú</a></li>
+    <li><a href="#packages" data-i18n="nav-packages">Paquetes</a></li>
+    <li><a href="#contact" class="nav-cta" data-i18n="nav-cta">Cotizar</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-content">
+    <div class="hero-eyebrow" data-i18n="hero-eyebrow">Richmond, Virginia</div>
+    <img src="img_02.png" alt="On The Rocks" class="hero-logo">
+    <h1 class="hero-title">
+      <span class="t1" data-i18n="hero-line1">Let's drink</span>
+      <span class="t2" data-i18n="hero-line2">about it.</span>
+    </h1>
+    <p class="hero-sub" data-i18n="hero-sub">Barra móvil premium · Cócteles artesanales · Eventos únicos</p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn btn-primary" data-i18n="hero-btn1">Cotiza tu evento</a>
+      <a href="#menu" class="btn btn-outline" data-i18n="hero-btn2">Ver menú</a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section" id="about" style="background:#001e28;">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div>
+        <div class="section-label" data-i18n="about-label">Sobre nosotros</div>
+        <h2 class="section-title"><span data-i18n="about-title1">Somos más que</span><br><span data-i18n="about-title2">una barra.</span></h2>
+        <p data-i18n="about-p1">On The Rocks es un servicio premium de barras móviles que ofrece experiencias únicas en eventos a través de cócteles personalizados y mixología profesional.</p>
+        <p data-i18n="about-p2">Creemos que cada evento merece una barra que no solo sirva bebidas, sino que cree momentos memorables. Somos exclusivos, profesionales, auténticos, creativos y cercanos.</p>
+        <div class="stats">
+          <div class="stat"><div class="stat-num">100+</div><div class="stat-lbl" data-i18n="stat-label1">Eventos realizados</div></div>
+          <div class="stat"><div class="stat-num">15+</div><div class="stat-lbl" data-i18n="stat-label2">Cócteles en menú</div></div>
+          <div class="stat"><div class="stat-num">5★</div><div class="stat-lbl" data-i18n="stat-label3">Calificación promedio</div></div>
+          <div class="stat"><div class="stat-num">RVA</div><div class="stat-lbl" data-i18n="stat-label4">Richmond, Virginia</div></div>
+        </div>
+      </div>
+      <div class="gio-frame">
+        <img src="img_03.jpg" alt="Giovanni Martinez" style="width:100%;display:block;">
+        <div class="gio-overlay">
+          <div style="font-size:0.62rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#F08100;margin-bottom:0.3rem;">Head Bartender</div>
+          <div style="font-size:1.3rem;font-weight:900;text-transform:uppercase;letter-spacing:0.05em;">Giovanni Martinez</div>
+          <div style="font-size:0.78rem;color:rgba(246,246,246,0.6);margin-top:0.2rem;">10+ years · Richmond, VA</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section services-bg" id="services">
+  <div class="section-inner" style="position:relative;">
+    <div class="section-label" data-i18n="services-label">Lo que ofrecemos</div>
+    <h2 class="section-title"><span data-i18n="services-title1">Nuestros</span><br><span data-i18n="services-title2">servicios.</span></h2>
+    <div class="services-grid">
+      <div class="svc-card">
+        <img src="img_04.png" style="width:100%;height:260px;object-fit:cover;object-position:center 75%;display:block;">
+        <div class="svc-body">
+          <div class="svc-num">01</div>
+          <div class="svc-title" data-i18n="service1-title">Barra Móvil Completa</div>
+          <p class="svc-desc" data-i18n="service1-desc">Setup completo con luces LED, cristalería premium, decoración y un bartender profesional. Solo dinos el lugar y nosotros llevamos el resto.</p>
+        </div>
+      </div>
+      <div class="svc-card">
+        <img src="img_05.jpg" style="width:100%;height:260px;object-fit:cover;object-position:center top;display:block;">
+        <div class="svc-body">
+          <div class="svc-num">02</div>
+          <div class="svc-title" data-i18n="service2-title">Bartender Profesional</div>
+          <p class="svc-desc" data-i18n="service2-desc">Solo necesitas el bartender? Te mandamos a nuestro equipo profesional con sus herramientas para complementar tu evento con estilo.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU - NUEVO ESTILO E-BOOK -->
+<section class="section menu-bg" id="menu">
+  <div class="section-inner">
+    <div class="section-label" data-i18n="menu-label">Carta de bebidas</div>
+    <h2 class="section-title"><span data-i18n="menu-title1">Nuestro</span><br><span data-i18n="menu-title2">menú.</span></h2>
+    <p class="menu-note" data-i18n="menu-note">Todas las bebidas disponibles como <strong>Cocktail</strong> o <strong>Mocktail</strong> 🍹</p>
+
+    <div class="menu-tabs">
+      <button class="tab active" onclick="showTab('margaritas',this)">Margaritas</button>
+      <button class="tab" onclick="showTab('frozen',this)">Frozen</button>
+      <button class="tab" onclick="showTab('palomas',this)">Palomas</button>
+      <button class="tab" onclick="showTab('mojitos',this)">Mojitos</button>
+      <button class="tab" onclick="showTab('more',this)">También disponible</button>
+    </div>
+
+    <!-- MARGARITAS -->
+    <div id="margaritas" class="menu-panel active">
+      <div class="drink-card">
+        <div class="drink-photo-wrapper"><img src="img_06.jpg" alt="Raspberry Margarita"></div>
+        <div class="drink-body">
+          <div class="drink-header"><div class="drink-name">Raspberry Margarita</div></div>
+          <p class="drink-desc">Lime, raspberry purée, tequila, Cointreau.</p>
+          <div class="drink-tags"><span class="drink-tag">Cocktail</span><span class="drink-tag">Mocktail</span></div>
+        </div>
+      </div>
+      <div class="drink-card">
+        <div class="drink-photo-wrapper"><img src="img_07.jpg" alt="Passion Mango Margarita"></div>
+        <div class="drink-body">
+          <div class="drink-header"><div class="drink-name">Passion Mango Margarita</div></div>
+          <p class="drink-desc">Tajin, chamoy, tequila, lime, peach schnapps, mango, passion fruit.</p>
+          <div class="drink-tags"><span class="drink-tag">Cocktail</span><span class="drink-tag">Mocktail</span></div>
+        </div>
+      </div>
+      <div class="drink-card">
+        <div class="drink-photo-wrapper"><img src="img_08.jpg" alt="Strawberry Mango Frozen Margarita"></div>
+        <div class="drink-body">
+          <div class="drink-header"><div class="drink-name">Strawberry Mango Frozen</div></div>
+          <p class="drink-desc">Tequila, strawberry, mango, lime.</p>
+          <div class="drink-tags"><span class="drink-tag">Cocktail</span><span class="drink-tag">Mocktail</span></div>
+        </div>
+      </div>
+      <div class="drink-card">
+        <div class="drink-photo-wrapper"><img src="img_09.jpg" alt="Aperol Coconut Margarita"></div>
+        <div class="drink-body">
+          <div class="drink-header"><div class="drink-name">Aperol Coconut Margarita</div></div>
+          <p class="drink-desc">Tequila, aperol, lime, cream of coconut.</p>
+          <div class="drink-tags"><span class="drink-tag">Cocktail</span><span class="drink-tag">Mocktail</span></div>
+        </div>
+      </div>
+      <div class="drink-card">
+        <div class="drink-photo-wrapper"><img src="img_10.jpg" alt="Watermelon Margarita"></div>
+        <div class="drink-body">
+          <div class="drink-header"><div class="drink-name">Watermelon Margarita</div><span class="drink-badge-seasonal">Seasonal</span></div>
+          <p class="drink-desc">Seasonal — disponible por temporada.</p>
+          <div class="drink-tags"><span class="drink-tag">Seasonal</span><span class="drink-tag">Cocktail</span><span class="drink-tag">Mocktail</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FROZEN -->
+    <div id="frozen" class="menu-panel">
+      <div class="drink-card">
+        <div class="drink-photo-wrapper"><img src="img_11.jpg" alt="Frozen Mangoneada"></div>
+        <div class="drink-body">
+          <div class="drink-header"><div class="drink-name">Frozen Mangoneada</div></div>
+          <p class="drink-desc">Mango, chamoy, tequila, tajín.</p>
+          <div class="drink-tags"><span class="drink-tag">Cocktail</span><span class="drink-tag">Mocktail</span></div>
+        </div>
+      </div>
+      <div class="drink-card">
+        <div class="drink-photo-wrapper"><img src="img_12.jpg" alt="Frozen Mango Colada"></div>
+        <div class="drink-body">
+          <div class="drink-header"><div class="drink-name">Frozen Mango Colada</div></div>
+          <p class="drink-desc">Mango, cream of coconut, white rum, coconut rum.</p>
+          <div class="drink-tags"><span class="drink-tag">Cocktail</span><span class="drink-tag">Mocktail</span></div>
+        </div>
+      </div>
+      <div class="drink-card">
+        <div class="drink-photo-wrapper"><img src="img_13.jpg" alt="Piña Colada"></div>
+        <div class="drink-body">
+          <div class="drink-header"><div class="drink-name">Piña Colada</div></div>
+          <p class="drink-desc">Pineapple, cream of coconut, coconut rum, spiced rum.</p>
+          <div class="drink-tags"><span class="drink-tag">Cocktail</span><span class="drink-tag">Mocktail</span></div>
+        </div>
+      </div>
+      <div class="drink-card">
+        <div class="drink-photo-wrapper"><img src="img_14.jpg" alt="Tequila Jungle Bird"></div>
+        <div class="drink-body">
+          <div class="drink-header"><div class="drink-name">Tequila Jungle Bird</div></div>
+          <p class="drink-desc">Coconut 1800, pineapple, blueberries, lime.</p>
+          <div class="drink-tags"><span class="drink-tag">Cocktail</span><span class="drink-tag">Mocktail</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PALOMAS -->
+    <div id="palomas" class="menu-panel">
+      <div class="drink-card">
+        <div class="drink-photo-wrapper"><img src="img_15.jpg" alt="Classic Paloma"></div>
+        <div class="drink-body">
+          <div class="drink-header"><div class="drink-name">Classic Paloma</div></div>
+          <p class="drink-desc">Lime, tequila, salt, orange, grapefruit, squirt, chamoy & tajín.</p>
+          <div class="drink-tags"><span class="drink-tag">Cocktail</span><span class="drink-tag">Mocktail</span></div>
+        </div>
+      </div>
+      <div class="drink-card">
+        <div class="drink-photo-wrapper"><img src="img_16.jpg" alt="Pineapple Paloma"></div>
+        <div class="drink-body">
+          <div class="drink-header"><div class="drink-name">Pineapple Paloma</div></div>
+          <p class="drink-desc">Tequila, lime, tajin, pineapple, grapefruit soda, chamoy rim.</p>
+          <div class="drink-tags"><span class="drink-tag">Cocktail</span><span class="drink-tag">Mocktail</span></div>
+        </div>
+      </div>
+      <div class="drink-card">
+        <div class="drink-photo-wrapper"><img src="img_17.jpg" alt="Strawberry Paloma"></div>
+        <div class="drink-body">
+          <div class="drink-header"><div class="drink-name">Strawberry Paloma</div></div>
+          <p class="drink-desc">Tequila, lime, tajin, strawberry, grapefruit soda, chamoy rim.</p>
+          <div class="drink-tags"><span class="drink-tag">Cocktail</span><span class="drink-tag">Mocktail</span></div>
+        </div>
+      </div>
+      <div class="drink-card">
+        <div class="drink-photo-wrapper"><img src="img_18.jpg" alt="Mango Paloma"></div>
+        <div class="drink-body">
+          <div class="drink-header"><div class="drink-name">Mango Paloma</div></div>
+          <p class="drink-desc">Tequila, lime, tajin, mango, grapefruit soda, chamoy rim.</p>
+          <div class="drink-tags"><span class="drink-tag">Cocktail</span><span class="drink-tag">Mocktail</span></div>
+        </div>
+      </div>
+      <div class="drink-card">
+        <div class="drink-photo-wrapper"><img src="img_19.jpg" alt="Watermelon Paloma"></div>
+        <div class="drink-body">
+          <div class="drink-header"><div class="drink-name">Watermelon Paloma</div><span class="drink-badge-seasonal">Seasonal</span></div>
+          <p class="drink-desc">Lime, watermelon, agave nectar, tequila, squirt.</p>
+          <div class="drink-tags"><span class="drink-tag">Seasonal</span><span class="drink-tag">Cocktail</span><span class="drink-tag">Mocktail</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MOJITOS -->
+    <div id="mojitos" class="menu-panel">
+      <div class="base-info"><p><strong>Base:</strong> Lime, mint, white rum, el sabor de tu elección y soda water. &nbsp;|&nbsp; Flavors: Lime · Peach · Strawberry · Coconut · Watermelon · Blueberry</p></div>
+      <div class="drink-card">
+        <div class="drink-photo-wrapper"><img src="img_20.jpg" alt="Strawberry Mojito"></div>
+        <div class="drink-body">
+          <div class="drink-header"><div class="drink-name">Strawberry Mojito</div></div>
+          <p class="drink-desc">Lime, mint, white rum, strawberry, soda water.</p>
+          <div class="drink-tags"><span class="drink-tag">Cocktail</span><span class="drink-tag">Mocktail</span></div>
+        </div>
+      </div>
+      <div class="drink-card">
+        <div class="drink-photo-wrapper"><img src="img_21.jpg" alt="Watermelon Mojito"></div>
+        <div class="drink-body">
+          <div class="drink-header"><div class="drink-name">Watermelon Mojito</div><span class="drink-badge-seasonal">Seasonal</span></div>
+          <p class="drink-desc">Lime, mint, white rum, watermelon, soda water.</p>
+          <div class="drink-tags"><span class="drink-tag">Cocktail</span><span class="drink-tag">Mocktail</span><span class="drink-tag">Seasonal</span></div>
+        </div>
+      </div>
+      <div class="drink-card">
+        <div class="drink-photo-wrapper"><img src="img_22.jpg" alt="Coconut Mojito"></div>
+        <div class="drink-body">
+          <div class="drink-header"><div class="drink-name">Coconut Mojito</div></div>
+          <p class="drink-desc">Lime, mint, white rum, coconut, soda water.</p>
+          <div class="drink-tags"><span class="drink-tag">Cocktail</span><span class="drink-tag">Mocktail</span></div>
+        </div>
+      </div>
+      <div class="drink-card">
+        <div class="drink-photo-wrapper"><img src="img_23.jpg" alt="Blueberry Mojito"></div>
+        <div class="drink-body">
+          <div class="drink-header"><div class="drink-name">Blueberry Mojito</div></div>
+          <p class="drink-desc">Lime, mint, white rum, blueberry, soda water.</p>
+          <div class="drink-tags"><span class="drink-tag">Cocktail</span><span class="drink-tag">Mocktail</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MORE -->
+    <div id="more" class="menu-panel">
+      <div class="drink-card">
+        <div class="drink-photo-wrapper"><img src="img_24.jpg" alt="Ranch Water"></div>
+        <div class="drink-body">
+          <div class="drink-header"><div class="drink-name">Ranch Water</div></div>
+          <p class="drink-desc">Tequila, lime, sea salt, Topo Chico.</p>
+          <div class="drink-tags"><span class="drink-tag">Cocktail</span><span class="drink-tag">Mocktail</span></div>
+        </div>
+      </div>
+      <div class="drink-card">
+        <div class="drink-photo-wrapper"><img src="img_25.jpg" alt="Cantarito"></div>
+        <div class="drink-body">
+          <div class="drink-header"><div class="drink-name">Cantarito</div></div>
+          <p class="drink-desc">Lime, tequila, salt, orange, grapefruit, squirt, chamoy & tajín.</p>
+          <div class="drink-tags"><span class="drink-tag">Cocktail</span><span class="drink-tag">Mocktail</span></div>
+        </div>
+      </div>
+      <div class="drink-card">
+        <div class="drink-photo-wrapper"><img src="img_26.jpg" alt="Malibú Sunrise"></div>
+        <div class="drink-body">
+          <div class="drink-header"><div class="drink-name">Malibú Sunrise</div></div>
+          <p class="drink-desc">Lime, pineapple, orange, white rum, coconut rum, peach schnapps, grenadine.</p>
+          <div class="drink-tags"><span class="drink-tag">Cocktail</span><span class="drink-tag">Mocktail</span></div>
+        </div>
+      </div>
+      <div class="drink-card">
+        <div class="drink-photo-wrapper"><img src="img_27.jpg" alt="Blue Tiki"></div>
+        <div class="drink-body">
+          <div class="drink-header"><div class="drink-name">Blue Tiki</div></div>
+          <p class="drink-desc">Coconut 1800, Cointreau, lime, pineapple, agave.</p>
+          <div class="drink-tags"><span class="drink-tag">Cocktail</span><span class="drink-tag">Mocktail</span></div>
+        </div>
+      </div>
+      <div class="also-avail">
+        <h4>Also Available</h4>
+        <div class="also-grid">
+          <div class="also-item"><strong>Moscow / Mezcal Mule</strong><p>Vodka / mezcal, salt, lime, ginger beer.</p></div>
+          <div class="also-item"><strong>Passion Colada</strong><p>Cream of coconut, passion fruit, white rum, coconut rum.</p></div>
+          <div class="also-item"><strong>Pineapple Mezcalita</strong><p>Pineapple, orange, lime, agave nectar, mezcal, cointreau.</p></div>
+          <div class="also-item"><strong>Rum Punch</strong><p>White rum, dark rum, coconut, orange, pineapple, grenadine.</p></div>
+          <div class="also-item"><strong>Miami Vice</strong><p>Strawberry, coconut, pineapple, tequila and rum.</p></div>
+          <div class="also-item"><strong>Other Options</strong><p>Michelada mix · Spicy mango shots · Watermelon candy shot · Spicy Strawberry shots.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mocktail-bar">
+      <div style="font-size:2rem;">🥤</div>
+      <div>
+        <h4 data-i18n="mocktail-title">¡Todas disponibles como Mocktail!</h4>
+        <p data-i18n="mocktail-desc">Cada bebida puede prepararse sin alcohol. Inclusión total — todos disfrutan en tu evento.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY REMOVIDA -->
+
+
+<!-- INTERACTIVE MENU -->
+<section style="background:#000d14;padding:6rem 0;" id="interactive-menu">
+  <div style="max-width:1200px;margin:0 auto;padding:0 3rem;">
+    <div style="text-align:center;margin-bottom:3rem;">
+      <div style="font-size:0.65rem;font-weight:700;letter-spacing:0.3em;text-transform:uppercase;color:#F08100;margin-bottom:0.8rem;">Explora todo</div>
+      <h2 style="font-size:clamp(2.2rem,5vw,4rem);font-weight:900;text-transform:uppercase;line-height:0.95;letter-spacing:-0.02em;">El menú<br><span style="color:#F08100;">completo.</span></h2>
+      <p style="color:rgba(246,246,246,0.5);margin-top:1rem;font-size:0.9rem;">Haz click en cualquier bebida para ver los detalles</p>
+    </div>
+
+    <!-- Category Filter -->
+    <div style="display:flex;justify-content:center;gap:0.5rem;flex-wrap:wrap;margin-bottom:3rem;" id="cat-filters">
+      <button onclick="filterMenu('all',this)" class="filter-btn filter-active">Todo</button>
+      <button onclick="filterMenu('margarita',this)" class="filter-btn">Margaritas</button>
+      <button onclick="filterMenu('frozen',this)" class="filter-btn">Frozen</button>
+      <button onclick="filterMenu('paloma',this)" class="filter-btn">Palomas</button>
+      <button onclick="filterMenu('mojito',this)" class="filter-btn">Mojitos</button>
+      <button onclick="filterMenu('other',this)" class="filter-btn">Más</button>
+    </div>
+
+    <!-- Menu Grid -->
+    <div id="menu-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.5rem;">
+
+      <!-- MARGARITAS -->
+      <div class="menu-item" data-cat="margarita" onclick="openDrink('Raspberry Margarita','Lime, raspberry purée, tequila, Cointreau.','Una margarita elegante con frambuesa fresca. El color rojo vibrante y el sabor cítrico hacen de esta una de las favoritas.',['Cocktail','Mocktail'],'images/img_40.jpg')">
+        <div class="menu-card"><div class="menu-img-wrapper"><img src="img_41.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Margarita</span><div class="menu-name">Raspberry Margarita</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
+      </div>
+
+      <div class="menu-item" data-cat="margarita" onclick="openDrink('Passion Mango Margarita','Tajin, chamoy, tequila, lime, peach schnapps, mango, passion fruit.','Tropical y audaz. El chamoy y tajin en el borde crean una experiencia única que nadie olvida.',['Cocktail','Mocktail'],'images/img_42.jpg')">
+        <div class="menu-card"><div class="menu-img-wrapper"><img src="img_43.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Margarita</span><div class="menu-name">Passion Mango Margarita</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
+      </div>
+
+      <div class="menu-item" data-cat="margarita frozen" onclick="openDrink('Strawberry Mango Frozen Margarita','Tequila, strawberry, mango, lime.','El color en capas rojo y amarillo es visualmente espectacular. Frozen, frutal y refrescante.',['Cocktail','Mocktail'],'images/img_44.jpg')">
+        <div class="menu-card"><div class="menu-img-wrapper"><img src="img_45.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Margarita · Frozen</span><div class="menu-name">Strawberry Mango Frozen</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
+      </div>
+
+      <div class="menu-item" data-cat="margarita" onclick="openDrink('Aperol Coconut Margarita','Tequila, aperol, lime, cream of coconut.','La combinación de aperol y coco crea un balance perfecto entre lo amargo y lo tropical.',['Cocktail','Mocktail'],'images/img_46.jpg')">
+        <div class="menu-card"><div class="menu-img-wrapper"><img src="img_47.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Margarita</span><div class="menu-name">Aperol Coconut Margarita</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
+      </div>
+
+      <div class="menu-item" data-cat="margarita" onclick="openDrink('Watermelon Margarita 🍉','Tequila, watermelon, lime, agave.','Refrescante y colorida. Solo disponible por temporada — cuando está, vuela.',['Seasonal','Cocktail','Mocktail'],'images/img_48.jpg')">
+        <div class="menu-card"><div class="menu-img-wrapper"><img src="img_49.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat" style="background:#671243;color:#F6F6F6;">Seasonal</span><div class="menu-name">Watermelon Margarita</div><div class="menu-tags-sm"><span>Seasonal</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
+      </div>
+
+      <!-- FROZEN -->
+      <div class="menu-item" data-cat="frozen" onclick="openDrink('Frozen Mangoneada','Mango, chamoy, tequila, tajín.','La mangoneada es un ícono. Mango frozen con chamoy y tajin — dulce, picante y completamente adictiva.',['Cocktail','Mocktail'],'images/img_50.jpg')">
+        <div class="menu-card"><div class="menu-img-wrapper"><img src="img_51.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Frozen</span><div class="menu-name">Frozen Mangoneada</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
+      </div>
+
+      <div class="menu-item" data-cat="frozen" onclick="openDrink('Frozen Mango Colada','Mango, cream of coconut, white rum, coconut rum.','Tropical y cremosa. El mango y el coco frozen es la combinación perfecta para cualquier evento.',['Cocktail','Mocktail'],'images/img_52.jpg')">
+        <div class="menu-card"><div class="menu-img-wrapper"><img src="img_53.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Frozen</span><div class="menu-name">Frozen Mango Colada</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
+      </div>
+
+      <div class="menu-item" data-cat="frozen" onclick="openDrink('Piña Colada','Pineapple, cream of coconut, coconut rum, spiced rum.','El clásico de siempre. Cremosa, tropical y perfecta para cualquier ocasión.',['Cocktail','Mocktail'],'images/img_54.jpg')">
+        <div class="menu-card"><div class="menu-img-wrapper"><img src="img_55.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Frozen</span><div class="menu-name">Piña Colada</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
+      </div>
+
+      <div class="menu-item" data-cat="frozen" onclick="openDrink('Tequila Jungle Bird','Coconut 1800, pineapple, blueberries, lime.','Azul vibrante y tropical. El Coconut 1800 con piña y blueberries crea un sabor único e Instagram-worthy.',['Cocktail','Mocktail'],'images/img_56.jpg')">
+        <div class="menu-card"><div class="menu-img-wrapper"><img src="img_57.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Frozen</span><div class="menu-name">Tequila Jungle Bird</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
+      </div>
+
+      <!-- PALOMAS -->
+      <div class="menu-item" data-cat="paloma" onclick="openDrink('Classic Paloma','Lime, tequila, salt, orange, grapefruit, squirt, chamoy & tajín.','La paloma clásica elevada. Con chamoy y tajin en el borde — auténtica y refrescante.',['Cocktail','Mocktail'],'images/img_58.jpg')">
+        <div class="menu-card"><div class="menu-img-wrapper"><img src="img_59.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Paloma</span><div class="menu-name">Classic Paloma</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
+      </div>
+
+      <div class="menu-item" data-cat="paloma" onclick="openDrink('Pineapple Paloma','Tequila, lime, tajin, pineapple, grapefruit soda, chamoy rim.','El toque tropical de la piña hace de esta paloma algo completamente diferente y adictivo.',['Cocktail','Mocktail'],'images/img_60.jpg')">
+        <div class="menu-card"><div class="menu-img-wrapper"><img src="img_61.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Paloma</span><div class="menu-name">Pineapple Paloma</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
+      </div>
+
+      <div class="menu-item" data-cat="paloma" onclick="openDrink('Strawberry Paloma','Tequila, lime, tajin, strawberry, grapefruit soda, chamoy rim.','Color rojo vibrante y sabor frutal. Una de las más pedidas en eventos.',['Cocktail','Mocktail'],'images/img_62.jpg')">
+        <div class="menu-card"><div class="menu-img-wrapper"><img src="img_63.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Paloma</span><div class="menu-name">Strawberry Paloma</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
+      </div>
+
+      <div class="menu-item" data-cat="paloma" onclick="openDrink('Mango Paloma','Tequila, lime, tajin, mango, grapefruit soda, chamoy rim.','Mango fresco con la base de paloma. Dulce, cítrico y con ese kick de tajin.',['Cocktail','Mocktail'],'images/img_64.jpg')">
+        <div class="menu-card"><div class="menu-img-wrapper"><img src="img_65.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Paloma</span><div class="menu-name">Mango Paloma</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
+      </div>
+
+      <div class="menu-item" data-cat="paloma" onclick="openDrink('Watermelon Paloma 🍉','Lime, watermelon, agave nectar, tequila, squirt.','Seasonal y especial. Sandía fresca con la base de paloma — verano en un vaso.',['Seasonal','Cocktail','Mocktail'],'images/img_66.jpg')">
+        <div class="menu-card"><div class="menu-img-wrapper"><img src="img_67.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat" style="background:#671243;color:#F6F6F6;">Seasonal</span><div class="menu-name">Watermelon Paloma</div><div class="menu-tags-sm"><span>Seasonal</span></div></div><div class="menu-tap">Tap to explore →</div></div>
+      </div>
+
+      <!-- MOJITOS -->
+      <div class="menu-item" data-cat="mojito" onclick="openDrink('Strawberry Mojito','Lime, mint, white rum, strawberry, soda water.','Fresa fresca, menta y ron blanco. Refrescante y elegante — perfecto para cualquier evento.',['Cocktail','Mocktail'],'images/img_68.jpg')">
+        <div class="menu-card"><div class="menu-img-wrapper"><img src="img_69.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Mojito</span><div class="menu-name">Strawberry Mojito</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
+      </div>
+
+      <div class="menu-item" data-cat="mojito" onclick="openDrink('Watermelon Mojito 🍉','Lime, mint, white rum, watermelon, soda water.','Sandía fresca con menta — verano en cada sorbo. Seasonal.',['Seasonal','Cocktail','Mocktail'],'images/img_70.jpg')">
+        <div class="menu-card"><div class="menu-img-wrapper"><img src="img_71.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat" style="background:#671243;color:#F6F6F6;">Seasonal</span><div class="menu-name">Watermelon Mojito</div><div class="menu-tags-sm"><span>Seasonal</span></div></div><div class="menu-tap">Tap to explore →</div></div>
+      </div>
+
+      <div class="menu-item" data-cat="mojito" onclick="openDrink('Coconut Mojito','Lime, mint, white rum, coconut, soda water.','Coco tropical con la frescura de la menta. Suave y delicioso.',['Cocktail','Mocktail'],'images/img_72.jpg')">
+        <div class="menu-card"><div class="menu-img-wrapper"><img src="img_73.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Mojito</span><div class="menu-name">Coconut Mojito</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
+      </div>
+
+      <div class="menu-item" data-cat="mojito" onclick="openDrink('Blueberry Mojito','Lime, mint, white rum, blueberry, soda water.','Color morado intenso y sabor frutal único. Uno de los más fotogénicos del menú.',['Cocktail','Mocktail'],'images/img_74.jpg')">
+        <div class="menu-card"><div class="menu-img-wrapper"><img src="img_75.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Mojito</span><div class="menu-name">Blueberry Mojito</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
+      </div>
+
+      <!-- OTHER -->
+      <div class="menu-item" data-cat="other" onclick="openDrink('Ranch Water','Tequila, lime, sea salt, Topo Chico.','Simple, refrescante y perfecto. El tequila con Topo Chico es la combinación ideal para el verano.',['Cocktail','Mocktail'],'images/img_76.jpg')">
+        <div class="menu-card"><div class="menu-img-wrapper"><img src="img_77.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Signature</span><div class="menu-name">Ranch Water</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
+      </div>
+
+      <div class="menu-item" data-cat="other" onclick="openDrink('Cantarito','Lime, tequila, salt, orange, grapefruit, squirt, chamoy & tajín.','Servido en vasito personalizado de On The Rocks. Un ícono que todo el mundo quiere en su evento.',['Cocktail','Mocktail'],'images/img_78.jpg')">
+        <div class="menu-card"><div class="menu-img-wrapper"><img src="img_79.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Signature</span><div class="menu-name">Cantarito</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
+      </div>
+
+      <div class="menu-item" data-cat="other" onclick="openDrink('Malibú Sunrise','Lime, pineapple, orange, white rum, coconut rum, peach schnapps, grenadine.','El degradado de colores hace de este un cóctel visualmente impresionante. Dulce y tropical.',['Cocktail','Mocktail'],'images/img_80.jpg')">
+        <div class="menu-card"><div class="menu-img-wrapper"><img src="img_81.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Signature</span><div class="menu-name">Malibú Sunrise</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
+      </div>
+
+      <div class="menu-item" data-cat="other" onclick="openDrink('Blue Tiki','Coconut 1800, Cointreau, lime, pineapple, agave.','Azul tropical y refrescante. El Coconut 1800 con piña crea una experiencia única.',['Cocktail','Mocktail'],'images/img_82.jpg')">
+        <div class="menu-card"><div class="menu-img-wrapper"><img src="img_83.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Signature</span><div class="menu-name">Blue Tiki</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap">Tap to explore →</div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MODAL -->
+  <div id="drink-modal" style="display:none;position:fixed;inset:0;z-index:9998;background:rgba(0,10,18,0.92);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:2rem;" onclick="closeModal(event)">
+    <div style="background:#002a35;max-width:600px;width:100%;border-top:3px solid #F08100;overflow:hidden;position:relative;animation:modal-in 0.35s ease;max-height:90vh;overflow-y:auto;" onclick="event.stopPropagation()">
+      <button onclick="closeModal()" style="position:absolute;top:1rem;right:1rem;background:rgba(0,0,0,0.5);border:none;color:#F6F6F6;width:36px;height:36px;font-size:1.2rem;cursor:pointer;z-index:1;border-radius:50%;">×</button>
+      <div style="background:transparent;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;padding:16px;">
+        <img id="modal-img" src="" style="max-width:100%;max-height:100%;object-fit:contain;display:block;">
+      </div>
+      <div style="padding:2rem;">
+        <div id="modal-cat" style="font-size:0.6rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#F08100;margin-bottom:0.5rem;"></div>
+        <div id="modal-name" style="font-size:1.6rem;font-weight:900;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.8rem;"></div>
+        <div id="modal-ingredients" style="color:rgba(246,246,246,0.6);font-size:0.88rem;margin-bottom:1rem;padding:0.8rem 1rem;background:rgba(0,0,0,0.25);border-left:3px solid #F08100;"></div>
+        <div id="modal-desc" style="color:rgba(246,246,246,0.75);font-size:0.9rem;line-height:1.7;margin-bottom:1.5rem;"></div>
+        <div id="modal-tags" style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:1.5rem;"></div>
+        <a href="https://wa.me/18045026837" style="display:block;text-align:center;background:#F08100;color:#000;font-family:'Montserrat',sans-serif;font-weight:800;font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.9rem;text-decoration:none;">💬 Pedir este coctel en mi evento</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+@keyframes modal-in { from { opacity:0;transform:translateY(20px); } to { opacity:1;transform:translateY(0); } }
+.filter-btn { background:transparent;border:1px solid rgba(246,246,246,0.2);color:rgba(246,246,246,0.5);font-family:'Montserrat',sans-serif;font-size:0.68rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:0.55rem 1.2rem;cursor:pointer;transition:all 0.25s;border-radius:2px; }
+.filter-btn:hover, .filter-active { background:#F08100;border-color:#F08100;color:#000; }
+.menu-card { background:transparent;overflow:visible;cursor:pointer;transition:transform 0.3s;border:none;position:relative; }
+.menu-card:hover { transform:translateY(-4px); }
+
+/* ✨ Wrapper transparente - fotos flotan libres ✨ */
+.menu-img-wrapper {
+  background: transparent;
+  aspect-ratio: 4 / 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  overflow: hidden;
+}
+.menu-img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  transition: transform 0.5s;
+}
+.menu-card:hover .menu-img { transform:scale(1.06); }
+
+.menu-info { padding:1rem 0.3rem 0.5rem; text-align:center; }
+.menu-cat { font-size:0.58rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;background:#F08100;color:#000;padding:0.2rem 0.6rem;display:inline-block;margin-bottom:0.5rem; }
+.menu-name { font-size:1rem;font-weight:800;text-transform:uppercase;letter-spacing:0.04em;color:#F6F6F6;line-height:1.2; }
+.menu-tags-sm { display:flex;gap:0.3rem;flex-wrap:wrap;margin-top:0.5rem;justify-content:center; }
+.menu-tags-sm span { font-size:0.58rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#F08100;border:1px solid rgba(240,129,0,0.3);padding:0.15rem 0.4rem; }
+.menu-tap { text-align:center;padding:0.6rem 0;font-size:0.62rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:rgba(246,246,246,0.3);transition:all 0.3s; }
+.menu-card:hover .menu-tap { color:#F08100; }
+.menu-item { transition:opacity 0.3s,transform 0.3s; }
+.menu-item.hidden { display:none; }
+</style>
+
+<script>
+function filterMenu(cat, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('filter-active'));
+  btn.classList.add('filter-active');
+  document.querySelectorAll('.menu-item').forEach(item => {
+    if (cat === 'all' || item.dataset.cat.includes(cat)) {
+      item.classList.remove('hidden');
+    } else {
+      item.classList.add('hidden');
+    }
+  });
+}
+
+function openDrink(name, ingredients, desc, tags, imgSrc) {
+  document.getElementById('modal-name').textContent = name;
+  document.getElementById('modal-ingredients').textContent = '🍹 ' + ingredients;
+  document.getElementById('modal-desc').textContent = desc;
+  document.getElementById('modal-img').src = imgSrc;
+  const tagsEl = document.getElementById('modal-tags');
+  tagsEl.innerHTML = tags.map(t => `<span style="font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#F08100;border:1px solid rgba(240,129,0,0.35);padding:0.25rem 0.6rem;">${t}</span>`).join('');
+  document.getElementById('drink-modal').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(e) {
+  if (!e || e.target === document.getElementById('drink-modal')) {
+    document.getElementById('drink-modal').style.display = 'none';
+    document.body.style.overflow = '';
+  }
+}
+
+document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal(); });
+</script>
+
+<!-- PACKAGES -->
+<section class="section packages-bg" id="packages">
+  <div class="section-inner" style="position:relative;">
+    <div class="section-label" data-i18n="packages-label">Experiencias personalizadas</div>
+    <h2 class="section-title"><span data-i18n="packages-title1">Paquetes para</span><br><span data-i18n="packages-title2">cada evento.</span></h2>
+    <div class="pkg-grid">
+      <div class="pkg-card"><div class="pkg-icon">👑</div><div class="pkg-name">Sweet 15 Glam</div><div class="pkg-sub">Quinceañeras</div><p class="pkg-desc">5 horas de servicio, bar setup clásico, menú digital personalizado, 2 cócteles especiales, 1 mocktail, bartenders, garnishes, flores comestibles, espejo personalizado.</p></div>
+      <div class="pkg-card"><div class="pkg-icon">🥂</div><div class="pkg-name">Mimosa Moments</div><div class="pkg-sub">Brunch & Baby Showers</div><p class="pkg-desc">4 horas de servicio, 3 sabores de mimosa, garnishes premium con flores comestibles, crystal toppers personalizados, glassware, ice, mixers y syrups artesanales.</p></div>
+      <div class="pkg-card"><div class="pkg-icon">💍</div><div class="pkg-name">Forever Toast</div><div class="pkg-sub">Bodas & Aniversarios</div><p class="pkg-desc">4 horas de servicio, bar setup, 2 cócteles signature + extra, menú digital personalizado, crystal toppers, garnishes, flores, stir sticks personalizados, carrito de shots.</p></div>
+      <div class="pkg-card"><div class="pkg-icon">🏢</div><div class="pkg-name">Corporate Cheers</div><div class="pkg-sub">Eventos Corporativos</div><p class="pkg-desc">4 horas de servicio, bar setup con menú digital y crystal toppers, craft mixers, flores decorativas, fruta fresca, cups, ice, bar tools y bartender profesional.</p></div>
+      <div class="pkg-card"><div class="pkg-icon">🍼</div><div class="pkg-name">Oh Baby</div><div class="pkg-sub">Baby Showers</div><p class="pkg-desc">4 horas + setup, 2 cócteles temáticos (boy/girl), 3 mixers a elección, bartender, mixers, ice, fruta fresca, flores comestibles, cups y cocktail toppers personalizados.</p></div>
+      <div class="pkg-card"><div class="pkg-icon">🎯</div><div class="pkg-name">Bartender Only</div><div class="pkg-sub">Solo el profesional</div><p class="pkg-desc">Consulta pre-evento, 4 horas de servicio, 1 hora setup/breakdown, 2 signature drinks, bartender con herramientas, liquor liability & insurance, garnishes y menú impreso.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section contact-bg" id="contact">
+  <div class="section-inner">
+    <div class="contact-grid">
+      <div class="contact-text">
+        <div class="section-label" data-i18n="contact-label">Hablemos</div>
+        <h2 class="section-title"><span data-i18n="contact-title1">Cotiza tu</span><br><span data-i18n="contact-title2">evento hoy.</span></h2>
+        <p data-i18n="contact-p">Cuéntanos sobre tu evento y te preparamos una propuesta personalizada. Atendemos Richmond, Virginia y alrededores.</p>
+        <div class="contact-items">
+          <div class="contact-item"><div class="contact-icon">📱</div><a href="https://wa.me/18045026837">(804) 502-6837</a></div>
+          <div class="contact-item"><div class="contact-icon">📧</div><a href="mailto:ontherocksrva@gmail.com">ontherocksrva@gmail.com</a></div>
+          <div class="contact-item"><div class="contact-icon">📍</div><span>Richmond, Virginia</span></div>
+          <div class="contact-item"><div class="contact-icon">📸</div><a href="https://instagram.com/ontherocksrva" target="_blank">@ontherocksrva</a></div>
+        </div>
+        <a href="https://wa.me/18045026837" class="btn btn-primary" data-i18n="contact-btn">WhatsApp directo</a>
+      </div>
+      <div class="contact-form">
+        <div class="form-title" data-i18n="form-title">Solicita tu cotización</div>
+        <div class="form-group"><label data-i18n="form-name-label">Tu nombre</label><input type="text" placeholder="Giovanni Martinez"></div>
+        <div class="form-group"><label data-i18n="form-type-label">Tipo de evento</label>
+          <select><option>Quinceañera</option><option>Boda</option><option>Baby Shower</option><option>Corporativo</option><option>Brunch</option><option>Otro</option></select>
+        </div>
+        <div class="form-group"><label data-i18n="form-guests-label">Número de personas</label><input type="text" placeholder="ej. 50-100 personas"></div>
+        <div class="form-group"><label data-i18n="form-date-label">Fecha del evento</label><input type="date"></div>
+        <div class="form-group"><label data-i18n="form-msg-label">Mensaje</label><textarea placeholder="Cuéntanos más sobre tu evento..."></textarea></div>
+        <a href="https://wa.me/18045026837" class="btn btn-primary" style="display:block;text-align:center;margin-top:0.5rem;" data-i18n="form-btn">Enviar por WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <img src="img_84.png" alt="On The Rocks" style="height:46px;opacity:0.85;">
+  <div class="footer-copy">© 2026 On The Rocks Mobile Bar · Richmond, VA</div>
+  <div class="social-links">
+    <a href="https://instagram.com/ontherocksrva" class="social-link" target="_blank">📸</a>
+    <a href="https://wa.me/18045026837" class="social-link">💬</a>
+    <a href="mailto:ontherocksrva@gmail.com" class="social-link">✉️</a>
+  </div>
+</footer>
+
+<a href="https://wa.me/18045026837" class="wa-float" target="_blank">💬</a>
+
+<script>
+let currentLang = 'es';
+
+const t = {
+  es: {
+    'nav-about':'Nosotros','nav-services':'Servicios','nav-menu':'Menú','nav-packages':'Paquetes','nav-cta':'Cotizar',
+    'hero-eyebrow':'Richmond, Virginia','hero-line1':"Let's drink",'hero-line2':'about it.',
+    'hero-sub':'Barra móvil premium · Cócteles artesanales · Eventos únicos',
+    'hero-btn1':'Cotiza tu evento','hero-btn2':'Ver menú',
+    'about-label':'Sobre nosotros','about-title1':'Somos más que','about-title2':'una barra.',
+    'about-p1':'On The Rocks es un servicio premium de barras móviles que ofrece experiencias únicas en eventos a través de cócteles personalizados y mixología profesional.',
+    'about-p2':'Creemos que cada evento merece una barra que no solo sirva bebidas, sino que cree momentos memorables. Somos exclusivos, profesionales, auténticos, creativos y cercanos.',
+    'stat-label1':'Eventos realizados','stat-label2':'Cócteles en menú','stat-label3':'Calificación promedio','stat-label4':'Richmond, Virginia',
+    'services-label':'Lo que ofrecemos','services-title1':'Nuestros','services-title2':'servicios.',
+    'service1-title':'Barra Móvil Completa','service1-desc':'Setup completo con luces LED, cristalería premium, decoración y un bartender profesional. Solo dinos el lugar y nosotros llevamos el resto.',
+    'service2-title':'Bartender Profesional','service2-desc':'Solo necesitas el bartender? Te mandamos a nuestro equipo profesional con sus herramientas para complementar tu evento con estilo.',
+    'menu-label':'Carta de bebidas','menu-title1':'Nuestro','menu-title2':'menú.',
+    'menu-note':'Todas las bebidas disponibles como Cocktail o Mocktail 🍹',
+    'mocktail-title':'¡Todas disponibles como Mocktail!','mocktail-desc':'Cada bebida puede prepararse sin alcohol. Inclusión total — todos disfrutan en tu evento.',
+    'gallery-label':'Nuestras creaciones','gallery-title1':'Así se ve','gallery-title2':'On The Rocks.',
+    'gallery-cta-text':'¿Quieres esto en tu evento?','gallery-cta-btn':'Cotiza ahora',
+    'packages-label':'Experiencias personalizadas','packages-title1':'Paquetes para','packages-title2':'cada evento.',
+    'contact-label':'Hablemos','contact-title1':'Cotiza tu','contact-title2':'evento hoy.',
+    'contact-p':'Cuéntanos sobre tu evento y te preparamos una propuesta personalizada. Atendemos Richmond, Virginia y alrededores.',
+    'contact-btn':'WhatsApp directo','form-title':'Solicita tu cotización',
+    'form-name-label':'Tu nombre','form-type-label':'Tipo de evento','form-guests-label':'Número de personas',
+    'form-date-label':'Fecha del evento','form-msg-label':'Mensaje','form-btn':'Enviar por WhatsApp',
+  },
+  en: {
+    'nav-about':'About','nav-services':'Services','nav-menu':'Menu','nav-packages':'Packages','nav-cta':'Book Now',
+    'hero-eyebrow':'Richmond, Virginia','hero-line1':"Let's drink",'hero-line2':'about it.',
+    'hero-sub':'Premium mobile bar · Craft cocktails · Unforgettable events',
+    'hero-btn1':'Get a Quote','hero-btn2':'View Menu',
+    'about-label':'About Us','about-title1':'We are more than','about-title2':'a bar.',
+    'about-p1':'On The Rocks is a premium mobile bar service offering unique event experiences through personalized cocktails and professional mixology. We bring the party to you.',
+    'about-p2':"We believe every event deserves a bar that doesn't just serve drinks, but creates unforgettable moments. We are exclusive, professional, authentic, creative and personal.",
+    'stat-label1':'Events completed','stat-label2':'Cocktails on menu','stat-label3':'Average rating','stat-label4':'Richmond, Virginia',
+    'services-label':'What we offer','services-title1':'Our','services-title2':'services.',
+    'service1-title':'Full Mobile Bar','service1-desc':'Complete setup with LED lights, premium glassware, decor and a professional bartender. Just tell us the location and we bring everything else.',
+    'service2-title':'Professional Bartender','service2-desc':'Just need a bartender? We send our professional team with all their tools to complement your event with style.',
+    'menu-label':'Drink menu','menu-title1':'Our','menu-title2':'menu.',
+    'menu-note':'All drinks available as Cocktail or Mocktail 🍹',
+    'mocktail-title':'All available as Mocktail!','mocktail-desc':'Every drink can be made non-alcoholic. Full inclusion — everyone enjoys your event.',
+    'gallery-label':'Our creations','gallery-title1':'This is','gallery-title2':'On The Rocks.',
+    'gallery-cta-text':'Want this at your event?','gallery-cta-btn':'Get a Quote',
+    'packages-label':'Personalized experiences','packages-title1':'Packages for','packages-title2':'every event.',
+    'contact-label':"Let's talk",'contact-title1':'Get your','contact-title2':'quote today.',
+    'contact-p':'Tell us about your event and we will prepare a personalized proposal. Serving Richmond, Virginia and surrounding areas.',
+    'contact-btn':'WhatsApp us','form-title':'Request a Quote',
+    'form-name-label':'Your name','form-type-label':'Event type','form-guests-label':'Number of guests',
+    'form-date-label':'Event date','form-msg-label':'Message','form-btn':'Send via WhatsApp',
+  }
+};
+
+function setLang(lang) {
+  currentLang = lang;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (t[lang][key]) el.textContent = t[lang][key];
+  });
+  var btnEs = document.getElementById('btn-es');
+  var btnEn = document.getElementById('btn-en');
+  if (btnEs) btnEs.className = 'lang-btn' + (lang==='es'?' active':'');
+  if (btnEn) btnEn.className = 'lang-btn' + (lang==='en'?' active':'');
+  document.documentElement.lang = lang;
+  localStorage.setItem('otr-lang', lang);
+}
+
+// Auto-detect saved language on load
+document.addEventListener('DOMContentLoaded', function() {
+  var saved = localStorage.getItem('otr-lang');
+  if (saved && saved !== 'es') setLang(saved);
+});
+
+function showTab(id, btn) {
+  ['margaritas','frozen','palomas','mojitos','more'].forEach(p => {
+    const el = document.getElementById(p);
+    if (el) { el.classList.remove('active'); el.style.display = 'none'; }
+  });
+  const active = document.getElementById(id);
+  if (active) { active.classList.add('active'); active.style.display = 'grid'; }
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+}
+</script>
+</body>
+</html>
