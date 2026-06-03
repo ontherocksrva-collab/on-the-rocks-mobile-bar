@@ -692,10 +692,17 @@ async function generateAndSend() {
       client_email: email,
       event_type: eventType,
       event_date: dateFormatted,
-      contract_html: contractHtml
+      contract_html: `Hola ${name},\n\nGracias por preferirnos! 🍹\n\nAquí está tu contrato para el siguiente evento:\n\n📋 Evento: ${eventType}\n📅 Fecha: ${dateFormatted}\n📍 Lugar: ${venue || address}\n👥 Invitados: ${guests}\n💰 Total: $${total.toLocaleString()}.00\n💳 Depósito requerido: $${deposit.toLocaleString()}.00\n💵 Restante: $${remain.toLocaleString()}.00\n\nPara ver el contrato completo y firmarlo, haz click aquí:\n${contractLink}\n\n⚠️ Recuerda que debes proveer el licor y obtener la licencia VABC del estado de Virginia.\n\nCualquier pregunta estamos a tu disposición.\n\nOn The Rocks Mobile Bar\nontherocksrva@gmail.com | (804) 502-6837\n@ontherocksrva`
     });
     showStatus(`✅ Contrato enviado exitosamente a ${email}`, 'success');
     btn.textContent = '✅ CONTRATO ENVIADO';
+    // Show link to also share via WhatsApp
+    setTimeout(() => {
+      const linkDiv = document.createElement('div');
+      linkDiv.style.cssText = 'margin-top:1rem;padding:1rem;background:#f0f9f7;border-radius:8px;border:1.5px solid #004E5E;';
+      linkDiv.innerHTML = `<p style="font-size:0.8rem;color:#004E5E;font-weight:600;margin-bottom:0.5rem;">🔗 También puedes mandar el link por WhatsApp:</p><p style="font-size:0.72rem;word-break:break-all;color:#555;margin-bottom:0.5rem;">${contractLink}</p><button onclick="navigator.clipboard.writeText('${contractLink}').then(()=>this.textContent='✓ Copiado!')" style="padding:0.4rem 0.9rem;background:#004E5E;color:white;border:none;border-radius:6px;cursor:pointer;font-size:0.78rem;font-family:Montserrat,sans-serif;">Copiar link</button>`;
+      document.getElementById('statusMsg').insertAdjacentElement('afterend', linkDiv);
+    }, 300);
   } catch (err) {
     console.error(err);
     showStatus('❌ Error al enviar. Verifica la configuración de EmailJS.', 'error');
