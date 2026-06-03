@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>On The Rocks — Sistema de Contratos</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<style>
+  :root {
+    --green: #004E5E;
+    --green-dark: #003540;
+    --orange: #F08100;
+    --wine: #671243;
+    --red: #A91821;
+    --cream: #F9F6F0;
+    --text: #1a1a1a;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Montserrat', sans-serif; background: #f4f1eb; color: var(--text); min-height: 100vh; }
+
+  /* ===== LOGIN ===== */
+  #loginScreen {
+    min-height: 100vh;
+    background: var(--green);
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 2rem;
+  }
+  #loginScreen .logo { font-family: 'Bebas Neue', sans-serif; font-size: 3rem; color: var(--orange); letter-spacing: 4px; line-height: 1; }
+  #loginScreen .sub { color: rgba(255,255,255,0.6); font-size: 0.75rem; letter-spacing: 3px; text-transform: uppercase; margin-top: 0.25rem; }
+  .login-card {
+    background: white; border-radius: 16px; padding: 2rem 2.5rem;
+    width: 340px; box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+  .login-card h2 { font-size: 1.1rem; font-weight: 600; margin-bottom: 1.5rem; color: var(--green); }
+  .login-card input {
+    width: 100%; padding: 0.75rem 1rem; border: 1.5px solid var(--border);
+    border-radius: 8px; font-family: 'Montserrat', sans-serif; font-size: 0.9rem;
+    margin-bottom: 1rem; outline: none; transition: border-color 0.2s;
+  }
+  .login-card input:focus { border-color: var(--green); }
+  .btn-primary {
+    width: 100%; padding: 0.8rem; background: var(--green); color: white;
+    border: none; border-radius: 8px; font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem; font-weight: 600; cursor: pointer; letter-spacing: 1px;
+    transition: background 0.2s;
+  }
+  .btn-primary:hover { background: var(--green-dark); }
+  .login-error { color: var(--red); font-size: 0.8rem; margin-top: 0.5rem; display: none; }
+
+  /* ===== ADMIN PANEL ===== */
+  #adminPanel { display: none; min-height: 100vh; }
+  .admin-header {
+    background: var(--green); padding: 1rem 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .admin-header .brand { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; color: var(--orange); letter-spacing: 3px; }
+  .admin-header .brand span { color: rgba(255,255,255,0.5); font-size: 0.7rem; font-family: 'Montserrat', sans-serif; font-weight: 400; letter-spacing: 2px; display: block; margin-top: -6px; }
+  .btn-logout { background: rgba(255,255,255,0.15); color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; }
+
+  .admin-body { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem; }
+  .admin-body h1 { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: var(--green); letter-spacing: 2px; margin-bottom: 0.25rem; }
+  .admin-body .subtitle { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; }
+
+  .form-card {
+    background: white; border-radius: 16px; padding: 2rem;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.06); margin-bottom: 1.5rem;
+  }
+  .form-card h3 {
+    font-size: 0.7rem; font-weight: 600; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--orange); margin-bottom: 1.5rem; padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+  .form-group.full { grid-column: 1 / -1; }
+  .form-group label { font-size: 0.75rem; font-weight: 600; color: var(--muted); letter-spacing: 0.5px; text-transform: uppercase; }
+  .form-group input, .form-group select, .form-group textarea {
+    padding: 0.7rem 0.9rem; border: 1.5px solid var(--border);
+    border-radius: 8px; font-family: 'Montserrat', sans-serif; font-size: 0.875rem;
+    outline: none; transition: border-color 0.2s; background: white; color: var(--text);
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--green); }
+  .form-group textarea { resize: vertical; min-height: 80px; }
+
+  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin-bottom: 1rem; }
+  .service-toggle {
+    border: 1.5px solid var(--border); border-radius: 10px; padding: 0.75rem;
+    cursor: pointer; transition: all 0.2s; text-align: center; user-select: none;
+  }
+  .service-toggle:hover { border-color: var(--green); }
+  .service-toggle.active { border-color: var(--green); background: #f0f9f7; }
+  .service-toggle .s-name { font-size: 0.8rem; font-weight: 600; color: var(--text); }
+  .service-toggle .s-price { font-size: 0.75rem; color: var(--orange); font-weight: 600; margin-top: 2px; }
+
+  .total-bar {
+    background: var(--green); color: white; border-radius: 12px;
+    padding: 1.25rem 1.5rem; display: flex; justify-content: space-between; align-items: center;
+    margin-top: 1rem;
+  }
+  .total-bar .t-label { font-size: 0.8rem; opacity: 0.7; letter-spacing: 1px; text-transform: uppercase; }
+  .total-bar .t-amount { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 2px; color: var(--orange); }
+  .total-details { font-size: 0.8rem; opacity: 0.8; margin-top: 0.25rem; }
+
+  .send-btn {
+    width: 100%; padding: 1rem; background: var(--orange); color: white;
+    border: none; border-radius: 10px; font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem; letter-spacing: 3px; cursor: pointer; transition: background 0.2s;
+    margin-top: 1rem;
+  }
+  .send-btn:hover { background: #d97000; }
+  .send-btn:disabled { background: var(--muted); cursor: not-allowed; }
+
+  .status-msg {
+    text-align: center; padding: 1rem; border-radius: 8px; margin-top: 1rem;
+    font-size: 0.875rem; font-weight: 500; display: none;
+  }
+  .status-msg.success { background: #d1fae5; color: #065f46; }
+  .status-msg.error { background: #fee2e2; color: #991b1b; }
+
+  /* ===== CONTRACT VIEW (cliente) ===== */
+  #contractView {
+    display: none; min-height: 100vh;
+    background: var(--green);
+  }
+  .contract-hero {
+    background: var(--green); color: white;
+    padding: 3rem 2rem 2rem; text-align: center;
+  }
+  .contract-hero .otr-logo {
+    font-family: 'Bebas Neue', sans-serif; font-size: 3rem; color: var(--orange); letter-spacing: 4px;
+  }
+  .contract-hero .otr-sub { font-size: 0.65rem; letter-spacing: 4px; opacity: 0.6; text-transform: uppercase; margin-bottom: 2rem; }
+  .contract-hero h2 { font-size: 1.5rem; font-weight: 300; opacity: 0.9; margin-bottom: 0.5rem; }
+  .contract-hero .event-date-display { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; color: var(--orange); letter-spacing: 2px; }
+
+  .contract-meta {
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+    padding: 2rem; color: rgba(255,255,255,0.7); font-size: 0.75rem; letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .contract-meta div { line-height: 1.8; }
+  .contract-meta strong { color: white; display: block; font-size: 0.85rem; font-weight: 500; }
+
+  .contract-body-wrap {
+    background: white; margin: 0 1.5rem; border-radius: 16px 16px 0 0;
+    padding: 2.5rem; min-height: 60vh;
+  }
+
+  .contract-section { margin-bottom: 2rem; }
+  .contract-section h3 {
+    font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--orange); font-weight: 600; margin-bottom: 1rem;
+    padding-bottom: 0.5rem; border-bottom: 1px solid var(--border);
+  }
+  .detail-row {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    padding: 0.6rem 0; border-bottom: 1px solid #f3f4f6; font-size: 0.875rem;
+  }
+  .detail-row .d-label { color: var(--muted); font-weight: 500; }
+  .detail-row .d-val { font-weight: 600; text-align: right; max-width: 60%; }
+
+  .services-list { display: flex; flex-direction: column; gap: 0.5rem; }
+  .service-item {
+    display: flex; align-items: center; gap: 0.75rem;
+    padding: 0.6rem 0.75rem; background: #f9fafb; border-radius: 8px;
+    font-size: 0.85rem;
+  }
+  .service-item .s-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--orange); flex-shrink: 0; }
+
+  .total-section {
+    background: var(--green); color: white; border-radius: 12px;
+    padding: 1.5rem; margin-top: 1.5rem;
+  }
+  .total-section .t-row { display: flex; justify-content: space-between; padding: 0.4rem 0; font-size: 0.875rem; opacity: 0.8; }
+  .total-section .t-row.main { font-size: 1.1rem; opacity: 1; font-weight: 600; border-top: 1px solid rgba(255,255,255,0.2); margin-top: 0.5rem; padding-top: 0.75rem; }
+  .total-section .t-row.deposit { color: var(--orange); font-weight: 600; }
+
+  .tnc-section {
+    background: var(--green); color: white;
+    margin: 0 1.5rem; padding: 2.5rem;
+  }
+  .tnc-section h2 {
+    font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; letter-spacing: 3px;
+    color: white; margin-bottom: 2rem;
+  }
+  .tnc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .tnc-item h4 { font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; color: var(--orange); margin-bottom: 0.5rem; }
+  .tnc-item p { font-size: 0.8rem; line-height: 1.7; opacity: 0.8; }
+
+  .signature-section {
+    background: white; margin: 0 1.5rem; border-radius: 0 0 16px 16px;
+    padding: 2.5rem; border-top: 2px solid var(--border);
+  }
+  .signature-section h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; color: var(--green); letter-spacing: 2px; margin-bottom: 1.5rem; }
+  .sig-info { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+  .sig-field { display: flex; flex-direction: column; gap: 0.4rem; }
+  .sig-field label { font-size: 0.7rem; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  .sig-field input {
+    padding: 0.7rem; border: 1.5px solid var(--border); border-radius: 8px;
+    font-family: 'Montserrat', sans-serif; font-size: 0.875rem; outline: none;
+    transition: border-color 0.2s;
+  }
+  .sig-field input:focus { border-color: var(--green); }
+  .sig-pad-wrap { margin-bottom: 1rem; }
+  .sig-pad-wrap label { font-size: 0.7rem; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); font-weight: 600; display: block; margin-bottom: 0.5rem; }
+  #sigCanvas {
+    width: 100%; height: 160px; border: 1.5px solid var(--border);
+    border-radius: 10px; cursor: crosshair; touch-action: none; background: #fafafa;
+    display: block;
+  }
+  .sig-actions { display: flex; gap: 0.75rem; margin-top: 0.75rem; }
+  .btn-clear { background: none; border: 1.5px solid var(--border); border-radius: 6px; padding: 0.5rem 1rem; cursor: pointer; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; color: var(--muted); }
+  .btn-sign {
+    flex: 1; padding: 1rem; background: var(--green); color: white; border: none;
+    border-radius: 10px; font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem;
+    letter-spacing: 3px; cursor: pointer; transition: background 0.2s;
+  }
+  .btn-sign:hover { background: var(--green-dark); }
+
+  .accepted-banner {
+    background: #d1fae5; border-radius: 12px; padding: 1.25rem 1.5rem;
+    display: flex; align-items: center; gap: 1rem; margin-top: 1rem;
+  }
+  .accepted-banner .check { width: 36px; height: 36px; background: #10b981; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; flex-shrink: 0; }
+  .accepted-banner .acc-text h4 { color: #065f46; font-weight: 600; font-size: 0.9rem; }
+  .accepted-banner .acc-text p { color: #047857; font-size: 0.8rem; margin-top: 2px; }
+
+  .contract-footer {
+    background: var(--green); color: rgba(255,255,255,0.5);
+    text-align: center; padding: 2rem; font-size: 0.75rem; letter-spacing: 1px;
+  }
+  .contract-footer strong { color: white; display: block; margin-bottom: 0.25rem; }
+
+  @media (max-width: 600px) {
+    .form-grid { grid-template-columns: 1fr; }
+    .services-grid { grid-template-columns: 1fr 1fr; }
+    .tnc-grid { grid-template-columns: 1fr; }
+    .sig-info { grid-template-columns: 1fr; }
+    .contract-body-wrap, .tnc-section, .signature-section { margin: 0 0.75rem; padding: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== LOGIN ===== -->
+<div id="loginScreen">
+  <div>
+    <div class="logo">On The Rocks</div>
+    <div class="sub">Mobile Bar · Contratos</div>
+  </div>
+  <div class="login-card">
+    <h2>Acceso Admin</h2>
+    <input type="password" id="pinInput" placeholder="Contraseña" onkeydown="if(event.key==='Enter')checkLogin()" />
+    <button class="btn-primary" onclick="checkLogin()">Entrar</button>
+    <div class="login-error" id="loginError">Contraseña incorrecta</div>
+  </div>
+</div>
+
+<!-- ===== ADMIN PANEL ===== -->
+<div id="adminPanel">
+  <div class="admin-header">
+    <div class="brand">On The Rocks <span>Sistema de Contratos</span></div>
+    <button class="btn-logout" onclick="logout()">Cerrar sesión</button>
+  </div>
+  <div class="admin-body">
+    <h1>Nuevo Contrato</h1>
+    <p class="subtitle">Completa los datos del evento y el contrato se enviará automáticamente al cliente.</p>
+
+    <!-- Cliente -->
+    <div class="form-card">
+      <h3>📋 Datos del Cliente</h3>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Nombre completo</label>
+          <input type="text" id="clientName" placeholder="Ej: María García" oninput="updateTotals()" />
+        </div>
+        <div class="form-group">
+          <label>Email del cliente</label>
+          <input type="email" id="clientEmail" placeholder="cliente@email.com" />
+        </div>
+        <div class="form-group">
+          <label>Teléfono</label>
+          <input type="text" id="clientPhone" placeholder="(804) 555-0000" />
+        </div>
+        <div class="form-group">
+          <label>Dirección del evento</label>
+          <input type="text" id="eventAddress" placeholder="5901 Fox Creek Crossing, Richmond VA" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Evento -->
+    <div class="form-card">
+      <h3>🎉 Detalles del Evento</h3>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Tipo de evento</label>
+          <select id="eventType" onchange="updateTotals()">
+            <option value="">Seleccionar...</option>
+            <option>Boda</option>
+            <option>Quinceañera</option>
+            <option>Baby Shower</option>
+            <option>Fiesta de Graduación</option>
+            <option>Evento Corporativo</option>
+            <option>Cumpleaños</option>
+            <option>Otro</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Fecha del evento</label>
+          <input type="date" id="eventDate" oninput="updateTotals()" />
+        </div>
+        <div class="form-group">
+          <label>Hora de inicio</label>
+          <input type="time" id="eventTime" />
+        </div>
+        <div class="form-group">
+          <label>Duración (horas)</label>
+          <select id="eventHours" onchange="updateTotals()">
+            <option value="3">3 horas</option>
+            <option value="4">4 horas</option>
+            <option value="5" selected>5 horas</option>
+            <option value="6">6 horas</option>
+            <option value="7">7 horas</option>
+            <option value="8">8 horas</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Número de invitados</label>
+          <input type="number" id="guestCount" placeholder="50" min="1" oninput="updateTotals()" />
+        </div>
+        <div class="form-group">
+          <label>Invitados de 21+ años</label>
+          <input type="number" id="guestAdult" placeholder="35" min="0" oninput="updateTotals()" />
+        </div>
+        <div class="form-group">
+          <label>Lugar / Venue</label>
+          <input type="text" id="eventVenue" placeholder="Fox Creek Club House" />
+        </div>
+        <div class="form-group">
+          <label>Distancia desde Richmond (mi)</label>
+          <select id="travelMiles" onchange="updateTotals()">
+            <option value="0">0–20 mi (gratis)</option>
+            <option value="75">21–35 mi (+$75)</option>
+            <option value="100">36–50 mi (+$100)</option>
+            <option value="150">51–75 mi (+$150)</option>
+            <option value="200">76+ mi (+$200)</option>
+          </select>
+        </div>
+        <div class="form-group full">
+          <label>3 Cócteles de preferencia del cliente</label>
+          <input type="text" id="cocktails" placeholder="Ej: Margarita, Paloma, Mojito" />
+        </div>
+        <div class="form-group full">
+          <label>Mixers elegidos por el cliente</label>
+          <input type="text" id="mixers" placeholder="Ej: Jugo de naranja, agua tónica, cranberry" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Servicios -->
+    <div class="form-card">
+      <h3>🍹 Servicios Adicionales</h3>
+      <div class="services-grid">
+        <div class="service-toggle" id="svc-frozen" onclick="toggleService('frozen', 200)">
+          <div class="s-name">🧊 Máquina Frozen</div>
+          <div class="s-price">+$200</div>
+        </div>
+        <div class="service-toggle" id="svc-shotcart" onclick="toggleService('shotcart', 150)">
+          <div class="s-name">🥃 Shot Cart</div>
+          <div class="s-price">+$150</div>
+        </div>
+        <div class="service-toggle" id="svc-menu" onclick="toggleService('menu', 0)">
+          <div class="s-name">🎨 Menú + Toppers</div>
+          <div class="s-price">Incluido</div>
+        </div>
+        <div class="service-toggle" id="svc-dj" onclick="toggleService('dj', 300)">
+          <div class="s-name">🎧 Servicio DJ/AV</div>
+          <div class="s-price">+$300</div>
+        </div>
+        <div class="service-toggle" id="svc-extra1" onclick="toggleService('extra1', 100)">
+          <div class="s-name">⏱ +1 Hora Extra</div>
+          <div class="s-price">+$100</div>
+        </div>
+        <div class="service-toggle" id="svc-extra2" onclick="toggleService('extra2', 200)">
+          <div class="s-name">⏱ +2 Horas Extra</div>
+          <div class="s-price">+$200</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Notas adicionales (opcional)</label>
+        <textarea id="extraNotes" placeholder="Cualquier detalle especial del evento..."></textarea>
+      </div>
+
+      <!-- Totales -->
+      <div class="total-bar">
+        <div>
+          <div class="t-label">Total del Evento</div>
+          <div class="total-details" id="totalDetails">Bartending + Setup</div>
+        </div>
+        <div class="t-amount" id="totalAmount">$0</div>
+      </div>
+      <div style="display:flex; gap:1rem; margin-top:0.75rem; font-size:0.8rem; color:var(--muted);">
+        <span>Depósito (50%): <strong id="depositAmt" style="color:var(--green)">$0</strong></span>
+        <span>·</span>
+        <span>Restante: <strong id="remainAmt" style="color:var(--green)">$0</strong></span>
+      </div>
+    </div>
+
+    <button class="send-btn" onclick="generateAndSend()" id="sendBtn">GENERAR Y ENVIAR CONTRATO</button>
+    <div class="status-msg" id="statusMsg"></div>
+  </div>
+</div>
+
+<!-- ===== CONTRACT VIEW (cliente) ===== -->
+<div id="contractView">
+  <div class="contract-hero">
+    <div class="otr-logo">On The Rocks</div>
+    <div class="otr-sub">Mobile Bar</div>
+    <h2>Gracias por preferirnos!</h2>
+    <div class="event-date-display" id="cv-date"></div>
+  </div>
+  <div class="contract-meta">
+    <div>
+      <span>On The Rocks</span>
+      <strong>ontherocksrva@gmail.com</strong>
+      <strong>(804) 502-6837</strong>
+      <strong>Richmond, VA</strong>
+    </div>
+    <div style="text-align:right;">
+      <span>Cliente</span>
+      <strong id="cv-client"></strong>
+      <strong id="cv-phone"></strong>
+      <strong id="cv-address"></strong>
+    </div>
+  </div>
+
+  <div class="contract-body-wrap">
+    <div class="contract-section">
+      <h3>Detalles del Evento</h3>
+      <div class="detail-row"><span class="d-label">Tipo de evento</span><span class="d-val" id="cv-type"></span></div>
+      <div class="detail-row"><span class="d-label">Fecha</span><span class="d-val" id="cv-fecha"></span></div>
+      <div class="detail-row"><span class="d-label">Hora de inicio</span><span class="d-val" id="cv-time"></span></div>
+      <div class="detail-row"><span class="d-label">Duración del servicio</span><span class="d-val" id="cv-hours"></span></div>
+      <div class="detail-row"><span class="d-label">Lugar</span><span class="d-val" id="cv-venue"></span></div>
+      <div class="detail-row"><span class="d-label">Dirección</span><span class="d-val" id="cv-addr2"></span></div>
+      <div class="detail-row"><span class="d-label">Invitados</span><span class="d-val" id="cv-guests"></span></div>
+    </div>
+
+    <div class="contract-section">
+      <h3>Servicios Incluidos</h3>
+      <div class="services-list" id="cv-services"></div>
+    </div>
+
+    <div class="total-section">
+      <div class="t-row"><span>Bartending + mixers</span><span id="cv-bartending"></span></div>
+      <div class="t-row"><span>Setup de barra</span><span>$300.00</span></div>
+      <div class="t-row" id="cv-travel-row" style="display:none"><span>Tarifa de viaje</span><span id="cv-travel"></span></div>
+      <div class="t-row" id="cv-extras-row" style="display:none"><span>Servicios adicionales</span><span id="cv-extras"></span></div>
+      <div class="t-row main"><span>TOTAL</span><span id="cv-total"></span></div>
+      <div class="t-row deposit"><span>Depósito requerido (50%)</span><span id="cv-deposit"></span></div>
+      <div class="t-row"><span>Restante antes del evento</span><span id="cv-remain"></span></div>
+    </div>
+
+    <p style="margin-top:1rem; font-size:0.8rem; color:var(--muted); line-height:1.6;">
+      <strong>Nota:</strong> El cliente es encargado de proveer el licor y el VABC license requerida por el estado de Virginia. On The Rocks provee el servicio de bartending, setup, suministros e implementos.
+    </p>
+  </div>
+
+  <!-- T&C -->
+  <div class="tnc-section">
+    <h2>Términos y Condiciones</h2>
+    <div class="tnc-grid">
+      <div class="tnc-item">
+        <h4>1. Edad Legal para Consumir Alcohol</h4>
+        <p>Es ilegal que cualquier persona menor de 21 años consuma bebidas alcohólicas en cualquier evento. On The Rocks Mobile Bar cumple estrictamente con todas las leyes estatales de Virginia aplicables al servicio de alcohol.</p>
+      </div>
+      <div class="tnc-item">
+        <h4>2. Comprobante de Edad</h4>
+        <p>Recomendamos que todos los invitados porten una identificación con foto válida. La ley del estado de Virginia exige que todos los clientes presenten un comprobante de edad al solicitar una bebida alcohólica. On The Rocks se reserva el derecho de negar el servicio a cualquier invitado que no pueda o no quiera proporcionar una identificación válida.</p>
+      </div>
+      <div class="tnc-item">
+        <h4>3. Derecho a Negar el Servicio</h4>
+        <p>On The Rocks se reserva el derecho de negar el servicio a cualquier persona que aparente estar excesivamente intoxicada, sea menor de edad, o cuyo comportamiento pueda representar un riesgo para la seguridad del evento.</p>
+      </div>
+      <div class="tnc-item">
+        <h4>4. Autoridad para Cerrar el Bar</h4>
+        <p>El personal de On The Rocks se reserva el derecho de cerrar el bar en cualquier momento durante el evento si el comportamiento de los invitados se considera amenazante, desordenado o con probabilidad de causar daño a otras personas o a la propiedad. Todas las decisiones relacionadas con la negación del servicio o el cierre del bar quedarán a entera discreción del personal de On The Rocks Mobile Bar y son definitivas.</p>
+      </div>
+      <div class="tnc-item">
+        <h4>Pago</h4>
+        <p>Se requiere un depósito del 50% al momento de la reserva para asegurar su evento. El saldo restante debe pagarse en su totalidad a más tardar 7 días antes de la fecha del evento. Métodos aceptados: Zelle, Cash, Venmo.</p>
+      </div>
+      <div class="tnc-item">
+        <h4>Política de Reembolsos</h4>
+        <p>Solo se emitirán reembolsos si el evento es cancelado por On The Rocks. Las cancelaciones realizadas por el cliente no son reembolsables.</p>
+      </div>
+      <div class="tnc-item">
+        <h4>Confidencialidad</h4>
+        <p>Toda la información intercambiada entre el cliente y On The Rocks se mantendrá estrictamente confidencial y no será divulgada a ningún tercero sin consentimiento previo por escrito, salvo que la ley lo exija.</p>
+      </div>
+      <div class="tnc-item">
+        <h4>Propiedad Intelectual</h4>
+        <p>Todos los materiales, diseños y conceptos creados por On The Rocks permanecen como propiedad exclusiva del negocio y no podrán ser usados sin autorización escrita previa.</p>
+      </div>
+      <div class="tnc-item">
+        <h4>Derecho a Terminar</h4>
+        <p>Cualquiera de las partes podrá terminar este acuerdo con un aviso por escrito de treinta (30) días. La terminación no exime a ninguna de las partes de las obligaciones contraídas antes de la fecha de terminación.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firma -->
+  <div class="signature-section" id="signatureSection">
+    <h3>Firma del Contrato</h3>
+    <div class="sig-info">
+      <div class="sig-field">
+        <label>Nombre completo</label>
+        <input type="text" id="sigName" placeholder="Tu nombre legal completo" />
+      </div>
+      <div class="sig-field">
+        <label>Fecha de aceptación</label>
+        <input type="text" id="sigDate" readonly />
+      </div>
+    </div>
+    <div class="sig-pad-wrap">
+      <label>Firma (dibuja con el mouse o dedo)</label>
+      <canvas id="sigCanvas"></canvas>
+      <div class="sig-actions">
+        <button class="btn-clear" onclick="clearSig()">Limpiar firma</button>
+        <button class="btn-sign" onclick="submitSignature()">✓ FIRMAR Y ACEPTAR CONTRATO</button>
+      </div>
+    </div>
+    <p style="font-size:0.75rem; color:var(--muted); line-height:1.6; margin-top:1rem;">
+      Al firmar este contrato, confirmo que he leído y acepto todos los términos y condiciones de On The Rocks Mobile Bar. Entiendo que el depósito no es reembolsable en caso de cancelación por mi parte.
+    </p>
+  </div>
+
+  <div class="contract-footer">
+    <strong>On The Rocks RVA</strong>
+    ontherocksrva@gmail.com · (804) 502-6837<br>
+    On The Rocks | Copyright © 2026
+  </div>
+</div>
+
+<script>
+// ===== CONFIG EMAILJS =====
+const EMAILJS_SERVICE = 'service_uny27zs';
+const EMAILJS_TEMPLATE = 'template_car269q';
+const EMAILJS_PUBKEY = 'cLZZRwMn_4c4X49cn';
+const ADMIN_PIN = 'otr2026';
+
+emailjs.init(EMAILJS_PUBKEY);
+
+// ===== STATE =====
+let activeServices = {};
+let contractData = {};
+let sigDrawing = false;
+let sigCtx = null;
+let sigHasContent = false;
+
+// ===== LOGIN =====
+function checkLogin() {
+  const pin = document.getElementById('pinInput').value;
+  if (pin === ADMIN_PIN) {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('adminPanel').style.display = 'block';
+    updateTotals();
+  } else {
+    document.getElementById('loginError').style.display = 'block';
+  }
+}
+
+function logout() {
+  document.getElementById('adminPanel').style.display = 'none';
+  document.getElementById('loginScreen').style.display = 'flex';
+  document.getElementById('pinInput').value = '';
+}
+
+// ===== CHECK URL for contract view =====
+window.addEventListener('DOMContentLoaded', () => {
+  const params = new URLSearchParams(window.location.search);
+  if (params.has('contrato')) {
+    try {
+      const data = JSON.parse(decodeURIComponent(atob(params.get('contrato'))));
+      showContractView(data);
+    } catch(e) {}
+  }
+  document.getElementById('sigDate').value = new Date().toLocaleDateString('es-ES', {
+    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+  });
+});
+
+// ===== SERVICES =====
+function toggleService(id, price) {
+  const el = document.getElementById('svc-' + id);
+  if (activeServices[id]) {
+    delete activeServices[id];
+    el.classList.remove('active');
+  } else {
+    activeServices[id] = price;
+    el.classList.add('active');
+  }
+  updateTotals();
+}
+
+// ===== TOTALS =====
+function updateTotals() {
+  const guests = parseInt(document.getElementById('guestCount').value) || 0;
+  const hours = parseInt(document.getElementById('eventHours').value) || 5;
+  const travel = parseInt(document.getElementById('travelMiles').value) || 0;
+
+  // Bartending: base $20/person
+  const bartending = guests * 20;
+  const setup = 300;
+  const extras = Object.values(activeServices).reduce((a, b) => a + b, 0);
+  const total = bartending + setup + travel + extras;
+  const deposit = Math.round(total * 0.5);
+  const remain = total - deposit;
+
+  document.getElementById('totalAmount').textContent = '$' + total.toLocaleString();
+  document.getElementById('depositAmt').textContent = '$' + deposit.toLocaleString();
+  document.getElementById('remainAmt').textContent = '$' + remain.toLocaleString();
+
+  let details = `Bartending (${guests} inv.) + Setup`;
+  if (travel > 0) details += ` + Viaje`;
+  if (extras > 0) details += ` + Extras`;
+  document.getElementById('totalDetails').textContent = details;
+}
+
+// ===== GENERATE & SEND =====
+async function generateAndSend() {
+  const name = document.getElementById('clientName').value.trim();
+  const email = document.getElementById('clientEmail').value.trim();
+  const phone = document.getElementById('clientPhone').value.trim();
+  const address = document.getElementById('eventAddress').value.trim();
+  const eventType = document.getElementById('eventType').value;
+  const eventDate = document.getElementById('eventDate').value;
+  const eventTime = document.getElementById('eventTime').value;
+  const hours = document.getElementById('eventHours').value;
+  const guests = document.getElementById('guestCount').value;
+  const guestAdult = document.getElementById('guestAdult').value;
+  const venue = document.getElementById('eventVenue').value.trim();
+  const travel = parseInt(document.getElementById('travelMiles').value) || 0;
+  const cocktails = document.getElementById('cocktails').value.trim();
+  const mixers = document.getElementById('mixers').value.trim();
+  const notes = document.getElementById('extraNotes').value.trim();
+
+  if (!name || !email || !eventType || !eventDate) {
+    showStatus('Por favor completa nombre, email, tipo de evento y fecha.', 'error');
+    return;
+  }
+
+  const guestsNum = parseInt(guests) || 0;
+  const bartending = guestsNum * 20;
+  const setup = 300;
+  const extras = Object.values(activeServices).reduce((a, b) => a + b, 0);
+  const total = bartending + setup + travel + extras;
+  const deposit = Math.round(total * 0.5);
+  const remain = total - deposit;
+
+  const dateFormatted = eventDate ? new Date(eventDate + 'T12:00:00').toLocaleDateString('es-ES', {
+    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+  }) : '';
+
+  contractData = {
+    clientName: name, clientEmail: email, clientPhone: phone,
+    clientAddress: address, eventType, eventDate, eventDateFormatted: dateFormatted,
+    eventTime, hours, guests, guestAdult, venue, travel, travelFee: travel,
+    cocktails, mixers, notes, bartending, setup, extras, total, deposit, remain,
+    activeServices: { ...activeServices },
+    generatedAt: new Date().toISOString()
+  };
+
+  // Build contract link
+  const encoded = btoa(encodeURIComponent(JSON.stringify(contractData)));
+  const contractLink = window.location.origin + window.location.pathname + '?contrato=' + encoded;
+
+  // Build HTML for email
+  const servicesList = buildServicesList(contractData);
+  const contractHtml = buildContractEmailHTML(contractData, servicesList, contractLink);
+
+  const btn = document.getElementById('sendBtn');
+  btn.disabled = true;
+  btn.textContent = 'ENVIANDO...';
+
+  try {
+    await emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, {
+      client_email: email,
+      event_type: eventType,
+      event_date: dateFormatted,
+      contract_html: contractHtml
+    });
+    showStatus(`✅ Contrato enviado exitosamente a ${email}`, 'success');
+    btn.textContent = '✅ CONTRATO ENVIADO';
+  } catch (err) {
+    console.error(err);
+    showStatus('❌ Error al enviar. Verifica la configuración de EmailJS.', 'error');
+    btn.disabled = false;
+    btn.textContent = 'GENERAR Y ENVIAR CONTRATO';
+  }
+}
+
+function buildServicesList(d) {
+  const always = [
+    'Servicio de barra (' + d.hours + ' horas)',
+    'Bartenders profesionales · ' + d.guests + ' invitados',
+    'Hielo, vasos, cocktail straws, flores comestibles',
+    '3 cócteles de preferencia: ' + (d.cocktails || 'por confirmar'),
+    'Mixers: ' + (d.mixers || 'por confirmar'),
+    'Menú personalizado + toppers branded On The Rocks',
+    'Diseño exclusivo On The Rocks'
+  ];
+  const extra = [];
+  if (d.activeServices.frozen) extra.push('Máquina de bebidas frozen');
+  if (d.activeServices.shotcart) extra.push('Shot Cart');
+  if (d.activeServices.dj) extra.push('Servicio DJ / AV Production');
+  if (d.activeServices.menu) extra.push('Menú y toppers personalizados');
+  if (d.activeServices.extra1) extra.push('+1 hora extra de servicio');
+  if (d.activeServices.extra2) extra.push('+2 horas extra de servicio');
+  return [...always, ...extra];
+}
+
+function buildContractEmailHTML(d, services, link) {
+  return `<div style="font-family:Georgia,serif;max-width:600px;margin:0 auto;background:#004E5E;color:white;padding:40px 30px;">
+  <div style="text-align:center;margin-bottom:30px;">
+    <div style="font-size:32px;font-weight:bold;color:#F08100;letter-spacing:4px;">ON THE ROCKS</div>
+    <div style="font-size:11px;letter-spacing:3px;opacity:0.6;">MOBILE BAR</div>
+  </div>
+  <h2 style="text-align:center;font-weight:300;font-size:20px;margin-bottom:5px;">Gracias por preferirnos!</h2>
+  <p style="text-align:center;color:#F08100;font-size:14px;letter-spacing:2px;">${d.eventDateFormatted}</p>
+  <div style="background:rgba(255,255,255,0.1);border-radius:12px;padding:20px;margin:20px 0;">
+    <p><strong>TIPO DE EVENTO</strong><br>${d.eventType}</p>
+    <p><strong>FECHA</strong><br>${d.eventDateFormatted}</p>
+    <p><strong>SERVICIO</strong><br>${d.hours} horas</p>
+    <p><strong>LUGAR</strong><br>${d.venue}</p>
+    <p><strong>INVITADOS</strong><br>${d.guests} (${d.guestAdult} de 21+)</p>
+    <p><strong>DIRECCIÓN</strong><br>${d.clientAddress}</p>
+    <hr style="border-color:rgba(255,255,255,0.2);margin:15px 0;">
+    ${services.map(s => `<p style="margin:5px 0;">• ${s}</p>`).join('')}
+    <hr style="border-color:rgba(255,255,255,0.2);margin:15px 0;">
+    <p style="font-size:18px;font-weight:bold;">TOTAL $${d.total.toLocaleString()}.00</p>
+    <p>Depósito $${d.deposit.toLocaleString()}.00</p>
+    <p>Restante a pagar antes de empezar el evento $${d.remain.toLocaleString()}.00</p>
+    <p style="font-size:12px;opacity:0.7;margin-top:10px;">Nota: El cliente es encargado de proveer el licor y el VABC license requerida por el estado de Virginia.</p>
+  </div>
+  <div style="text-align:center;margin:25px 0;">
+    <a href="${link}" style="background:#F08100;color:white;padding:14px 28px;border-radius:8px;text-decoration:none;font-weight:bold;font-size:14px;letter-spacing:1px;">VER Y FIRMAR CONTRATO →</a>
+  </div>
+  <p style="text-align:center;font-size:11px;opacity:0.5;">On The Rocks RVA · ontherocksrva@gmail.com · (804) 502-6837</p>
+</div>`;
+}
+
+function showStatus(msg, type) {
+  const el = document.getElementById('statusMsg');
+  el.textContent = msg;
+  el.className = 'status-msg ' + type;
+  el.style.display = 'block';
+  el.scrollIntoView({ behavior: 'smooth' });
+}
+
+// ===== CONTRACT VIEW =====
+function showContractView(data) {
+  contractData = data;
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('adminPanel').style.display = 'none';
+  document.getElementById('contractView').style.display = 'block';
+
+  document.getElementById('cv-date').textContent = data.eventDateFormatted || '';
+  document.getElementById('cv-client').textContent = data.clientName;
+  document.getElementById('cv-phone').textContent = data.clientPhone;
+  document.getElementById('cv-address').textContent = data.clientAddress;
+  document.getElementById('cv-type').textContent = data.eventType;
+  document.getElementById('cv-fecha').textContent = data.eventDateFormatted;
+  document.getElementById('cv-time').textContent = formatTime(data.eventTime);
+  document.getElementById('cv-hours').textContent = data.hours + ' horas';
+  document.getElementById('cv-venue').textContent = data.venue;
+  document.getElementById('cv-addr2').textContent = data.clientAddress;
+  document.getElementById('cv-guests').textContent = data.guests + ' (' + data.guestAdult + ' de 21+)';
+
+  // Services
+  const sl = document.getElementById('cv-services');
+  sl.innerHTML = '';
+  const services = buildServicesList(data);
+  services.forEach(s => {
+    sl.innerHTML += `<div class="service-item"><div class="s-dot"></div><span>${s}</span></div>`;
+  });
+
+  // Totals
+  document.getElementById('cv-bartending').textContent = '$' + data.bartending.toLocaleString() + '.00';
+  document.getElementById('cv-total').textContent = '$' + data.total.toLocaleString() + '.00';
+  document.getElementById('cv-deposit').textContent = '$' + data.deposit.toLocaleString() + '.00';
+  document.getElementById('cv-remain').textContent = '$' + data.remain.toLocaleString() + '.00';
+
+  if (data.travelFee > 0) {
+    document.getElementById('cv-travel-row').style.display = 'flex';
+    document.getElementById('cv-travel').textContent = '$' + data.travelFee + '.00';
+  }
+  if (data.extras > 0) {
+    document.getElementById('cv-extras-row').style.display = 'flex';
+    document.getElementById('cv-extras').textContent = '$' + data.extras + '.00';
+  }
+
+  initSigCanvas();
+  document.getElementById('sigName').value = data.clientName || '';
+}
+
+function formatTime(t) {
+  if (!t) return '';
+  const [h, m] = t.split(':');
+  const hr = parseInt(h);
+  return (hr > 12 ? hr - 12 : hr) + ':' + m + (hr >= 12 ? ' PM' : ' AM');
+}
+
+// ===== SIGNATURE =====
+function initSigCanvas() {
+  const canvas = document.getElementById('sigCanvas');
+  canvas.width = canvas.offsetWidth || 600;
+  canvas.height = 160;
+  sigCtx = canvas.getContext('2d');
+  sigCtx.strokeStyle = '#004E5E';
+  sigCtx.lineWidth = 2.5;
+  sigCtx.lineCap = 'round';
+  sigCtx.lineJoin = 'round';
+
+  function getPos(e) {
+    const r = canvas.getBoundingClientRect();
+    const src = e.touches ? e.touches[0] : e;
+    return { x: (src.clientX - r.left) * (canvas.width / r.width), y: (src.clientY - r.top) * (canvas.height / r.height) };
+  }
+  canvas.addEventListener('mousedown', e => { sigDrawing = true; const p = getPos(e); sigCtx.beginPath(); sigCtx.moveTo(p.x, p.y); });
+  canvas.addEventListener('mousemove', e => { if (!sigDrawing) return; const p = getPos(e); sigCtx.lineTo(p.x, p.y); sigCtx.stroke(); sigHasContent = true; });
+  canvas.addEventListener('mouseup', () => sigDrawing = false);
+  canvas.addEventListener('touchstart', e => { e.preventDefault(); sigDrawing = true; const p = getPos(e); sigCtx.beginPath(); sigCtx.moveTo(p.x, p.y); }, { passive: false });
+  canvas.addEventListener('touchmove', e => { e.preventDefault(); if (!sigDrawing) return; const p = getPos(e); sigCtx.lineTo(p.x, p.y); sigCtx.stroke(); sigHasContent = true; }, { passive: false });
+  canvas.addEventListener('touchend', () => sigDrawing = false);
+}
+
+function clearSig() {
+  const canvas = document.getElementById('sigCanvas');
+  sigCtx.clearRect(0, 0, canvas.width, canvas.height);
+  sigHasContent = false;
+}
+
+async function submitSignature() {
+  const sigName = document.getElementById('sigName').value.trim();
+  if (!sigName) { alert('Por favor escribe tu nombre completo.'); return; }
+  if (!sigHasContent) { alert('Por favor dibuja tu firma.'); return; }
+
+  const canvas = document.getElementById('sigCanvas');
+  const sigImage = canvas.toDataURL('image/png');
+  const acceptedDate = new Date().toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+  // Notify OTR
+  try {
+    await emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, {
+      client_email: 'ontherocksrva@gmail.com',
+      event_type: '✅ CONTRATO FIRMADO — ' + contractData.eventType,
+      event_date: acceptedDate,
+      contract_html: `<div style="font-family:sans-serif;padding:20px;background:#004E5E;color:white;border-radius:12px;">
+        <h2 style="color:#F08100;">¡Contrato firmado!</h2>
+        <p><strong>${contractData.clientName}</strong> firmó el contrato el ${acceptedDate}</p>
+        <p>Evento: ${contractData.eventType} — ${contractData.eventDateFormatted}</p>
+        <p>Total: $${contractData.total?.toLocaleString()}</p>
+        <p>Email cliente: ${contractData.clientEmail}</p>
+        <p>Teléfono: ${contractData.clientPhone}</p>
+      </div>`
+    });
+  } catch(e) { console.log('Notify error', e); }
+
+  // Show accepted banner
+  document.getElementById('signatureSection').innerHTML = `
+    <div class="accepted-banner">
+      <div class="check">✓</div>
+      <div class="acc-text">
+        <h4>Accepted on ${acceptedDate}</h4>
+        <p>Firmado por ${sigName} · On The Rocks Mobile Bar ha sido notificado.</p>
+      </div>
+    </div>`;
+}
+</script>
+</body>
+</html>
