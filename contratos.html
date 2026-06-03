@@ -277,12 +277,12 @@
     </div>
   </div>
   <div class="admin-body">
-    <h1>Nuevo Contrato</h1>
-    <p class="subtitle">Completa los datos del evento y el contrato se enviará automáticamente al cliente.</p>
+    <h1 id="admin-h1">Nuevo Contrato</h1>
+    <p class="subtitle" id="admin-sub">Completa los datos del evento y el contrato se enviará automáticamente al cliente.</p>
 
     <!-- Cliente -->
     <div class="form-card">
-      <h3>📋 Datos del Cliente</h3>
+      <h3 id="sec-cliente">📋 Datos del Cliente</h3>
       <div class="form-grid">
         <div class="form-group">
           <label id="lbl-name">Nombre completo</label>
@@ -305,7 +305,7 @@
 
     <!-- Evento -->
     <div class="form-card">
-      <h3>🎉 Detalles del Evento</h3>
+      <h3 id="sec-evento">🎉 Detalles del Evento</h3>
       <div class="form-grid">
         <div class="form-group">
           <label id="lbl-type">Tipo de evento</label>
@@ -374,7 +374,7 @@
 
     <!-- Servicios -->
     <div class="form-card">
-      <h3>🍹 Servicios Adicionales</h3>
+      <h3 id="sec-servicios">🍹 Servicios Adicionales</h3>
       <div class="services-grid">
         <div class="service-toggle" id="svc-frozen" onclick="toggleService('frozen', 200)">
           <div class="s-name">🧊 Máquina Frozen</div>
@@ -409,15 +409,15 @@
       <!-- Totales -->
       <div class="total-bar">
         <div>
-          <div class="t-label">Total del Evento</div>
+          <div class="t-label" id="lbl-total-txt">Total del Evento</div>
           <div class="total-details" id="totalDetails">Bartending + Setup</div>
         </div>
         <div class="t-amount" id="totalAmount">$0</div>
       </div>
       <div style="display:flex; gap:1rem; margin-top:0.75rem; font-size:0.8rem; color:var(--muted);">
-        <span>Depósito (50%): <strong id="depositAmt" style="color:var(--green)">$0</strong></span>
+        <span id="lbl-deposit-label">Depósito (50%): <strong id="depositAmt" style="color:var(--green)">$0</strong></span>
         <span>·</span>
-        <span>Restante: <strong id="remainAmt" style="color:var(--green)">$0</strong></span>
+        <span id="lbl-remain-label">Restante: <strong id="remainAmt" style="color:var(--green)">$0</strong></span>
       </div>
     </div>
 
@@ -435,7 +435,7 @@
   <div class="contract-hero">
     <div class="otr-logo">On The Rocks</div>
     <div class="otr-sub">Mobile Bar</div>
-    <h2>Gracias por preferirnos!</h2>
+    <h2 id="cv-hero-thanks">¡Gracias por preferirnos!</h2>
     <div class="event-date-display" id="cv-date"></div>
   </div>
   <div class="contract-meta">
@@ -475,74 +475,74 @@
       <div class="t-row"><span id="cv-lbl-setup">Setup de barra</span><span>$300.00</span></div>
       <div class="t-row" id="cv-travel-row" style="display:none"><span id="cv-lbl-travel">Tarifa de viaje</span><span id="cv-travel"></span></div>
       <div class="t-row" id="cv-extras-row" style="display:none"><span id="cv-lbl-extras">Servicios adicionales</span><span id="cv-extras"></span></div>
-      <div class="t-row main"><span>TOTAL</span><span id="cv-total"></span></div>
+      <div class="t-row main"><span id="cv-lbl-total">TOTAL</span><span id="cv-total"></span></div>
       <div class="t-row deposit"><span id="cv-lbl-deposit">Depósito requerido (50%)</span><span id="cv-deposit"></span></div>
       <div class="t-row"><span id="cv-lbl-remain">Restante antes del evento</span><span id="cv-remain"></span></div>
     </div>
 
     <p style="margin-top:1rem; font-size:0.8rem; color:var(--muted); line-height:1.6;">
-      <strong>Nota:</strong> El cliente es encargado de proveer el licor y el VABC license requerida por el estado de Virginia. On The Rocks provee el servicio de bartending, setup, suministros e implementos.
+      <strong id="cv-note-vabc">Nota: El cliente es encargado de proveer el licor y el VABC license requerida por el estado de Virginia. On The Rocks provee el servicio de bartending, setup, suministros e implementos.
     </p>
   </div>
 
   <!-- T&C -->
   <div class="tnc-section">
-    <h2 id="cv-section-tnc">TÉRMINOS Y CONDICIONES</h2>
+    <h2 id="cv-tnc-title">TÉRMINOS Y CONDICIONES</h2>
     <div class="tnc-grid">
       <div class="tnc-item">
-        <h4>1. Edad Legal para Consumir Alcohol</h4>
-        <p>Es ilegal que cualquier persona menor de 21 años consuma bebidas alcohólicas en cualquier evento. On The Rocks Mobile Bar cumple estrictamente con todas las leyes estatales de Virginia aplicables al servicio de alcohol.</p>
+        <h4 id="cv-tnc-1-title">1. Edad Legal para Consumir Alcohol</h4>
+        <p id="cv-tnc-1-body">Es ilegal que cualquier persona menor de 21 años consuma bebidas alcohólicas en cualquier evento. On The Rocks Mobile Bar cumple estrictamente con todas las leyes estatales de Virginia aplicables al servicio de alcohol.</p>
       </div>
       <div class="tnc-item">
-        <h4>2. Comprobante de Edad</h4>
-        <p>Recomendamos que todos los invitados porten una identificación con foto válida. La ley del estado de Virginia exige que todos los clientes presenten un comprobante de edad al solicitar una bebida alcohólica. On The Rocks se reserva el derecho de negar el servicio a cualquier invitado que no pueda o no quiera proporcionar una identificación válida.</p>
+        <h4 id="cv-tnc-2-title">2. Comprobante de Edad</h4>
+        <p id="cv-tnc-2-body">Recomendamos que todos los invitados porten una identificación con foto válida. La ley del estado de Virginia exige que todos los clientes presenten un comprobante de edad al solicitar una bebida alcohólica. On The Rocks se reserva el derecho de negar el servicio a cualquier invitado que no pueda o no quiera proporcionar una identificación válida.</p>
       </div>
       <div class="tnc-item">
-        <h4>3. Derecho a Negar el Servicio</h4>
-        <p>On The Rocks se reserva el derecho de negar el servicio a cualquier persona que aparente estar excesivamente intoxicada, sea menor de edad, o cuyo comportamiento pueda representar un riesgo para la seguridad del evento.</p>
+        <h4 id="cv-tnc-3-title">3. Derecho a Negar el Servicio</h4>
+        <p id="cv-tnc-3-body">On The Rocks se reserva el derecho de negar el servicio a cualquier persona que aparente estar excesivamente intoxicada, sea menor de edad, o cuyo comportamiento pueda representar un riesgo para la seguridad del evento.</p>
       </div>
       <div class="tnc-item">
-        <h4>4. Autoridad para Cerrar el Bar</h4>
-        <p>El personal de On The Rocks se reserva el derecho de cerrar el bar en cualquier momento durante el evento si el comportamiento de los invitados se considera amenazante, desordenado o con probabilidad de causar daño a otras personas o a la propiedad. Todas las decisiones relacionadas con la negación del servicio o el cierre del bar quedarán a entera discreción del personal de On The Rocks Mobile Bar y son definitivas.</p>
+        <h4 id="cv-tnc-4-title">4. Autoridad para Cerrar el Bar</h4>
+        <p id="cv-tnc-4-body">El personal de On The Rocks se reserva el derecho de cerrar el bar en cualquier momento durante el evento si el comportamiento de los invitados se considera amenazante, desordenado o con probabilidad de causar daño a otras personas o a la propiedad. Todas las decisiones relacionadas con la negación del servicio o el cierre del bar quedarán a entera discreción del personal de On The Rocks Mobile Bar y son definitivas.</p>
       </div>
       <div class="tnc-item">
-        <h4>Pago</h4>
-        <p>Se requiere un depósito del 50% al momento de la reserva para asegurar su evento. El saldo restante debe pagarse en su totalidad a más tardar 7 días antes de la fecha del evento. Métodos aceptados: Zelle, Cash, Venmo.</p>
+        <h4 id="cv-tnc-pago-title">Pago</h4>
+        <p id="cv-tnc-pago-body">Se requiere un depósito del 50% al momento de la reserva para asegurar su evento. El saldo restante debe pagarse en su totalidad a más tardar 7 días antes de la fecha del evento. Métodos aceptados: Zelle, Cash, Venmo.</p>
       </div>
       <div class="tnc-item">
-        <h4>Política de Reembolsos</h4>
-        <p>Solo se emitirán reembolsos si el evento es cancelado por On The Rocks. Las cancelaciones realizadas por el cliente no son reembolsables.</p>
+        <h4 id="cv-tnc-reembolso-title">Política de Reembolsos</h4>
+        <p id="cv-tnc-reembolso-body">Solo se emitirán reembolsos si el evento es cancelado por On The Rocks. Las cancelaciones realizadas por el cliente no son reembolsables.</p>
       </div>
       <div class="tnc-item">
-        <h4>Confidencialidad</h4>
-        <p>Toda la información intercambiada entre el cliente y On The Rocks se mantendrá estrictamente confidencial y no será divulgada a ningún tercero sin consentimiento previo por escrito, salvo que la ley lo exija.</p>
+        <h4 id="cv-tnc-conf-title">Confidencialidad</h4>
+        <p id="cv-tnc-conf-body">Toda la información intercambiada entre el cliente y On The Rocks se mantendrá estrictamente confidencial y no será divulgada a ningún tercero sin consentimiento previo por escrito, salvo que la ley lo exija.</p>
       </div>
       <div class="tnc-item">
-        <h4>Propiedad Intelectual</h4>
-        <p>Todos los materiales, diseños y conceptos creados por On The Rocks permanecen como propiedad exclusiva del negocio y no podrán ser usados sin autorización escrita previa.</p>
+        <h4 id="cv-tnc-ip-title">Propiedad Intelectual</h4>
+        <p id="cv-tnc-ip-body">Todos los materiales, diseños y conceptos creados por On The Rocks permanecen como propiedad exclusiva del negocio y no podrán ser usados sin autorización escrita previa.</p>
       </div>
       <div class="tnc-item">
-        <h4>Derecho a Terminar</h4>
-        <p>Cualquiera de las partes podrá terminar este acuerdo con un aviso por escrito de treinta (30) días. La terminación no exime a ninguna de las partes de las obligaciones contraídas antes de la fecha de terminación.</p>
+        <h4 id="cv-tnc-term-title">Derecho a Terminar</h4>
+        <p id="cv-tnc-term-body">Cualquiera de las partes podrá terminar este acuerdo con un aviso por escrito de treinta (30) días. La terminación no exime a ninguna de las partes de las obligaciones contraídas antes de la fecha de terminación.</p>
       </div>
     </div>
   </div>
 
   <!-- Firma -->
   <div class="signature-section" id="signatureSection">
-    <h3 id="cv-section-sig">Firma del Contrato</h3>
+    <h3 id="cv-sig-title">Firma del Contrato</h3>
     <div class="sig-info">
       <div class="sig-field">
-        <label id="cv-lbl-signame">Nombre completo</label>
+        <label id="cv-sig-name-lbl">Nombre completo</label>
         <input type="text" id="sigName" placeholder="Tu nombre legal completo" />
       </div>
       <div class="sig-field">
-        <label id="cv-lbl-sigdate">Fecha de aceptación</label>
+        <label id="cv-sig-date-lbl">Fecha de aceptación</label>
         <input type="text" id="sigDate" readonly />
       </div>
     </div>
     <div class="sig-pad-wrap">
-      <label id="cv-lbl-sigpad">Firma (dibuja con el mouse o dedo)</label>
+      <label id="cv-sig-pad-lbl">Firma (dibuja con el mouse o dedo)</label>
       <canvas id="sigCanvas"></canvas>
       <div class="sig-actions">
         <button class="btn-clear" id="cv-lbl-clearsig" onclick="clearSig()">Limpiar firma</button>
@@ -557,7 +557,7 @@
   <div class="contract-footer">
     <strong>On The Rocks RVA</strong>
     ontherocksrva@gmail.com · (804) 502-6837<br>
-    On The Rocks | Copyright © 2026
+    <span id="cv-footer-copy">On The Rocks | Copyright © 2026</span>
   </div>
 </div>
 
@@ -905,56 +905,130 @@ async function submitSignature() {
 }
 
 // ===== TRANSLATIONS =====
-const TRANSLATIONS = {
+const T = {
   es: {
     // Admin
-    'Nuevo Contrato': 'Nuevo Contrato',
-    'admin-subtitle': 'Completa los datos del evento y el contrato se enviará automáticamente al cliente.',
-    'label-name': 'Nombre completo', 'label-email': 'Email del cliente', 'label-phone': 'Teléfono',
-    'label-address': 'Dirección del evento', 'label-type': 'Tipo de evento', 'label-date': 'Fecha del evento',
-    'label-time': 'Hora de inicio', 'label-hours': 'Duración (horas)', 'label-guests': 'Número de invitados',
-    'label-adult': 'Invitados de 21+ años', 'label-venue': 'Lugar / Venue', 'label-travel': 'Distancia desde Richmond (mi)',
-    'label-cocktails': '3 Cócteles de preferencia del cliente', 'label-mixers': 'Mixers elegidos por el cliente',
-    'label-notes': 'Notas adicionales (opcional)',
-    'send-btn': 'GENERAR Y ENVIAR CONTRATO', 'logout': 'Cerrar sesión',
-    // Contract view
-    'Gracias por preferirnos!': '¡Gracias por preferirnos!',
-    'Detalles del Evento': 'Detalles del Evento', 'Servicios Incluidos': 'Servicios Incluidos',
-    'Tipo de evento': 'Tipo de evento', 'Fecha': 'Fecha', 'Hora de inicio': 'Hora de inicio',
-    'Duración del servicio': 'Duración del servicio', 'Lugar': 'Lugar', 'Dirección': 'Dirección', 'Invitados': 'Invitados',
-    'Bartending + mixers': 'Bartending + mixers', 'Setup de barra': 'Setup de barra',
-    'Tarifa de viaje': 'Tarifa de viaje', 'Servicios adicionales': 'Servicios adicionales',
-    'Restante antes del evento': 'Restante antes del evento', 'Depósito requerido (50%)': 'Depósito requerido (50%)',
-    'Términos y Condiciones': 'TÉRMINOS Y CONDICIONES',
-    'Firma del Contrato': 'Firma del Contrato', 'Nombre completo': 'Nombre completo',
-    'Fecha de aceptación': 'Fecha de aceptación', 'Firma (dibuja con el mouse o dedo)': 'Firma (dibuja con el mouse o dedo)',
-    'Limpiar firma': 'Limpiar firma', 'FIRMAR Y ACEPTAR CONTRATO': '✓ FIRMAR Y ACEPTAR CONTRATO',
+    'admin-h1': 'Nuevo Contrato',
+    'admin-sub': 'Completa los datos del evento y el contrato se enviará automáticamente al cliente.',
+    'sec-cliente': '📋 Datos del Cliente',
+    'sec-evento': '🎉 Detalles del Evento',
+    'sec-servicios': '🍹 Servicios Adicionales',
+    'lbl-name': 'Nombre completo', 'lbl-email': 'Email del cliente', 'lbl-phone': 'Teléfono',
+    'lbl-address': 'Dirección del evento', 'lbl-type': 'Tipo de evento', 'lbl-date': 'Fecha del evento',
+    'lbl-time': 'Hora de inicio', 'lbl-hours': 'Duración (horas)', 'lbl-guests': 'Número de invitados',
+    'lbl-adult': 'Invitados de 21+ años', 'lbl-venue': 'Lugar / Venue', 'lbl-travel': 'Distancia desde Richmond (mi)',
+    'lbl-cocktails': '3 Cócteles de preferencia del cliente', 'lbl-mixers': 'Mixers elegidos por el cliente',
+    'lbl-notes': 'Notas adicionales (opcional)',
+    'lbl-total': 'Total del Evento',
+    'lbl-deposit-label': 'Depósito (50%):',
+    'lbl-remain-label': 'Restante:',
+    'send-btn': 'GENERAR Y ENVIAR CONTRATO',
+    'logout': 'Cerrar sesión',
+    // Contract hero
+    'hero-thanks': '¡Gracias por preferirnos!',
+    'hero-sub': 'Mobile Bar',
+    // Contract sections
+    'sec-details': 'Detalles del Evento',
+    'sec-services': 'Servicios Incluidos',
+    // Detail labels
+    'lbl-event-type': 'Tipo de evento', 'lbl-fecha': 'Fecha', 'lbl-start': 'Hora de inicio',
+    'lbl-duration': 'Duración del servicio', 'lbl-venue2': 'Lugar', 'lbl-addr2': 'Dirección', 'lbl-guests2': 'Invitados',
+    // Totals
+    'lbl-bartending': 'Bartending + mixers', 'lbl-setup': 'Setup de barra',
+    'lbl-travel2': 'Tarifa de viaje', 'lbl-extras': 'Servicios adicionales',
+    'lbl-total2': 'TOTAL', 'lbl-deposit2': 'Depósito requerido (50%)', 'lbl-remain2': 'Restante antes del evento',
+    // Note
+    'note-vabc': 'Nota: El cliente es encargado de proveer el licor y el VABC license requerida por el estado de Virginia. On The Rocks provee el servicio de bartending, setup, suministros e implementos.',
+    // TnC
+    'tnc-title': 'TÉRMINOS Y CONDICIONES',
+    'tnc-1-title': '1. Edad Legal para Consumir Alcohol',
+    'tnc-1-body': 'Es ilegal que cualquier persona menor de 21 años consuma bebidas alcohólicas en cualquier evento. On The Rocks Mobile Bar cumple estrictamente con todas las leyes estatales de Virginia aplicables al servicio de alcohol.',
+    'tnc-2-title': '2. Comprobante de Edad',
+    'tnc-2-body': 'Recomendamos que todos los invitados porten una identificación con foto válida. La ley del estado de Virginia exige que todos los clientes presenten un comprobante de edad al solicitar una bebida alcohólica. On The Rocks se reserva el derecho de negar el servicio a cualquier invitado que no pueda o no quiera proporcionar una identificación válida.',
+    'tnc-3-title': '3. Derecho a Negar el Servicio',
+    'tnc-3-body': 'On The Rocks se reserva el derecho de negar el servicio a cualquier persona que aparente estar excesivamente intoxicada, sea menor de edad, o cuyo comportamiento pueda representar un riesgo para la seguridad del evento.',
+    'tnc-4-title': '4. Autoridad para Cerrar el Bar',
+    'tnc-4-body': 'El personal de On The Rocks se reserva el derecho de cerrar el bar en cualquier momento durante el evento si el comportamiento de los invitados se considera amenazante, desordenado o con probabilidad de causar daño a otras personas o a la propiedad. Todas las decisiones relacionadas con la negación del servicio o el cierre del bar quedarán a entera discreción del personal de On The Rocks Mobile Bar y son definitivas.',
+    'tnc-pago-title': 'Pago',
+    'tnc-pago-body': 'Se requiere un depósito del 50% al momento de la reserva para asegurar su evento. El saldo restante debe pagarse en su totalidad a más tardar 7 días antes de la fecha del evento. Métodos aceptados: Zelle, Cash, Venmo.',
+    'tnc-reembolso-title': 'Política de Reembolsos',
+    'tnc-reembolso-body': 'Solo se emitirán reembolsos si el evento es cancelado por On The Rocks. Las cancelaciones realizadas por el cliente no son reembolsables.',
+    'tnc-conf-title': 'Confidencialidad',
+    'tnc-conf-body': 'Toda la información intercambiada entre el cliente y On The Rocks se mantendrá estrictamente confidencial y no será divulgada a ningún tercero sin consentimiento previo por escrito, salvo que la ley lo exija.',
+    'tnc-ip-title': 'Propiedad Intelectual',
+    'tnc-ip-body': 'Todos los materiales, diseños y conceptos creados por On The Rocks permanecen como propiedad exclusiva del negocio y no podrán ser usados sin autorización escrita previa.',
+    'tnc-term-title': 'Derecho a Terminar',
+    'tnc-term-body': 'Cualquiera de las partes podrá terminar este acuerdo con un aviso por escrito de treinta (30) días. La terminación no exime a ninguna de las partes de las obligaciones contraídas antes de la fecha de terminación.',
+    // Signature
+    'sig-title': 'Firma del Contrato',
+    'sig-name-lbl': 'Nombre completo', 'sig-date-lbl': 'Fecha de aceptación',
+    'sig-pad-lbl': 'Firma (dibuja con el mouse o dedo)',
+    'sig-clear': 'Limpiar firma', 'sig-btn': '✓ FIRMAR Y ACEPTAR CONTRATO',
     'sig-disclaimer': 'Al firmar este contrato, confirmo que he leído y acepto todos los términos y condiciones de On The Rocks Mobile Bar. Entiendo que el depósito no es reembolsable en caso de cancelación por mi parte.',
+    // Footer
+    'footer-copy': 'On The Rocks | Copyright © 2026',
   },
   en: {
     // Admin
-    'Nuevo Contrato': 'New Contract',
-    'admin-subtitle': 'Fill in the event details and the contract will be sent automatically to the client.',
-    'label-name': 'Full name', 'label-email': 'Client email', 'label-phone': 'Phone',
-    'label-address': 'Event address', 'label-type': 'Event type', 'label-date': 'Event date',
-    'label-time': 'Start time', 'label-hours': 'Duration (hours)', 'label-guests': 'Number of guests',
-    'label-adult': '21+ guests', 'label-venue': 'Venue', 'label-travel': 'Distance from Richmond (mi)',
-    'label-cocktails': '3 Cocktails of client choice', 'label-mixers': 'Mixers chosen by client',
-    'label-notes': 'Additional notes (optional)',
-    'send-btn': 'GENERATE AND SEND CONTRACT', 'logout': 'Sign out',
-    // Contract view
-    'Gracias por preferirnos!': 'Thank you for choosing us!',
-    'Detalles del Evento': 'Event Details', 'Servicios Incluidos': 'Services Included',
-    'Tipo de evento': 'Event type', 'Fecha': 'Date', 'Hora de inicio': 'Start time',
-    'Duración del servicio': 'Service duration', 'Lugar': 'Venue', 'Dirección': 'Address', 'Invitados': 'Guests',
-    'Bartending + mixers': 'Bartending + mixers', 'Setup de barra': 'Bar setup',
-    'Tarifa de viaje': 'Travel fee', 'Servicios adicionales': 'Additional services',
-    'Restante antes del evento': 'Balance due before event', 'Depósito requerido (50%)': 'Required deposit (50%)',
-    'Términos y Condiciones': 'TERMS & CONDITIONS',
-    'Firma del Contrato': 'Contract Signature', 'Nombre completo': 'Full name',
-    'Fecha de aceptación': 'Acceptance date', 'Firma (dibuja con el mouse o dedo)': 'Signature (draw with mouse or finger)',
-    'Limpiar firma': 'Clear signature', 'FIRMAR Y ACEPTAR CONTRATO': '✓ SIGN AND ACCEPT CONTRACT',
+    'admin-h1': 'New Contract',
+    'admin-sub': 'Fill in the event details and the contract will be sent automatically to the client.',
+    'sec-cliente': '📋 Client Information',
+    'sec-evento': '🎉 Event Details',
+    'sec-servicios': '🍹 Additional Services',
+    'lbl-name': 'Full name', 'lbl-email': 'Client email', 'lbl-phone': 'Phone',
+    'lbl-address': 'Event address', 'lbl-type': 'Event type', 'lbl-date': 'Event date',
+    'lbl-time': 'Start time', 'lbl-hours': 'Duration (hours)', 'lbl-guests': 'Number of guests',
+    'lbl-adult': '21+ guests', 'lbl-venue': 'Venue', 'lbl-travel': 'Distance from Richmond (mi)',
+    'lbl-cocktails': '3 Cocktails of choice', 'lbl-mixers': 'Mixers chosen by client',
+    'lbl-notes': 'Additional notes (optional)',
+    'lbl-total': 'Event Total',
+    'lbl-deposit-label': 'Deposit (50%):',
+    'lbl-remain-label': 'Balance:',
+    'send-btn': 'GENERATE AND SEND CONTRACT',
+    'logout': 'Sign out',
+    // Contract hero
+    'hero-thanks': 'Thank you for choosing us!',
+    'hero-sub': 'Mobile Bar',
+    // Contract sections
+    'sec-details': 'Event Details',
+    'sec-services': 'Services Included',
+    // Detail labels
+    'lbl-event-type': 'Event type', 'lbl-fecha': 'Date', 'lbl-start': 'Start time',
+    'lbl-duration': 'Service duration', 'lbl-venue2': 'Venue', 'lbl-addr2': 'Address', 'lbl-guests2': 'Guests',
+    // Totals
+    'lbl-bartending': 'Bartending + mixers', 'lbl-setup': 'Bar setup',
+    'lbl-travel2': 'Travel fee', 'lbl-extras': 'Additional services',
+    'lbl-total2': 'TOTAL', 'lbl-deposit2': 'Required deposit (50%)', 'lbl-remain2': 'Balance due before event',
+    // Note
+    'note-vabc': 'Note: The client is responsible for providing the alcohol and obtaining the VA ABC Banquet License required by the state of Virginia. On The Rocks provides bartending service, setup, supplies and equipment.',
+    // TnC
+    'tnc-title': 'TERMS & CONDITIONS',
+    'tnc-1-title': '1. Legal Drinking Age',
+    'tnc-1-body': 'It is illegal for any person under the age of 21 to consume alcoholic beverages at any event. On The Rocks Mobile Bar strictly complies with all applicable Virginia state laws regarding alcohol service.',
+    'tnc-2-title': '2. Age Verification',
+    'tnc-2-body': 'We recommend that all guests carry a valid photo ID. Virginia law requires all guests to present proof of age when requesting an alcoholic beverage. On The Rocks reserves the right to refuse service to any guest who cannot or will not provide valid identification.',
+    'tnc-3-title': '3. Right to Refuse Service',
+    'tnc-3-body': 'On The Rocks reserves the right to refuse service to any person who appears to be excessively intoxicated, is underage, or whose behavior may pose a risk to event safety.',
+    'tnc-4-title': '4. Authority to Close the Bar',
+    'tnc-4-body': 'On The Rocks staff reserves the right to close the bar at any time during the event if guest behavior is deemed threatening, disorderly, or likely to cause harm to others or property. All decisions regarding service refusal or bar closure are at the sole discretion of On The Rocks Mobile Bar staff and are final.',
+    'tnc-pago-title': 'Payment',
+    'tnc-pago-body': 'A deposit of 50% is required at the time of booking to secure your event. The remaining balance must be paid in full no later than 7 days before the event date. Accepted methods: Zelle, Cash, Venmo.',
+    'tnc-reembolso-title': 'Refund Policy',
+    'tnc-reembolso-body': 'Refunds will only be issued if the event is cancelled by On The Rocks. Cancellations made by the client are non-refundable.',
+    'tnc-conf-title': 'Confidentiality',
+    'tnc-conf-body': 'All information exchanged between the client and On The Rocks will be kept strictly confidential and will not be disclosed to any third party without prior written consent, unless required by law.',
+    'tnc-ip-title': 'Intellectual Property',
+    'tnc-ip-body': 'All materials, designs and concepts created by On The Rocks remain the exclusive property of the business and may not be used without prior written authorization.',
+    'tnc-term-title': 'Right to Terminate',
+    'tnc-term-body': 'Either party may terminate this agreement with thirty (30) days written notice. Termination does not relieve either party of obligations incurred prior to the termination date.',
+    // Signature
+    'sig-title': 'Contract Signature',
+    'sig-name-lbl': 'Full name', 'sig-date-lbl': 'Acceptance date',
+    'sig-pad-lbl': 'Signature (draw with mouse or finger)',
+    'sig-clear': 'Clear signature', 'sig-btn': '✓ SIGN AND ACCEPT CONTRACT',
     'sig-disclaimer': 'By signing this contract, I confirm that I have read and agree to all terms and conditions of On The Rocks Mobile Bar. I understand that the deposit is non-refundable in case of cancellation on my part.',
+    // Footer
+    'footer-copy': 'On The Rocks | Copyright © 2026',
   }
 };
 
@@ -962,72 +1036,81 @@ let currentLang = 'es';
 
 function setLang(lang) {
   currentLang = lang;
-  const t = TRANSLATIONS[lang];
+  const t = T[lang];
 
-  // Toggle active buttons
+  // Toggle buttons
   ['admin-es','admin-en','cv-es','cv-en'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.classList.toggle('active', id.endsWith(lang));
   });
 
-  // Admin panel labels
-  const labelMap = {
-    'label-name': 'lbl-name', 'label-email': 'lbl-email', 'label-phone': 'lbl-phone',
-    'label-address': 'lbl-address', 'label-type': 'lbl-type', 'label-date': 'lbl-date',
-    'label-time': 'lbl-time', 'label-hours': 'lbl-hours', 'label-guests': 'lbl-guests',
-    'label-adult': 'lbl-adult', 'label-venue': 'lbl-venue', 'label-travel': 'lbl-travel',
-    'label-cocktails': 'lbl-cocktails', 'label-mixers': 'lbl-mixers', 'label-notes': 'lbl-notes'
-  };
-  Object.entries(labelMap).forEach(([key, id]) => {
-    const el = document.getElementById(id);
-    if (el && t[key]) el.textContent = t[key];
-  });
+  // Helper
+  function setText(id, key) { const el = document.getElementById(id); if (el && t[key]) el.textContent = t[key]; }
+  function setInner(id, key) { const el = document.getElementById(id); if (el && t[key]) el.innerHTML = t[key]; }
 
-  const adminH1 = document.querySelector('#adminPanel .admin-body h1');
-  if (adminH1) adminH1.textContent = t['Nuevo Contrato'];
-  const adminSub = document.querySelector('#adminPanel .subtitle');
-  if (adminSub) adminSub.textContent = t['admin-subtitle'];
-  const sendBtn = document.getElementById('sendBtn');
-  if (sendBtn && !sendBtn.disabled) sendBtn.textContent = t['send-btn'];
-  const logoutBtn = document.getElementById('btn-logout-txt');
-  if (logoutBtn) logoutBtn.textContent = t['logout'];
+  // Admin
+  setText('admin-h1', 'admin-h1');
+  setText('admin-sub', 'admin-sub');
+  setText('sec-cliente', 'sec-cliente');
+  setText('sec-evento', 'sec-evento');
+  setText('sec-servicios', 'sec-servicios');
+  ['name','email','phone','address','type','date','time','hours','guests','adult','venue','travel','cocktails','mixers','notes'].forEach(k => setText('lbl-'+k, 'lbl-'+k));
+  setText('lbl-total-txt', 'lbl-total');
+  setText('lbl-deposit-label', 'lbl-deposit-label');
+  setText('lbl-remain-label', 'lbl-remain-label');
+  const sb = document.getElementById('sendBtn'); if (sb && !sb.disabled) sb.textContent = t['send-btn'];
+  setText('btn-logout-txt', 'logout');
 
-  // Contract view
-  const cvHero = document.querySelector('.contract-hero h2');
-  if (cvHero) cvHero.textContent = t['Gracias por preferirnos!'];
+  // Contract hero
+  setText('cv-hero-thanks', 'hero-thanks');
 
-  const sectionMap = {
-    'cv-section-details': 'Detalles del Evento',
-    'cv-section-services': 'Servicios Incluidos',
-    'cv-section-tnc': 'Términos y Condiciones',
-    'cv-section-sig': 'Firma del Contrato'
-  };
-  Object.entries(sectionMap).forEach(([id, key]) => {
-    const el = document.getElementById(id);
-    if (el && t[key]) el.textContent = t[key];
-  });
+  // Contract sections
+  setText('cv-section-details', 'sec-details');
+  setText('cv-section-services', 'sec-services');
 
-  const rowMap = {
-    'cv-lbl-type': 'Tipo de evento', 'cv-lbl-fecha': 'Fecha', 'cv-lbl-time': 'Hora de inicio',
-    'cv-lbl-hours': 'Duración del servicio', 'cv-lbl-venue': 'Lugar', 'cv-lbl-addr': 'Dirección',
-    'cv-lbl-guests': 'Invitados', 'cv-lbl-bartending': 'Bartending + mixers',
-    'cv-lbl-setup': 'Setup de barra', 'cv-lbl-travel': 'Tarifa de viaje',
-    'cv-lbl-extras': 'Servicios adicionales', 'cv-lbl-deposit': 'Depósito requerido (50%)',
-    'cv-lbl-remain': 'Restante antes del evento',
-    'cv-lbl-signame': 'Nombre completo', 'cv-lbl-sigdate': 'Fecha de aceptación',
-    'cv-lbl-sigpad': 'Firma (dibuja con el mouse o dedo)',
-    'cv-lbl-clearsig': 'Limpiar firma'
-  };
-  Object.entries(rowMap).forEach(([id, key]) => {
-    const el = document.getElementById(id);
-    if (el && t[key]) el.textContent = t[key];
-  });
+  // Detail labels
+  setText('cv-lbl-type', 'lbl-event-type');
+  setText('cv-lbl-fecha', 'lbl-fecha');
+  setText('cv-lbl-time', 'lbl-start');
+  setText('cv-lbl-hours', 'lbl-duration');
+  setText('cv-lbl-venue', 'lbl-venue2');
+  setText('cv-lbl-addr', 'lbl-addr2');
+  setText('cv-lbl-guests', 'lbl-guests2');
 
-  const signBtn = document.querySelector('.btn-sign');
-  if (signBtn) signBtn.textContent = t['FIRMAR Y ACEPTAR CONTRATO'];
-  const disclaimer = document.getElementById('sig-disclaimer');
-  if (disclaimer) disclaimer.textContent = t['sig-disclaimer'];
+  // Totals
+  setText('cv-lbl-bartending', 'lbl-bartending');
+  setText('cv-lbl-setup', 'lbl-setup');
+  setText('cv-lbl-travel', 'lbl-travel2');
+  setText('cv-lbl-extras', 'lbl-extras');
+  setText('cv-lbl-total', 'lbl-total2');
+  setText('cv-lbl-deposit', 'lbl-deposit2');
+  setText('cv-lbl-remain', 'lbl-remain2');
+
+  // Note
+  setText('cv-note-vabc', 'note-vabc');
+
+  // T&C
+  setText('cv-tnc-title', 'tnc-title');
+  setText('cv-tnc-1-title', 'tnc-1-title'); setText('cv-tnc-1-body', 'tnc-1-body');
+  setText('cv-tnc-2-title', 'tnc-2-title'); setText('cv-tnc-2-body', 'tnc-2-body');
+  setText('cv-tnc-3-title', 'tnc-3-title'); setText('cv-tnc-3-body', 'tnc-3-body');
+  setText('cv-tnc-4-title', 'tnc-4-title'); setText('cv-tnc-4-body', 'tnc-4-body');
+  setText('cv-tnc-pago-title', 'tnc-pago-title'); setText('cv-tnc-pago-body', 'tnc-pago-body');
+  setText('cv-tnc-reembolso-title', 'tnc-reembolso-title'); setText('cv-tnc-reembolso-body', 'tnc-reembolso-body');
+  setText('cv-tnc-conf-title', 'tnc-conf-title'); setText('cv-tnc-conf-body', 'tnc-conf-body');
+  setText('cv-tnc-ip-title', 'tnc-ip-title'); setText('cv-tnc-ip-body', 'tnc-ip-body');
+  setText('cv-tnc-term-title', 'tnc-term-title'); setText('cv-tnc-term-body', 'tnc-term-body');
+
+  // Signature
+  setText('cv-sig-title', 'sig-title');
+  setText('cv-sig-name-lbl', 'sig-name-lbl');
+  setText('cv-sig-date-lbl', 'sig-date-lbl');
+  setText('cv-sig-pad-lbl', 'sig-pad-lbl');
+  setText('cv-lbl-clearsig', 'sig-clear');
+  const signBtn = document.querySelector('.btn-sign'); if (signBtn) signBtn.textContent = t['sig-btn'];
+  setText('sig-disclaimer', 'sig-disclaimer');
+
+  // Footer
+  setText('cv-footer-copy', 'footer-copy');
 }
 </script>
-</body>
-</html>
