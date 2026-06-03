@@ -59,6 +59,13 @@
   .admin-header .brand { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; color: var(--orange); letter-spacing: 3px; }
   .admin-header .brand span { color: rgba(255,255,255,0.5); font-size: 0.7rem; font-family: 'Montserrat', sans-serif; font-weight: 400; letter-spacing: 2px; display: block; margin-top: -6px; }
   .btn-logout { background: rgba(255,255,255,0.15); color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; }
+  .lang-toggle { display: flex; align-items: center; gap: 6px; }
+  .lang-btn { background: rgba(255,255,255,0.15); color: white; border: none; padding: 0.4rem 0.8rem; border-radius: 6px; cursor: pointer; font-family: 'Montserrat', sans-serif; font-size: 0.78rem; font-weight: 600; letter-spacing: 1px; transition: background 0.2s; }
+  .lang-btn.active { background: var(--orange); }
+  .lang-btn:hover { background: rgba(255,255,255,0.3); }
+  .cv-lang-bar { position: fixed; top: 12px; right: 12px; z-index: 999; display: flex; gap: 6px; }
+  .cv-lang-btn { background: rgba(0,78,94,0.9); color: white; border: none; padding: 0.4rem 0.9rem; border-radius: 6px; cursor: pointer; font-family: 'Montserrat', sans-serif; font-size: 0.78rem; font-weight: 600; letter-spacing: 1px; backdrop-filter: blur(4px); }
+  .cv-lang-btn.active { background: var(--orange); }
 
   .admin-body { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem; }
   .admin-body h1 { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: var(--green); letter-spacing: 2px; margin-bottom: 0.25rem; }
@@ -263,7 +270,11 @@
 <div id="adminPanel">
   <div class="admin-header">
     <div class="brand">On The Rocks <span>Sistema de Contratos</span></div>
-    <button class="btn-logout" onclick="logout()">Cerrar sesión</button>
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="admin-es" onclick="setLang('es')">ES</button>
+      <button class="lang-btn" id="admin-en" onclick="setLang('en')">EN</button>
+      <button class="btn-logout" onclick="logout()" id="btn-logout-txt">Cerrar sesión</button>
+    </div>
   </div>
   <div class="admin-body">
     <h1>Nuevo Contrato</h1>
@@ -274,19 +285,19 @@
       <h3>📋 Datos del Cliente</h3>
       <div class="form-grid">
         <div class="form-group">
-          <label>Nombre completo</label>
+          <label id="lbl-name">Nombre completo</label>
           <input type="text" id="clientName" placeholder="Ej: María García" oninput="updateTotals()" />
         </div>
         <div class="form-group">
-          <label>Email del cliente</label>
+          <label id="lbl-email">Email del cliente</label>
           <input type="email" id="clientEmail" placeholder="cliente@email.com" />
         </div>
         <div class="form-group">
-          <label>Teléfono</label>
+          <label id="lbl-phone">Teléfono</label>
           <input type="text" id="clientPhone" placeholder="(804) 555-0000" />
         </div>
         <div class="form-group">
-          <label>Dirección del evento</label>
+          <label id="lbl-address">Dirección del evento</label>
           <input type="text" id="eventAddress" placeholder="5901 Fox Creek Crossing, Richmond VA" />
         </div>
       </div>
@@ -297,7 +308,7 @@
       <h3>🎉 Detalles del Evento</h3>
       <div class="form-grid">
         <div class="form-group">
-          <label>Tipo de evento</label>
+          <label id="lbl-type">Tipo de evento</label>
           <select id="eventType" onchange="updateTotals()">
             <option value="">Seleccionar...</option>
             <option>Boda</option>
@@ -310,15 +321,15 @@
           </select>
         </div>
         <div class="form-group">
-          <label>Fecha del evento</label>
+          <label id="lbl-date">Fecha del evento</label>
           <input type="date" id="eventDate" oninput="updateTotals()" />
         </div>
         <div class="form-group">
-          <label>Hora de inicio</label>
+          <label id="lbl-time">Hora de inicio</label>
           <input type="time" id="eventTime" />
         </div>
         <div class="form-group">
-          <label>Duración (horas)</label>
+          <label id="lbl-hours">Duración (horas)</label>
           <select id="eventHours" onchange="updateTotals()">
             <option value="3">3 horas</option>
             <option value="4">4 horas</option>
@@ -329,19 +340,19 @@
           </select>
         </div>
         <div class="form-group">
-          <label>Número de invitados</label>
+          <label id="lbl-guests">Número de invitados</label>
           <input type="number" id="guestCount" placeholder="50" min="1" oninput="updateTotals()" />
         </div>
         <div class="form-group">
-          <label>Invitados de 21+ años</label>
+          <label id="lbl-adult">Invitados de 21+ años</label>
           <input type="number" id="guestAdult" placeholder="35" min="0" oninput="updateTotals()" />
         </div>
         <div class="form-group">
-          <label>Lugar / Venue</label>
+          <label id="lbl-venue">Lugar / Venue</label>
           <input type="text" id="eventVenue" placeholder="Fox Creek Club House" />
         </div>
         <div class="form-group">
-          <label>Distancia desde Richmond (mi)</label>
+          <label id="lbl-travel">Distancia desde Richmond (mi)</label>
           <select id="travelMiles" onchange="updateTotals()">
             <option value="0">0–20 mi (gratis)</option>
             <option value="75">21–35 mi (+$75)</option>
@@ -351,11 +362,11 @@
           </select>
         </div>
         <div class="form-group full">
-          <label>3 Cócteles de preferencia del cliente</label>
+          <label id="lbl-cocktails">3 Cócteles de preferencia del cliente</label>
           <input type="text" id="cocktails" placeholder="Ej: Margarita, Paloma, Mojito" />
         </div>
         <div class="form-group full">
-          <label>Mixers elegidos por el cliente</label>
+          <label id="lbl-mixers">Mixers elegidos por el cliente</label>
           <input type="text" id="mixers" placeholder="Ej: Jugo de naranja, agua tónica, cranberry" />
         </div>
       </div>
@@ -391,7 +402,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label>Notas adicionales (opcional)</label>
+        <label id="lbl-notes">Notas adicionales (opcional)</label>
         <textarea id="extraNotes" placeholder="Cualquier detalle especial del evento..."></textarea>
       </div>
 
@@ -417,6 +428,10 @@
 
 <!-- ===== CONTRACT VIEW (cliente) ===== -->
 <div id="contractView">
+  <div class="cv-lang-bar">
+    <button class="cv-lang-btn active" id="cv-es" onclick="setLang('es')">ES</button>
+    <button class="cv-lang-btn" id="cv-en" onclick="setLang('en')">EN</button>
+  </div>
   <div class="contract-hero">
     <div class="otr-logo">On The Rocks</div>
     <div class="otr-sub">Mobile Bar</div>
@@ -440,29 +455,29 @@
 
   <div class="contract-body-wrap">
     <div class="contract-section">
-      <h3>Detalles del Evento</h3>
-      <div class="detail-row"><span class="d-label">Tipo de evento</span><span class="d-val" id="cv-type"></span></div>
-      <div class="detail-row"><span class="d-label">Fecha</span><span class="d-val" id="cv-fecha"></span></div>
-      <div class="detail-row"><span class="d-label">Hora de inicio</span><span class="d-val" id="cv-time"></span></div>
-      <div class="detail-row"><span class="d-label">Duración del servicio</span><span class="d-val" id="cv-hours"></span></div>
-      <div class="detail-row"><span class="d-label">Lugar</span><span class="d-val" id="cv-venue"></span></div>
-      <div class="detail-row"><span class="d-label">Dirección</span><span class="d-val" id="cv-addr2"></span></div>
-      <div class="detail-row"><span class="d-label">Invitados</span><span class="d-val" id="cv-guests"></span></div>
+      <h3 id="cv-section-details">Detalles del Evento</h3>
+      <div class="detail-row"><span class="d-label" id="cv-lbl-type">Tipo de evento</span><span class="d-val" id="cv-type"></span></div>
+      <div class="detail-row"><span class="d-label" id="cv-lbl-fecha">Fecha</span><span class="d-val" id="cv-fecha"></span></div>
+      <div class="detail-row"><span class="d-label" id="cv-lbl-time">Hora de inicio</span><span class="d-val" id="cv-time"></span></div>
+      <div class="detail-row"><span class="d-label" id="cv-lbl-hours">Duración del servicio</span><span class="d-val" id="cv-hours"></span></div>
+      <div class="detail-row"><span class="d-label" id="cv-lbl-venue">Lugar</span><span class="d-val" id="cv-venue"></span></div>
+      <div class="detail-row"><span class="d-label" id="cv-lbl-addr">Dirección</span><span class="d-val" id="cv-addr2"></span></div>
+      <div class="detail-row"><span class="d-label" id="cv-lbl-guests">Invitados</span><span class="d-val" id="cv-guests"></span></div>
     </div>
 
     <div class="contract-section">
-      <h3>Servicios Incluidos</h3>
+      <h3 id="cv-section-services">Servicios Incluidos</h3>
       <div class="services-list" id="cv-services"></div>
     </div>
 
     <div class="total-section">
-      <div class="t-row"><span>Bartending + mixers</span><span id="cv-bartending"></span></div>
-      <div class="t-row"><span>Setup de barra</span><span>$300.00</span></div>
-      <div class="t-row" id="cv-travel-row" style="display:none"><span>Tarifa de viaje</span><span id="cv-travel"></span></div>
-      <div class="t-row" id="cv-extras-row" style="display:none"><span>Servicios adicionales</span><span id="cv-extras"></span></div>
+      <div class="t-row"><span id="cv-lbl-bartending">Bartending + mixers</span><span id="cv-bartending"></span></div>
+      <div class="t-row"><span id="cv-lbl-setup">Setup de barra</span><span>$300.00</span></div>
+      <div class="t-row" id="cv-travel-row" style="display:none"><span id="cv-lbl-travel">Tarifa de viaje</span><span id="cv-travel"></span></div>
+      <div class="t-row" id="cv-extras-row" style="display:none"><span id="cv-lbl-extras">Servicios adicionales</span><span id="cv-extras"></span></div>
       <div class="t-row main"><span>TOTAL</span><span id="cv-total"></span></div>
-      <div class="t-row deposit"><span>Depósito requerido (50%)</span><span id="cv-deposit"></span></div>
-      <div class="t-row"><span>Restante antes del evento</span><span id="cv-remain"></span></div>
+      <div class="t-row deposit"><span id="cv-lbl-deposit">Depósito requerido (50%)</span><span id="cv-deposit"></span></div>
+      <div class="t-row"><span id="cv-lbl-remain">Restante antes del evento</span><span id="cv-remain"></span></div>
     </div>
 
     <p style="margin-top:1rem; font-size:0.8rem; color:var(--muted); line-height:1.6;">
@@ -472,7 +487,7 @@
 
   <!-- T&C -->
   <div class="tnc-section">
-    <h2>Términos y Condiciones</h2>
+    <h2 id="cv-section-tnc">TÉRMINOS Y CONDICIONES</h2>
     <div class="tnc-grid">
       <div class="tnc-item">
         <h4>1. Edad Legal para Consumir Alcohol</h4>
@@ -515,27 +530,27 @@
 
   <!-- Firma -->
   <div class="signature-section" id="signatureSection">
-    <h3>Firma del Contrato</h3>
+    <h3 id="cv-section-sig">Firma del Contrato</h3>
     <div class="sig-info">
       <div class="sig-field">
-        <label>Nombre completo</label>
+        <label id="cv-lbl-signame">Nombre completo</label>
         <input type="text" id="sigName" placeholder="Tu nombre legal completo" />
       </div>
       <div class="sig-field">
-        <label>Fecha de aceptación</label>
+        <label id="cv-lbl-sigdate">Fecha de aceptación</label>
         <input type="text" id="sigDate" readonly />
       </div>
     </div>
     <div class="sig-pad-wrap">
-      <label>Firma (dibuja con el mouse o dedo)</label>
+      <label id="cv-lbl-sigpad">Firma (dibuja con el mouse o dedo)</label>
       <canvas id="sigCanvas"></canvas>
       <div class="sig-actions">
-        <button class="btn-clear" onclick="clearSig()">Limpiar firma</button>
+        <button class="btn-clear" id="cv-lbl-clearsig" onclick="clearSig()">Limpiar firma</button>
         <button class="btn-sign" onclick="submitSignature()">✓ FIRMAR Y ACEPTAR CONTRATO</button>
       </div>
     </div>
     <p style="font-size:0.75rem; color:var(--muted); line-height:1.6; margin-top:1rem;">
-      Al firmar este contrato, confirmo que he leído y acepto todos los términos y condiciones de On The Rocks Mobile Bar. Entiendo que el depósito no es reembolsable en caso de cancelación por mi parte.
+      <span id="sig-disclaimer">Al firmar este contrato, confirmo que he leído y acepto todos los términos y condiciones de On The Rocks Mobile Bar. Entiendo que el depósito no es reembolsable en caso de cancelación por mi parte.</span>
     </p>
   </div>
 
@@ -887,6 +902,131 @@ async function submitSignature() {
         <p>Firmado por ${sigName} · On The Rocks Mobile Bar ha sido notificado.</p>
       </div>
     </div>`;
+}
+
+// ===== TRANSLATIONS =====
+const TRANSLATIONS = {
+  es: {
+    // Admin
+    'Nuevo Contrato': 'Nuevo Contrato',
+    'admin-subtitle': 'Completa los datos del evento y el contrato se enviará automáticamente al cliente.',
+    'label-name': 'Nombre completo', 'label-email': 'Email del cliente', 'label-phone': 'Teléfono',
+    'label-address': 'Dirección del evento', 'label-type': 'Tipo de evento', 'label-date': 'Fecha del evento',
+    'label-time': 'Hora de inicio', 'label-hours': 'Duración (horas)', 'label-guests': 'Número de invitados',
+    'label-adult': 'Invitados de 21+ años', 'label-venue': 'Lugar / Venue', 'label-travel': 'Distancia desde Richmond (mi)',
+    'label-cocktails': '3 Cócteles de preferencia del cliente', 'label-mixers': 'Mixers elegidos por el cliente',
+    'label-notes': 'Notas adicionales (opcional)',
+    'send-btn': 'GENERAR Y ENVIAR CONTRATO', 'logout': 'Cerrar sesión',
+    // Contract view
+    'Gracias por preferirnos!': '¡Gracias por preferirnos!',
+    'Detalles del Evento': 'Detalles del Evento', 'Servicios Incluidos': 'Servicios Incluidos',
+    'Tipo de evento': 'Tipo de evento', 'Fecha': 'Fecha', 'Hora de inicio': 'Hora de inicio',
+    'Duración del servicio': 'Duración del servicio', 'Lugar': 'Lugar', 'Dirección': 'Dirección', 'Invitados': 'Invitados',
+    'Bartending + mixers': 'Bartending + mixers', 'Setup de barra': 'Setup de barra',
+    'Tarifa de viaje': 'Tarifa de viaje', 'Servicios adicionales': 'Servicios adicionales',
+    'Restante antes del evento': 'Restante antes del evento', 'Depósito requerido (50%)': 'Depósito requerido (50%)',
+    'Términos y Condiciones': 'TÉRMINOS Y CONDICIONES',
+    'Firma del Contrato': 'Firma del Contrato', 'Nombre completo': 'Nombre completo',
+    'Fecha de aceptación': 'Fecha de aceptación', 'Firma (dibuja con el mouse o dedo)': 'Firma (dibuja con el mouse o dedo)',
+    'Limpiar firma': 'Limpiar firma', 'FIRMAR Y ACEPTAR CONTRATO': '✓ FIRMAR Y ACEPTAR CONTRATO',
+    'sig-disclaimer': 'Al firmar este contrato, confirmo que he leído y acepto todos los términos y condiciones de On The Rocks Mobile Bar. Entiendo que el depósito no es reembolsable en caso de cancelación por mi parte.',
+  },
+  en: {
+    // Admin
+    'Nuevo Contrato': 'New Contract',
+    'admin-subtitle': 'Fill in the event details and the contract will be sent automatically to the client.',
+    'label-name': 'Full name', 'label-email': 'Client email', 'label-phone': 'Phone',
+    'label-address': 'Event address', 'label-type': 'Event type', 'label-date': 'Event date',
+    'label-time': 'Start time', 'label-hours': 'Duration (hours)', 'label-guests': 'Number of guests',
+    'label-adult': '21+ guests', 'label-venue': 'Venue', 'label-travel': 'Distance from Richmond (mi)',
+    'label-cocktails': '3 Cocktails of client choice', 'label-mixers': 'Mixers chosen by client',
+    'label-notes': 'Additional notes (optional)',
+    'send-btn': 'GENERATE AND SEND CONTRACT', 'logout': 'Sign out',
+    // Contract view
+    'Gracias por preferirnos!': 'Thank you for choosing us!',
+    'Detalles del Evento': 'Event Details', 'Servicios Incluidos': 'Services Included',
+    'Tipo de evento': 'Event type', 'Fecha': 'Date', 'Hora de inicio': 'Start time',
+    'Duración del servicio': 'Service duration', 'Lugar': 'Venue', 'Dirección': 'Address', 'Invitados': 'Guests',
+    'Bartending + mixers': 'Bartending + mixers', 'Setup de barra': 'Bar setup',
+    'Tarifa de viaje': 'Travel fee', 'Servicios adicionales': 'Additional services',
+    'Restante antes del evento': 'Balance due before event', 'Depósito requerido (50%)': 'Required deposit (50%)',
+    'Términos y Condiciones': 'TERMS & CONDITIONS',
+    'Firma del Contrato': 'Contract Signature', 'Nombre completo': 'Full name',
+    'Fecha de aceptación': 'Acceptance date', 'Firma (dibuja con el mouse o dedo)': 'Signature (draw with mouse or finger)',
+    'Limpiar firma': 'Clear signature', 'FIRMAR Y ACEPTAR CONTRATO': '✓ SIGN AND ACCEPT CONTRACT',
+    'sig-disclaimer': 'By signing this contract, I confirm that I have read and agree to all terms and conditions of On The Rocks Mobile Bar. I understand that the deposit is non-refundable in case of cancellation on my part.',
+  }
+};
+
+let currentLang = 'es';
+
+function setLang(lang) {
+  currentLang = lang;
+  const t = TRANSLATIONS[lang];
+
+  // Toggle active buttons
+  ['admin-es','admin-en','cv-es','cv-en'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.toggle('active', id.endsWith(lang));
+  });
+
+  // Admin panel labels
+  const labelMap = {
+    'label-name': 'lbl-name', 'label-email': 'lbl-email', 'label-phone': 'lbl-phone',
+    'label-address': 'lbl-address', 'label-type': 'lbl-type', 'label-date': 'lbl-date',
+    'label-time': 'lbl-time', 'label-hours': 'lbl-hours', 'label-guests': 'lbl-guests',
+    'label-adult': 'lbl-adult', 'label-venue': 'lbl-venue', 'label-travel': 'lbl-travel',
+    'label-cocktails': 'lbl-cocktails', 'label-mixers': 'lbl-mixers', 'label-notes': 'lbl-notes'
+  };
+  Object.entries(labelMap).forEach(([key, id]) => {
+    const el = document.getElementById(id);
+    if (el && t[key]) el.textContent = t[key];
+  });
+
+  const adminH1 = document.querySelector('#adminPanel .admin-body h1');
+  if (adminH1) adminH1.textContent = t['Nuevo Contrato'];
+  const adminSub = document.querySelector('#adminPanel .subtitle');
+  if (adminSub) adminSub.textContent = t['admin-subtitle'];
+  const sendBtn = document.getElementById('sendBtn');
+  if (sendBtn && !sendBtn.disabled) sendBtn.textContent = t['send-btn'];
+  const logoutBtn = document.getElementById('btn-logout-txt');
+  if (logoutBtn) logoutBtn.textContent = t['logout'];
+
+  // Contract view
+  const cvHero = document.querySelector('.contract-hero h2');
+  if (cvHero) cvHero.textContent = t['Gracias por preferirnos!'];
+
+  const sectionMap = {
+    'cv-section-details': 'Detalles del Evento',
+    'cv-section-services': 'Servicios Incluidos',
+    'cv-section-tnc': 'Términos y Condiciones',
+    'cv-section-sig': 'Firma del Contrato'
+  };
+  Object.entries(sectionMap).forEach(([id, key]) => {
+    const el = document.getElementById(id);
+    if (el && t[key]) el.textContent = t[key];
+  });
+
+  const rowMap = {
+    'cv-lbl-type': 'Tipo de evento', 'cv-lbl-fecha': 'Fecha', 'cv-lbl-time': 'Hora de inicio',
+    'cv-lbl-hours': 'Duración del servicio', 'cv-lbl-venue': 'Lugar', 'cv-lbl-addr': 'Dirección',
+    'cv-lbl-guests': 'Invitados', 'cv-lbl-bartending': 'Bartending + mixers',
+    'cv-lbl-setup': 'Setup de barra', 'cv-lbl-travel': 'Tarifa de viaje',
+    'cv-lbl-extras': 'Servicios adicionales', 'cv-lbl-deposit': 'Depósito requerido (50%)',
+    'cv-lbl-remain': 'Restante antes del evento',
+    'cv-lbl-signame': 'Nombre completo', 'cv-lbl-sigdate': 'Fecha de aceptación',
+    'cv-lbl-sigpad': 'Firma (dibuja con el mouse o dedo)',
+    'cv-lbl-clearsig': 'Limpiar firma'
+  };
+  Object.entries(rowMap).forEach(([id, key]) => {
+    const el = document.getElementById(id);
+    if (el && t[key]) el.textContent = t[key];
+  });
+
+  const signBtn = document.querySelector('.btn-sign');
+  if (signBtn) signBtn.textContent = t['FIRMAR Y ACEPTAR CONTRATO'];
+  const disclaimer = document.getElementById('sig-disclaimer');
+  if (disclaimer) disclaimer.textContent = t['sig-disclaimer'];
 }
 </script>
 </body>
