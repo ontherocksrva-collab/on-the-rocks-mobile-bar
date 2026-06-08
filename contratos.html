@@ -694,7 +694,17 @@ async function generateAndSend() {
 
   // Build contract link
   const encoded = btoa(encodeURIComponent(JSON.stringify(contractData)));
-  const contractLink = window.location.origin + window.location.pathname + '?contrato=' + encoded;
+  const longLink = window.location.origin + window.location.pathname + '?contrato=' + encoded;
+
+  // Shorten with TinyURL
+  let contractLink = longLink;
+  try {
+    const tinyRes = await fetch('https://tinyurl.com/api-create.php?url=' + encodeURIComponent(longLink));
+    if (tinyRes.ok) {
+      const short = await tinyRes.text();
+      if (short.startsWith('https://')) contractLink = short;
+    }
+  } catch(e) { console.log('TinyURL error, using long link'); }
 
   // Build HTML for email
   const servicesList = buildServicesList(contractData);
@@ -709,7 +719,33 @@ async function generateAndSend() {
       client_email: email,
       event_type: eventType,
       event_date: dateFormatted,
-      contract_html: `Hola ${name},\n\nGracias por preferirnos! 🍹\n\nAquí está tu contrato para el siguiente evento:\n\n📋 Evento: ${eventType}\n📅 Fecha: ${dateFormatted}\n📍 Lugar: ${venue || address}\n👥 Invitados: ${guests}\n💰 Total: $${total.toLocaleString()}.00\n💳 Depósito requerido: $${deposit.toLocaleString()}.00\n💵 Restante: $${remain.toLocaleString()}.00\n\nPara ver el contrato completo y firmarlo, haz click aquí:\n${contractLink}\n\n⚠️ Recuerda que debes proveer el licor y obtener la licencia VABC del estado de Virginia.\n\nCualquier pregunta estamos a tu disposición.\n\nOn The Rocks Mobile Bar\nontherocksrva@gmail.com | (804) 502-6837\n@ontherocksrva`
+      contract_html: `Hola ${name},
+
+Gracias por preferirnos. A continuacion encontraras los detalles de tu contrato con On The Rocks Mobile Bar.
+
+DETALLES DEL EVENTO
+Evento: ${eventType}
+Fecha: ${dateFormatted}
+Lugar: ${venue || address}
+Invitados: ${guests}
+
+RESUMEN DE PAGO
+Total: $${total.toLocaleString()}.00
+Deposito requerido (50%): $${deposit.toLocaleString()}.00
+Saldo restante: $${remain.toLocaleString()}.00
+
+Para revisar el contrato completo y firmar digitalmente, haz click en el siguiente enlace:
+
+Ver y firmar contrato -> ${contractLink}
+
+Nota: El cliente es responsable de proveer el licor y obtener la licencia VABC del estado de Virginia.
+
+Para cualquier pregunta estamos a tu disposicion.
+
+On The Rocks Mobile Bar
+ontherocksrva@gmail.com
+(804) 502-6837
+@ontherocksrva`
     });
     showStatus(`✅ Contrato enviado exitosamente a ${email}`, 'success');
     btn.textContent = '✅ CONTRATO ENVIADO';
