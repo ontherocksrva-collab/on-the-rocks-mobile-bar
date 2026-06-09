@@ -414,10 +414,20 @@
         </div>
         <div class="t-amount" id="totalAmount">$0</div>
       </div>
+      <div class="form-grid" style="margin-top:0.75rem;">
+        <div class="form-group">
+          <label id="lbl-custom-total">Total personalizado $ (opcional)</label>
+          <input type="number" id="customTotal" placeholder="Ej. 1600" oninput="updateTotals()">
+        </div>
+        <div class="form-group">
+          <label id="lbl-custom-deposit">Depósito $ (vacío = 50%)</label>
+          <input type="number" id="customDeposit" placeholder="Ej. 500" oninput="updateTotals()">
+        </div>
+      </div>
       <div style="display:flex; gap:1rem; margin-top:0.75rem; font-size:0.8rem; color:var(--muted);">
-        <span id="lbl-deposit-label">Depósito (50%): <strong id="depositAmt" style="color:var(--green)">$0</strong></span>
+        <span><span id="lbl-deposit-label">Depósito:</span> <strong id="depositAmt" style="color:var(--green)">$0</strong></span>
         <span>·</span>
-        <span id="lbl-remain-label">Restante: <strong id="remainAmt" style="color:var(--green)">$0</strong></span>
+        <span><span id="lbl-remain-label">Restante:</span> <strong id="remainAmt" style="color:var(--green)">$0</strong></span>
       </div>
     </div>
 
@@ -475,7 +485,7 @@
       <div class="t-row" id="cv-travel-row" style="display:none"><span id="cv-lbl-travel">Tarifa de viaje</span><span id="cv-travel"></span></div>
       <div class="t-row" id="cv-extras-row" style="display:none"><span id="cv-lbl-extras">Servicios adicionales</span><span id="cv-extras"></span></div>
       <div class="t-row main"><span id="cv-lbl-total">TOTAL</span><span id="cv-total"></span></div>
-      <div class="t-row deposit"><span id="cv-lbl-deposit">Depósito requerido (50%)</span><span id="cv-deposit"></span></div>
+      <div class="t-row deposit"><span id="cv-lbl-deposit">Depósito requerido</span><span id="cv-deposit"></span></div>
       <div class="t-row"><span id="cv-lbl-remain">Restante antes del evento</span><span id="cv-remain"></span></div>
     </div>
 
@@ -506,7 +516,7 @@
       </div>
       <div class="tnc-item">
         <h4 id="cv-tnc-pago-title">Pago</h4>
-        <p id="cv-tnc-pago-body">Se requiere un depósito del 50% al momento de la reserva para asegurar su evento. El saldo restante debe pagarse en su totalidad a más tardar 7 días antes de la fecha del evento. Métodos aceptados: Zelle, Cash, Venmo.</p>
+        <p id="cv-tnc-pago-body">Se requiere un depósito al momento de la reserva para asegurar su evento. El saldo restante debe pagarse en su totalidad a más tardar 7 días antes de la fecha del evento. Métodos aceptados: Zelle, Cash, Venmo.</p>
       </div>
       <div class="tnc-item">
         <h4 id="cv-tnc-reembolso-title">Política de Reembolsos</h4>
@@ -631,8 +641,11 @@ function updateTotals() {
   const bartending = guests * 20;
   const setup = 300;
   const extras = Object.values(activeServices).reduce((a, b) => a + b, 0);
-  const total = bartending + setup + travel + extras;
-  const deposit = Math.round(total * 0.5);
+  const autoTotal = bartending + setup + travel + extras;
+  const customTotal = parseFloat(document.getElementById('customTotal').value) || 0;
+  const total = customTotal > 0 ? customTotal : autoTotal;
+  const customDeposit = parseFloat(document.getElementById('customDeposit').value) || 0;
+  const deposit = customDeposit > 0 ? customDeposit : Math.round(total * 0.5);
   const remain = total - deposit;
 
   document.getElementById('totalAmount').textContent = '$' + total.toLocaleString();
@@ -642,6 +655,7 @@ function updateTotals() {
   let details = `Bartending (${guests} inv.) + Setup`;
   if (travel > 0) details += ` + Viaje`;
   if (extras > 0) details += ` + Extras`;
+  if (customTotal > 0) details = 'Precio personalizado';
   document.getElementById('totalDetails').textContent = details;
 }
 
@@ -672,8 +686,11 @@ async function generateAndSend() {
   const bartending = guestsNum * 20;
   const setup = 300;
   const extras = Object.values(activeServices).reduce((a, b) => a + b, 0);
-  const total = bartending + setup + travel + extras;
-  const deposit = Math.round(total * 0.5);
+  const autoTotal = bartending + setup + travel + extras;
+  const customTotal = parseFloat(document.getElementById('customTotal').value) || 0;
+  const total = customTotal > 0 ? customTotal : autoTotal;
+  const customDeposit = parseFloat(document.getElementById('customDeposit').value) || 0;
+  const deposit = customDeposit > 0 ? customDeposit : Math.round(total * 0.5);
   const remain = total - deposit;
 
   const dateFormatted = eventDate ? new Date(eventDate + 'T12:00:00').toLocaleDateString('es-ES', {
@@ -724,7 +741,7 @@ Invitados      : ${guests} personas
 RESUMEN DE PAGO
 ------------------------------------------------
 Total          : $${total.toLocaleString()}.00
-Deposito (50%) : $${deposit.toLocaleString()}.00
+Deposito : $${deposit.toLocaleString()}.00
 Saldo restante : $${remain.toLocaleString()}.00
 
 El deposito debe pagarse para reservar tu fecha.
@@ -961,7 +978,7 @@ Evento: ${contractData.eventType} — ${contractData.eventDateFormatted}
 Lugar: ${contractData.venue || contractData.clientAddress}
 Invitados: ${contractData.guests}
 Total: $${contractData.total?.toLocaleString()}
-Deposito (50%): $${contractData.deposit?.toLocaleString()}
+Deposito: $${contractData.deposit?.toLocaleString()}
 Saldo pendiente: $${contractData.remain?.toLocaleString()}
 
 Contacto del cliente:
@@ -998,7 +1015,9 @@ const T = {
     'lbl-cocktails': '3 Cócteles de preferencia del cliente', 'lbl-mixers': 'Mixers elegidos por el cliente',
     'lbl-notes': 'Notas adicionales (opcional)',
     'lbl-total': 'Total del Evento',
-    'lbl-deposit-label': 'Depósito (50%):',
+    'lbl-deposit-label': 'Depósito:',
+    'lbl-custom-total': 'Total personalizado $ (opcional)',
+    'lbl-custom-deposit': 'Depósito $ (vacío = 50%)',
     'lbl-remain-label': 'Restante:',
     'send-btn': 'GENERAR Y ENVIAR CONTRATO',
     'logout': 'Cerrar sesión',
@@ -1014,7 +1033,7 @@ const T = {
     // Totals
     'lbl-bartending': 'Bartending + mixers', 'lbl-setup': 'Setup de barra',
     'lbl-travel2': 'Tarifa de viaje', 'lbl-extras': 'Servicios adicionales',
-    'lbl-total2': 'TOTAL', 'lbl-deposit2': 'Depósito requerido (50%)', 'lbl-remain2': 'Restante antes del evento',
+    'lbl-total2': 'TOTAL', 'lbl-deposit2': 'Depósito requerido', 'lbl-remain2': 'Restante antes del evento',
     // Note
     'note-vabc': 'Nota: El cliente es encargado de proveer el licor y el VABC license requerida por el estado de Virginia. On The Rocks provee el servicio de bartending, setup, suministros e implementos.',
     // TnC
@@ -1028,7 +1047,7 @@ const T = {
     'tnc-4-title': '4. Autoridad para Cerrar el Bar',
     'tnc-4-body': 'El personal de On The Rocks se reserva el derecho de cerrar el bar en cualquier momento durante el evento si el comportamiento de los invitados se considera amenazante, desordenado o con probabilidad de causar daño a otras personas o a la propiedad. Todas las decisiones relacionadas con la negación del servicio o el cierre del bar quedarán a entera discreción del personal de On The Rocks Mobile Bar y son definitivas.',
     'tnc-pago-title': 'Pago',
-    'tnc-pago-body': 'Se requiere un depósito del 50% al momento de la reserva para asegurar su evento. El saldo restante debe pagarse en su totalidad a más tardar 7 días antes de la fecha del evento. Métodos aceptados: Zelle, Cash, Venmo.',
+    'tnc-pago-body': 'Se requiere un depósito al momento de la reserva para asegurar su evento. El saldo restante debe pagarse en su totalidad a más tardar 7 días antes de la fecha del evento. Métodos aceptados: Zelle, Cash, Venmo.',
     'tnc-reembolso-title': 'Política de Reembolsos',
     'tnc-reembolso-body': 'Solo se emitirán reembolsos si el evento es cancelado por On The Rocks. Las cancelaciones realizadas por el cliente no son reembolsables.',
     'tnc-conf-title': 'Confidencialidad',
@@ -1060,7 +1079,9 @@ const T = {
     'lbl-cocktails': '3 Cocktails of choice', 'lbl-mixers': 'Mixers chosen by client',
     'lbl-notes': 'Additional notes (optional)',
     'lbl-total': 'Event Total',
-    'lbl-deposit-label': 'Deposit (50%):',
+    'lbl-deposit-label': 'Deposit:',
+    'lbl-custom-total': 'Custom total $ (optional)',
+    'lbl-custom-deposit': 'Deposit $ (blank = 50%)',
     'lbl-remain-label': 'Balance:',
     'send-btn': 'GENERATE AND SEND CONTRACT',
     'logout': 'Sign out',
@@ -1076,7 +1097,7 @@ const T = {
     // Totals
     'lbl-bartending': 'Bartending + mixers', 'lbl-setup': 'Bar setup',
     'lbl-travel2': 'Travel fee', 'lbl-extras': 'Additional services',
-    'lbl-total2': 'TOTAL', 'lbl-deposit2': 'Required deposit (50%)', 'lbl-remain2': 'Balance due before event',
+    'lbl-total2': 'TOTAL', 'lbl-deposit2': 'Required deposit', 'lbl-remain2': 'Balance due before event',
     // Note
     'note-vabc': 'Note: The client is responsible for providing the alcohol and obtaining the VA ABC Banquet License required by the state of Virginia. On The Rocks provides bartending service, setup, supplies and equipment.',
     // TnC
@@ -1090,7 +1111,7 @@ const T = {
     'tnc-4-title': '4. Authority to Close the Bar',
     'tnc-4-body': 'On The Rocks staff reserves the right to close the bar at any time during the event if guest behavior is deemed threatening, disorderly, or likely to cause harm to others or property. All decisions regarding service refusal or bar closure are at the sole discretion of On The Rocks Mobile Bar staff and are final.',
     'tnc-pago-title': 'Payment',
-    'tnc-pago-body': 'A deposit of 50% is required at the time of booking to secure your event. The remaining balance must be paid in full no later than 7 days before the event date. Accepted methods: Zelle, Cash, Venmo.',
+    'tnc-pago-body': 'A deposit is required at the time of booking to secure your event. The remaining balance must be paid in full no later than 7 days before the event date. Accepted methods: Zelle, Cash, Venmo.',
     'tnc-reembolso-title': 'Refund Policy',
     'tnc-reembolso-body': 'Refunds will only be issued if the event is cancelled by On The Rocks. Cancellations made by the client are non-refundable.',
     'tnc-conf-title': 'Confidentiality',
@@ -1136,6 +1157,8 @@ function setLang(lang) {
   setText('lbl-total-txt', 'lbl-total');
   setText('lbl-deposit-label', 'lbl-deposit-label');
   setText('lbl-remain-label', 'lbl-remain-label');
+  setText('lbl-custom-total', 'lbl-custom-total');
+  setText('lbl-custom-deposit', 'lbl-custom-deposit');
   const sb = document.getElementById('sendBtn'); if (sb && !sb.disabled) sb.textContent = t['send-btn'];
   setText('btn-logout-txt', 'logout');
 
