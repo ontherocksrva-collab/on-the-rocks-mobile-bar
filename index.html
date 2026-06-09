@@ -1024,5 +1024,264 @@ function showTab(id, btn) {
   if (btn) btn.classList.add('active');
 }
 </script>
+<!-- ============ OTR CHATBOT "ROCKY" ============ -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<style>
+#otr-chat-btn { position:fixed; bottom:6.8rem; right:2rem; z-index:9998; width:54px; height:54px; background:var(--orange); border:none; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.5rem; cursor:pointer; box-shadow:0 4px 18px rgba(240,129,0,0.5); transition:transform 0.3s; }
+#otr-chat-btn:hover { transform:scale(1.1); }
+#otr-chat-panel { position:fixed; bottom:6.8rem; right:2rem; z-index:9999; width:370px; max-width:calc(100vw - 2rem); height:540px; max-height:calc(100vh - 8rem); background:#00141b; border:1px solid rgba(240,129,0,0.4); border-radius:14px; display:none; flex-direction:column; overflow:hidden; box-shadow:0 12px 50px rgba(0,0,0,0.6); font-family:'Montserrat',sans-serif; }
+#otr-chat-panel.open { display:flex; }
+.otr-chat-head { background:var(--green); padding:0.9rem 1.1rem; display:flex; align-items:center; gap:0.7rem; }
+.otr-chat-head .rocky-av { width:38px; height:38px; border-radius:50%; background:var(--orange); display:flex; align-items:center; justify-content:center; font-size:1.2rem; }
+.otr-chat-head .rocky-name { font-weight:800; font-size:0.9rem; color:#fff; letter-spacing:0.05em; }
+.otr-chat-head .rocky-sub { font-size:0.62rem; color:rgba(255,255,255,0.65); text-transform:uppercase; letter-spacing:0.15em; }
+.otr-chat-close { margin-left:auto; background:none; border:none; color:#fff; font-size:1.2rem; cursor:pointer; opacity:0.7; }
+.otr-chat-close:hover { opacity:1; }
+#otr-chat-msgs { flex:1; overflow-y:auto; padding:1rem; display:flex; flex-direction:column; gap:0.6rem; }
+.otr-msg { max-width:85%; padding:0.6rem 0.85rem; border-radius:12px; font-size:0.82rem; line-height:1.45; white-space:pre-wrap; word-wrap:break-word; }
+.otr-msg.bot { background:rgba(246,246,246,0.08); color:var(--white); border-bottom-left-radius:3px; align-self:flex-start; }
+.otr-msg.user { background:var(--orange); color:#000; font-weight:500; border-bottom-right-radius:3px; align-self:flex-end; }
+.otr-msg.typing { color:rgba(246,246,246,0.5); font-style:italic; }
+.otr-chips { display:flex; flex-wrap:wrap; gap:0.4rem; padding:0 1rem 0.5rem; }
+.otr-chip { background:none; border:1px solid var(--orange); color:var(--orange); border-radius:20px; padding:0.35rem 0.8rem; font-size:0.72rem; font-weight:600; cursor:pointer; font-family:'Montserrat',sans-serif; }
+.otr-chip:hover { background:var(--orange); color:#000; }
+.otr-chat-input { display:flex; gap:0.5rem; padding:0.7rem; border-top:1px solid rgba(246,246,246,0.1); }
+.otr-chat-input input { flex:1; background:rgba(246,246,246,0.07); border:1px solid rgba(246,246,246,0.15); border-radius:8px; padding:0.6rem 0.8rem; color:var(--white); font-size:0.82rem; font-family:'Montserrat',sans-serif; outline:none; }
+.otr-chat-input input:focus { border-color:var(--orange); }
+.otr-chat-input button { background:var(--orange); border:none; border-radius:8px; padding:0 1rem; color:#000; font-weight:800; cursor:pointer; font-size:1rem; }
+#otr-lead-form { display:none; flex-direction:column; gap:0.45rem; padding:0.8rem 1rem; background:rgba(0,78,94,0.35); border-top:1px solid rgba(240,129,0,0.35); max-height:60%; overflow-y:auto; }
+#otr-lead-form .lf-title { font-size:0.72rem; font-weight:800; color:var(--orange); text-transform:uppercase; letter-spacing:0.12em; }
+#otr-lead-form input, #otr-lead-form select { background:rgba(246,246,246,0.07); border:1px solid rgba(246,246,246,0.18); border-radius:7px; padding:0.5rem 0.7rem; color:var(--white); font-size:0.78rem; font-family:'Montserrat',sans-serif; outline:none; width:100%; }
+#otr-lead-form select option { background:#00141b; }
+#otr-lead-form input:focus, #otr-lead-form select:focus { border-color:var(--orange); }
+#otr-lead-form .lf-row { display:flex; gap:0.45rem; }
+#otr-lead-form .lf-send { background:var(--orange); color:#000; border:none; border-radius:7px; padding:0.6rem; font-weight:800; font-size:0.78rem; cursor:pointer; text-transform:uppercase; letter-spacing:0.08em; font-family:'Montserrat',sans-serif; }
+#otr-lead-form .lf-cancel { background:none; color:rgba(246,246,246,0.5); border:none; font-size:0.7rem; cursor:pointer; font-family:'Montserrat',sans-serif; }
+@media (max-width:480px) {
+  #otr-chat-panel { right:0.5rem; bottom:5.5rem; width:calc(100vw - 1rem); height:calc(100vh - 7rem); }
+  #otr-chat-btn { bottom:6.5rem; right:1.6rem; }
+}
+</style>
+
+<button id="otr-chat-btn" onclick="otrToggleChat()" aria-label="Chat">🍹</button>
+
+<div id="otr-chat-panel">
+  <div class="otr-chat-head">
+    <div class="rocky-av">🍹</div>
+    <div>
+      <div class="rocky-name">Rocky</div>
+      <div class="rocky-sub" id="otr-rocky-sub">Asistente de On The Rocks</div>
+    </div>
+    <button class="otr-chat-close" onclick="otrToggleChat()">✕</button>
+  </div>
+  <div id="otr-chat-msgs"></div>
+  <div class="otr-chips" id="otr-chips"></div>
+  <form id="otr-lead-form" onsubmit="return otrSubmitLead(event)">
+    <div class="lf-title" id="otr-lf-title">Recibe tu cotización personalizada</div>
+    <input type="text" id="lf-nombre" required>
+    <div class="lf-row">
+      <input type="tel" id="lf-tel" required>
+      <input type="email" id="lf-email">
+    </div>
+    <div class="lf-row">
+      <input type="date" id="lf-fecha">
+      <input type="number" id="lf-invitados" min="1">
+    </div>
+    <select id="lf-evento">
+      <option value="">—</option>
+      <option>Boda / Wedding</option>
+      <option>Quinceañera</option>
+      <option>Cumpleaños / Birthday</option>
+      <option>Baby Shower</option>
+      <option>Corporativo / Corporate</option>
+      <option>Brunch</option>
+      <option>Otro / Other</option>
+    </select>
+    <button type="submit" class="lf-send" id="otr-lf-send">Enviar</button>
+    <button type="button" class="lf-cancel" id="otr-lf-cancel" onclick="otrHideLeadForm()">Seguir chateando</button>
+  </form>
+  <div class="otr-chat-input">
+    <input type="text" id="otr-chat-text" autocomplete="off">
+    <button onclick="otrSend()">➤</button>
+  </div>
+</div>
+
+<script>
+// ===== CONFIG =====
+const OTR_WORKER_URL = "https://otr-chatbot.ontherocksrva.workers.dev";
+const OTR_FIREBASE_CONFIG = {
+  apiKey: "AIzaSyAv5s7pYbxQZ8ghbheZoz9bs-h7B7dqtjg",
+  authDomain: "otr-crm-77dc2.firebaseapp.com",
+  projectId: "otr-crm-77dc2",
+  storageBucket: "otr-crm-77dc2.firebasestorage.app",
+  messagingSenderId: "1060934914326",
+  appId: "1:1060934914326:web:e0040864d8891405b48037"
+};
+firebase.initializeApp(OTR_FIREBASE_CONFIG);
+const otrDB = firebase.firestore();
+
+// ===== TEXTOS ES/EN =====
+const OTR_T = {
+  es: {
+    sub: "Asistente de On The Rocks",
+    hola: "¡Hola! Soy Rocky, el asistente de On The Rocks Mobile Bar 🍹 ¿En qué te ayudo hoy?",
+    chips: ["💲 Precios y paquetes", "🍸 Recomiéndame un cóctel", "📋 Ley de alcohol en VA", "📝 Cotizar mi evento"],
+    escribiendo: "Rocky está escribiendo...",
+    error: "Ups, algo falló 😅 Intenta de nuevo o escríbenos por WhatsApp: (804) 502-6837",
+    lfTitle: "Recibe tu cotización personalizada",
+    nombre: "Nombre *", tel: "Teléfono *", email: "Email",
+    fecha: "Fecha del evento", invitados: "# Invitados",
+    enviar: "Enviar", seguir: "Seguir chateando",
+    gracias: "¡Listo! 🎉 Giovanni recibió tus datos y te contactará muy pronto con tu cotización personalizada. ¡Gracias!",
+    placeholder: "Escribe tu mensaje..."
+  },
+  en: {
+    sub: "On The Rocks Assistant",
+    hola: "Hi! I'm Rocky, the On The Rocks Mobile Bar assistant 🍹 How can I help you today?",
+    chips: ["💲 Pricing & packages", "🍸 Recommend me a cocktail", "📋 Virginia alcohol law", "📝 Get a quote"],
+    escribiendo: "Rocky is typing...",
+    error: "Oops, something went wrong 😅 Try again or message us on WhatsApp: (804) 502-6837",
+    lfTitle: "Get your personalized quote",
+    nombre: "Name *", tel: "Phone *", email: "Email",
+    fecha: "Event date", invitados: "# Guests",
+    enviar: "Send", seguir: "Keep chatting",
+    gracias: "Done! 🎉 Giovanni got your info and will reach out very soon with your personalized quote. Thank you!",
+    placeholder: "Type your message..."
+  }
+};
+function otrLang() { return (localStorage.getItem('otr-lang') || 'es') === 'en' ? 'en' : 'es'; }
+
+let otrHistory = [];   // historial para la IA
+let otrStarted = false;
+
+function otrApplyLang() {
+  const t = OTR_T[otrLang()];
+  document.getElementById('otr-rocky-sub').textContent = t.sub;
+  document.getElementById('otr-chat-text').placeholder = t.placeholder;
+  document.getElementById('otr-lf-title').textContent = t.lfTitle;
+  document.getElementById('lf-nombre').placeholder = t.nombre;
+  document.getElementById('lf-tel').placeholder = t.tel;
+  document.getElementById('lf-email').placeholder = t.email;
+  document.getElementById('lf-fecha').title = t.fecha;
+  document.getElementById('lf-invitados').placeholder = t.invitados;
+  document.getElementById('otr-lf-send').textContent = t.enviar;
+  document.getElementById('otr-lf-cancel').textContent = t.seguir;
+}
+
+function otrToggleChat() {
+  const p = document.getElementById('otr-chat-panel');
+  p.classList.toggle('open');
+  if (p.classList.contains('open') && !otrStarted) {
+    otrStarted = true;
+    otrApplyLang();
+    const t = OTR_T[otrLang()];
+    otrAddMsg('bot', t.hola);
+    otrShowChips(t.chips);
+  }
+}
+
+function otrAddMsg(who, text) {
+  const m = document.createElement('div');
+  m.className = 'otr-msg ' + who;
+  m.textContent = text;
+  document.getElementById('otr-chat-msgs').appendChild(m);
+  m.scrollIntoView({ behavior:'smooth', block:'end' });
+  return m;
+}
+
+function otrShowChips(chips) {
+  const c = document.getElementById('otr-chips');
+  c.innerHTML = '';
+  chips.forEach(label => {
+    const b = document.createElement('button');
+    b.className = 'otr-chip';
+    b.textContent = label;
+    b.onclick = () => {
+      c.innerHTML = '';
+      if (label.includes('📝')) { otrAddMsg('user', label.replace(/^[^ ]+ /,'')); otrShowLeadForm(); }
+      else otrSend(label.replace(/^[^ ]+ /,''));
+    };
+    c.appendChild(b);
+  });
+}
+
+async function otrSend(forced) {
+  const input = document.getElementById('otr-chat-text');
+  const text = (forced || input.value).trim();
+  if (!text) return;
+  input.value = '';
+  document.getElementById('otr-chips').innerHTML = '';
+  otrAddMsg('user', text);
+  otrHistory.push({ role:'user', content:text });
+
+  const t = OTR_T[otrLang()];
+  const typing = otrAddMsg('bot typing', t.escribiendo);
+  typing.classList.add('typing');
+
+  try {
+    const res = await fetch(OTR_WORKER_URL, {
+      method: 'POST',
+      headers: { 'Content-Type':'application/json' },
+      body: JSON.stringify({ messages: otrHistory })
+    });
+    const data = await res.json();
+    typing.remove();
+    if (!data.reply) throw new Error('sin respuesta');
+
+    let reply = data.reply;
+    const wantsForm = reply.includes('[LEAD_FORM]');
+    reply = reply.replace(/\[LEAD_FORM\]/g, '').trim();
+    otrHistory.push({ role:'assistant', content:reply });
+    otrAddMsg('bot', reply);
+    if (wantsForm) otrShowLeadForm();
+  } catch (e) {
+    typing.remove();
+    otrAddMsg('bot', t.error);
+  }
+}
+
+document.getElementById('otr-chat-text').addEventListener('keydown', e => {
+  if (e.key === 'Enter') { e.preventDefault(); otrSend(); }
+});
+
+function otrShowLeadForm() {
+  otrApplyLang();
+  document.getElementById('otr-lead-form').style.display = 'flex';
+}
+function otrHideLeadForm() {
+  document.getElementById('otr-lead-form').style.display = 'none';
+}
+
+async function otrSubmitLead(e) {
+  e.preventDefault();
+  const t = OTR_T[otrLang()];
+  const btn = document.getElementById('otr-lf-send');
+  btn.disabled = true; btn.textContent = '...';
+  try {
+    await otrDB.collection('leads').add({
+      nombre: document.getElementById('lf-nombre').value.trim(),
+      telefono: document.getElementById('lf-tel').value.trim(),
+      email: document.getElementById('lf-email').value.trim(),
+      fechaEvento: document.getElementById('lf-fecha').value,
+      invitados: document.getElementById('lf-invitados').value,
+      tipoEvento: document.getElementById('lf-evento').value,
+      idioma: otrLang(),
+      estado: 'Nuevo',
+      conversacion: JSON.stringify(otrHistory.slice(-20)),
+      creado: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    otrHideLeadForm();
+    otrAddMsg('bot', t.gracias);
+    document.getElementById('otr-lead-form').reset();
+  } catch (err) {
+    otrAddMsg('bot', t.error);
+  }
+  btn.disabled = false; btn.textContent = t.enviar;
+  return false;
+}
+</script>
+<!-- ============ FIN OTR CHATBOT ============ -->
+
 </body>
 </html>
