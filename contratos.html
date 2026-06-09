@@ -391,10 +391,7 @@
           <div class="s-name">🎨 Menú + Toppers</div>
           <div class="s-price">Incluido</div>
         </div>
-        <div class="service-toggle" id="svc-dj" onclick="toggleService('dj', 300)">
-          <div class="s-name">🎧 Servicio DJ/AV</div>
-          <div class="s-price">+$300</div>
-        </div>
+
         <div class="service-toggle" id="svc-extra1" onclick="toggleService('extra1', 100)">
           <div class="s-name">⏱ +1 Hora Extra</div>
           <div class="s-price">+$100</div>
@@ -696,15 +693,15 @@ async function generateAndSend() {
   const encoded = btoa(encodeURIComponent(JSON.stringify(contractData)));
   const longLink = window.location.origin + window.location.pathname + '?contrato=' + encoded;
 
-  // Shorten with TinyURL
+  // Shorten with is.gd (supports CORS)
   let contractLink = longLink;
   try {
-    const tinyRes = await fetch('https://tinyurl.com/api-create.php?url=' + encodeURIComponent(longLink));
-    if (tinyRes.ok) {
-      const short = await tinyRes.text();
-      if (short.startsWith('https://')) contractLink = short;
+    const isgdRes = await fetch('https://is.gd/create.php?format=simple&url=' + encodeURIComponent(longLink));
+    if (isgdRes.ok) {
+      const short = await isgdRes.text();
+      if (short.startsWith('https://is.gd/')) contractLink = short.trim();
     }
-  } catch(e) { console.log('TinyURL error, using long link'); }
+  } catch(e) { console.log('Shortener error, using long link'); }
 
   // Build HTML for email
   const servicesList = buildServicesList(contractData);
