@@ -691,17 +691,7 @@ async function generateAndSend() {
 
   // Build contract link
   const encoded = btoa(encodeURIComponent(JSON.stringify(contractData)));
-  const longLink = window.location.origin + window.location.pathname + '?contrato=' + encoded;
-
-  // Shorten with is.gd (supports CORS)
-  let contractLink = longLink;
-  try {
-    const isgdRes = await fetch('https://is.gd/create.php?format=simple&url=' + encodeURIComponent(longLink));
-    if (isgdRes.ok) {
-      const short = await isgdRes.text();
-      if (short.startsWith('https://is.gd/')) contractLink = short.trim();
-    }
-  } catch(e) { console.log('Shortener error, using long link'); }
+  const contractLink = window.location.origin + window.location.pathname + '?contrato=' + encoded;
 
   // Build HTML for email
   const servicesList = buildServicesList(contractData);
@@ -718,31 +708,53 @@ async function generateAndSend() {
       event_date: dateFormatted,
       contract_html: `Hola ${name},
 
-Gracias por preferirnos. A continuacion encontraras los detalles de tu contrato con On The Rocks Mobile Bar.
+Gracias por elegirnos para tu evento. Nos emociona ser parte de esta celebracion especial.
 
+A continuacion encontraras el resumen de tu contrato con On The Rocks Mobile Bar:
+
+------------------------------------------------
 DETALLES DEL EVENTO
-Evento: ${eventType}
-Fecha: ${dateFormatted}
-Lugar: ${venue || address}
-Invitados: ${guests}
+------------------------------------------------
+Tipo de evento : ${eventType}
+Fecha          : ${dateFormatted}
+Lugar          : ${venue || address}
+Invitados      : ${guests} personas
 
+------------------------------------------------
 RESUMEN DE PAGO
-Total: $${total.toLocaleString()}.00
-Deposito requerido (50%): $${deposit.toLocaleString()}.00
-Saldo restante: $${remain.toLocaleString()}.00
+------------------------------------------------
+Total          : $${total.toLocaleString()}.00
+Deposito (50%) : $${deposit.toLocaleString()}.00
+Saldo restante : $${remain.toLocaleString()}.00
 
-Para revisar el contrato completo y firmar digitalmente, haz click en el siguiente enlace:
+El deposito debe pagarse para reservar tu fecha.
+Saldo restante due 7 dias antes del evento.
+Metodos de pago: Zelle · Cash · Venmo
 
-Ver y firmar contrato -> ${contractLink}
+------------------------------------------------
+FIRMA TU CONTRATO
+------------------------------------------------
+Para revisar los terminos completos y firmar
+digitalmente, haz click en el siguiente enlace:
 
-Nota: El cliente es responsable de proveer el licor y obtener la licencia VABC del estado de Virginia.
+${contractLink}
+
+------------------------------------------------
+NOTA IMPORTANTE — VIRGINIA ABC LAW
+------------------------------------------------
+El cliente es responsable de proveer el licor
+y obtener la VABC Banquet License requerida
+por el estado de Virginia.
 
 Para cualquier pregunta estamos a tu disposicion.
 
+Con gusto,
+Giovanni Martinez
 On The Rocks Mobile Bar
 ontherocksrva@gmail.com
 (804) 502-6837
-@ontherocksrva`
+@ontherocksrva
+Richmond, VA`
     });
     showStatus(`✅ Contrato enviado exitosamente a ${email}`, 'success');
     btn.textContent = '✅ CONTRATO ENVIADO';
