@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OTR · Calculador Maestro</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="OTR Precios">
+<meta name="theme-color" content="#004E5E">
+<link rel="apple-touch-icon" href="https://ontherocksrva-collab.github.io/on-the-rocks-mobile-bar/icon-otr.png">
+<link rel="icon" href="https://ontherocksrva-collab.github.io/on-the-rocks-mobile-bar/icon-otr.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green:#004E5E;
+    --green-deep:#003844;
+    --orange:#F08100;
+    --wine:#671243;
+    --auburn:#A91821;
+    --ink:#1a2327;
+    --muted:#5e7178;
+    --line:#d8e2e4;
+    --paper:#f4f7f7;
+    --card:#ffffff;
+    --good:#1f7a52;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:'Montserrat',system-ui,sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:40px;
+  }
+  .wrap{max-width:560px;margin:0 auto;padding:0 14px}
+
+  /* Header */
+  header{
+    background:linear-gradient(155deg,var(--green) 0%,var(--green-deep) 100%);
+    color:#fff;padding:22px 18px 18px;text-align:center;
+    border-bottom:4px solid var(--orange);
+  }
+  header .logo{font-family:'Bebas Neue';font-size:38px;letter-spacing:2px;line-height:.9}
+  header .logo b{color:var(--orange)}
+  header .sub{font-size:11px;letter-spacing:3px;text-transform:uppercase;opacity:.85;margin-top:4px}
+
+  /* Tabs */
+  .tabs{display:flex;gap:6px;max-width:560px;margin:14px auto 0;padding:0 14px}
+  .tab{
+    flex:1;border:none;cursor:pointer;font-family:'Montserrat';font-weight:700;
+    font-size:12.5px;letter-spacing:.3px;padding:11px 6px;border-radius:11px 11px 0 0;
+    background:#dfeaec;color:var(--muted);transition:.15s;text-transform:uppercase;
+  }
+  .tab.active{background:var(--card);color:var(--green);box-shadow:0 -2px 6px rgba(0,0,0,.04)}
+  .panel{display:none;animation:fade .25s ease}
+  .panel.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+  /* Cards */
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:16px;margin-top:14px;box-shadow:0 1px 3px rgba(0,40,50,.04);
+  }
+  .card h2{
+    font-family:'Bebas Neue';font-size:22px;letter-spacing:1px;color:var(--green);
+    margin-bottom:2px;display:flex;align-items:center;gap:8px;
+  }
+  .card h2 .dot{width:9px;height:9px;border-radius:50%;background:var(--orange);display:inline-block}
+  .hint{font-size:11.5px;color:var(--muted);margin-bottom:12px}
+
+  /* Inputs */
+  .field{margin-bottom:13px}
+  .field:last-child{margin-bottom:0}
+  label{display:block;font-size:12px;font-weight:600;color:var(--green);margin-bottom:5px;letter-spacing:.2px}
+  label .tag{font-weight:500;color:var(--muted);font-size:10.5px}
+  input[type=number],select{
+    width:100%;font-family:'Montserrat';font-size:15px;font-weight:600;color:var(--ink);
+    border:1.5px solid var(--line);border-radius:9px;padding:11px 12px;background:#fbfdfd;
+    transition:.15s;
+  }
+  input[type=number]:focus,select:focus{outline:none;border-color:var(--orange);background:#fff}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+  /* Stepper */
+  .step{display:flex;align-items:center;gap:0;border:1.5px solid var(--line);border-radius:9px;overflow:hidden;background:#fbfdfd}
+  .step button{
+    border:none;background:#eef4f5;color:var(--green);font-size:20px;font-weight:700;
+    width:46px;height:44px;cursor:pointer;flex:none;transition:.12s;
+  }
+  .step button:active{background:var(--orange);color:#fff}
+  .step input{border:none;text-align:center;background:transparent;flex:1;font-size:16px}
+
+  /* Add-on toggles */
+  .opt{
+    display:flex;align-items:center;gap:11px;padding:11px 12px;border:1.5px solid var(--line);
+    border-radius:10px;margin-bottom:8px;cursor:pointer;transition:.15s;background:#fbfdfd;
+  }
+  .opt:has(input:checked){border-color:var(--orange);background:#fff8ef}
+  .opt input{width:19px;height:19px;accent-color:var(--orange);flex:none;cursor:pointer}
+  .opt .ot{flex:1}
+  .opt .on{font-weight:600;font-size:13px}
+  .opt .od{font-size:11px;color:var(--muted)}
+  .opt .op{font-family:'Bebas Neue';font-size:19px;color:var(--orange);letter-spacing:.5px}
+
+  /* Result strip */
+  .result{
+    background:linear-gradient(155deg,var(--green) 0%,var(--green-deep) 100%);
+    color:#fff;border-radius:14px;padding:18px;margin-top:14px;text-align:center;
+  }
+  .result .rl{font-size:11px;letter-spacing:2px;text-transform:uppercase;opacity:.8}
+  .result .big{font-family:'Bebas Neue';font-size:56px;letter-spacing:1px;line-height:.95;color:var(--orange)}
+  .result .pp{font-size:13px;opacity:.9;margin-top:2px}
+  .result .pp b{color:#fff}
+
+  /* Internal panel */
+  details.intern{margin-top:12px;border-radius:12px;overflow:hidden;border:1.5px solid var(--wine)}
+  details.intern summary{
+    list-style:none;cursor:pointer;background:var(--wine);color:#fff;padding:12px 15px;
+    font-weight:700;font-size:13px;display:flex;justify-content:space-between;align-items:center;
+  }
+  details.intern summary::-webkit-details-marker{display:none}
+  details.intern summary .chev{transition:.2s}
+  details.intern[open] summary .chev{transform:rotate(180deg)}
+  .ibody{background:#fff;padding:14px 15px}
+  .irow{display:flex;justify-content:space-between;font-size:13px;padding:6px 0;border-bottom:1px dashed var(--line)}
+  .irow span:last-child{font-weight:600}
+  .irow.neg span:last-child{color:var(--auburn)}
+  .irow.tot{border-bottom:none;border-top:2px solid var(--green);margin-top:4px;padding-top:9px;font-size:15px}
+  .irow.tot span{font-weight:800;color:var(--green)}
+  .irow.tot .pf{font-family:'Bebas Neue';font-size:26px;color:var(--good);letter-spacing:.5px}
+  .margin-pill{display:inline-block;background:#e8f5ee;color:var(--good);font-weight:700;font-size:12px;padding:3px 10px;border-radius:20px;margin-top:8px}
+  .margin-pill.warn{background:#fdeecf;color:#9a6400}
+  .margin-pill.bad{background:#fbe3e1;color:var(--auburn)}
+
+  /* Copy block */
+  .copybox{
+    background:#fbfdfd;border:1.5px dashed var(--line);border-radius:11px;padding:14px;
+    font-size:12.5px;white-space:pre-wrap;line-height:1.55;color:var(--ink);margin-top:4px;
+  }
+  .copybtn{
+    width:100%;margin-top:10px;background:var(--orange);color:#fff;border:none;border-radius:10px;
+    padding:13px;font-family:'Montserrat';font-weight:700;font-size:13.5px;cursor:pointer;letter-spacing:.3px;
+  }
+  .copybtn:active{background:#d97400}
+  .copied{background:var(--good)!important}
+
+  .note{background:#fff8ef;border-left:3px solid var(--orange);border-radius:0 8px 8px 0;padding:10px 12px;font-size:11.5px;color:#7a5a20;margin-top:10px}
+  .ref{font-size:11.5px;color:var(--muted);margin-top:10px;line-height:1.5}
+  .ref b{color:var(--green)}
+  .miniedit{font-size:10.5px;color:var(--wine);text-decoration:underline;cursor:pointer;background:none;border:none;padding:0;margin-top:6px}
+  .editrow{display:none;margin-top:8px}
+  .editrow.show{display:block}
+  .editgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:6px}
+  .editgrid label{font-size:10.5px}
+  .editgrid input{font-size:13px;padding:8px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">ON THE <b>ROCKS</b></div>
+  <div class="sub">Calculador Maestro · Cotizaciones</div>
+</header>
+
+<div class="tabs">
+  <button class="tab active" data-p="evento">Evento</button>
+  <button class="tab" data-p="batch">Batch</button>
+  <button class="tab" data-p="incluye">Qué incluye</button>
+</div>
+
+<div class="wrap">
+
+<!-- ============ EVENTO ============ -->
+<div class="panel active" id="evento">
+
+  <div class="card">
+    <h2><span class="dot"></span>Datos del evento</h2>
+    <p class="hint">Elige el paquete o mete los datos — el precio sale solo, siempre igual.</p>
+
+    <div class="field">
+      <label>Paquete <span class="tag">(rellena la config típica)</span></label>
+      <select id="pkg" onchange="applyPkg()">
+        <option value="custom">Personalizado</option>
+        <option value="sweet15">Sweet15 Glam — Quinceañera</option>
+        <option value="forever">Forever Toast — Boda</option>
+        <option value="mimosa">Mimosa Moments — Brunch</option>
+        <option value="corporate">Corporate Cheers — Corporativo</option>
+        <option value="ohbaby">Oh Baby — Baby Shower</option>
+        <option value="bartender">Bartender Only</option>
+      </select>
+    </div>
+
+    <div class="row2">
+      <div class="field">
+        <label>Invitados</label>
+        <div class="step"><button onclick="bump('guests',-5)">–</button><input id="guests" type="number" value="50" oninput="calcEvent()"><button onclick="bump('guests',5)">+</button></div>
+      </div>
+      <div class="field">
+        <label>Horas de servicio</label>
+        <div class="step"><button onclick="bump('hours',-1)">–</button><input id="hours" type="number" value="4" oninput="calcEvent()"><button onclick="bump('hours',1)">+</button></div>
+      </div>
+    </div>
+
+    <div class="row2">
+      <div class="field">
+        <label>Bartenders</label>
+        <div class="step"><button onclick="bump('barts',-1)">–</button><input id="barts" type="number" value="2" oninput="calcEvent()"><button onclick="bump('barts',1)">+</button></div>
+      </div>
+      <div class="field">
+        <label>Cócteles en menú <span class="tag">(2 incl.)</span></label>
+        <div class="step"><button onclick="bump('cocktails',-1)">–</button><input id="cocktails" type="number" value="3" oninput="calcEvent()"><button onclick="bump('cocktails',1)">+</button></div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Precio por persona <span class="tag">(sugerido auto · puedes cambiarlo)</span></label>
+      <div class="step"><button onclick="bump('ppp',-1)">–</button><input id="ppp" type="number" value="20" oninput="calcEvent(true)"><button onclick="bump('ppp',1)">+</button></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="dot"></span>Montaje y add-ons</h2>
+    <label class="opt"><input type="checkbox" id="ax_setup" checked onchange="calcEvent()"><div class="ot"><div class="on">Bar + menú + TVs + toppers</div><div class="od">Barra, menú en pantalla e impreso, toppers · estándar</div></div><div class="op">$500</div></label>
+    <label class="opt"><input type="checkbox" id="ax_frozen" onchange="calcEvent()"><div class="ot"><div class="on">Máquina frozen + 1 bebida frozen</div><div class="od">Bebida sin alcohol congelada</div></div><div class="op">$200</div></label>
+    <label class="opt"><input type="checkbox" id="ax_tower" onchange="calcEvent()"><div class="ot"><div class="on">Torre de cerveza</div><div class="od">Self-serve dispenser</div></div><div class="op">$250</div></label>
+    <label class="opt"><input type="checkbox" id="ax_shots" onchange="calcEvent()"><div class="ot"><div class="on">Carrito de shots</div><div class="od">Servicio de shots a la mesa</div></div><div class="op">$150</div></label>
+
+    <div style="height:6px"></div>
+    <label style="font-size:12px;font-weight:700;color:var(--wine);margin-bottom:6px;display:block">⭐ Branding OTR (logo)</label>
+    <label class="opt"><input type="checkbox" id="ax_cups" onchange="calcEvent()"><div class="ot"><div class="on">Vasos con logo</div><div class="od">Personalizados OTR</div></div><div class="op">+$1.50<span style="font-size:11px">/p</span></div></label>
+    <label class="opt"><input type="checkbox" id="ax_straws" onchange="calcEvent()"><div class="ot"><div class="on">Cocktail straws con logo</div><div class="od">Negros, logo naranja</div></div><div class="op">+$0.50<span style="font-size:11px">/p</span></div></label>
+    <label class="opt"><input type="checkbox" id="ax_napkins" onchange="calcEvent()"><div class="ot"><div class="on">Servilletas con logo</div><div class="od">Cóctel personalizadas</div></div><div class="op">+$0.50<span style="font-size:11px">/p</span></div></label>
+
+    <div class="field" style="margin-top:12px;margin-bottom:0">
+      <label>Travel fee <span class="tag">(distancia desde Richmond)</span></label>
+      <select id="travel" onchange="calcEvent()">
+        <option value="0">0–20 millas — Sin cargo</option>
+        <option value="75">21–35 millas — $75</option>
+        <option value="100">36–50 millas — $100</option>
+        <option value="150">51–75 millas — $150</option>
+        <option value="200">76+ millas — $200</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="result">
+    <div class="rl">Total para el cliente</div>
+    <div class="big" id="ev_total">$1,300</div>
+    <div class="pp"><b id="ev_pp">$26.00</b> por persona · <span id="ev_breakdown">50 invitados</span></div>
+  </div>
+
+  <details class="intern">
+    <summary><span>🔒 Vista interna — tu ganancia</span><span class="chev">▾</span></summary>
+    <div class="ibody">
+      <div class="irow"><span>Total cobrado</span><span id="i_charged">$1,300</span></div>
+      <div class="irow neg"><span id="i_labor_l">Bartenders (2 × $25/hr × 4h)</span><span id="i_labor">−$200</span></div>
+      <div class="irow neg"><span id="i_sup_l">Insumos (50 × $4.75)</span><span id="i_sup">−$237.50</span></div>
+      <div class="irow neg"><span>Menú + personalizado</span><span>−$125</span></div>
+      <div class="irow neg" id="i_addrow"><span>Costo add-ons / branding</span><span id="i_addons">−$0</span></div>
+      <div class="irow tot"><span>Ganancia neta</span><span class="pf" id="i_profit">$737</span></div>
+      <div style="text-align:center"><span class="margin-pill" id="i_margin">Margen 57%</span></div>
+      <div class="note">Costos fijos amarrados: bartenders $25/hr, insumos $4.75/persona, menú $125. El cliente provee el alcohol — no cargas licor.</div>
+    </div>
+  </details>
+
+  <div class="card">
+    <h2><span class="dot"></span>Texto para el cliente</h2>
+    <p class="hint">Cópialo y mándalo por WhatsApp. Detalla lo que entregas.</p>
+    <div class="copybox" id="ev_copy"></div>
+    <button class="copybtn" onclick="copyText('ev_copy',this)">📋 Copiar cotización</button>
+  </div>
+</div>
+
+<!-- ============ BATCH ============ -->
+<div class="panel" id="batch">
+  <div class="card">
+    <h2><span class="dot"></span>Calculadora de batch</h2>
+    <p class="hint">Precio por bebida, por persona y tu ganancia exacta.</p>
+
+    <div class="row2">
+      <div class="field">
+        <label>Personas</label>
+        <div class="step"><button onclick="bump('b_people',-5)">–</button><input id="b_people" type="number" value="50" oninput="calcBatch()"><button onclick="bump('b_people',5)">+</button></div>
+      </div>
+      <div class="field">
+        <label>Bebidas por persona</label>
+        <div class="step"><button onclick="bump('b_per',-1)">–</button><input id="b_per" type="number" value="2" oninput="calcBatch()"><button onclick="bump('b_per',1)">+</button></div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>¿Quién pone el alcohol?</label>
+      <select id="b_alc" onchange="calcBatch()">
+        <option value="client">El cliente lo provee (banquet license)</option>
+        <option value="otr">OTR lo provee (festival / tu licencia)</option>
+      </select>
+    </div>
+
+    <div class="row2">
+      <div class="field">
+        <label>Costo mezcla <span class="tag">/bebida</span></label>
+        <input id="b_mix" type="number" value="1.50" step="0.25" oninput="calcBatch()">
+      </div>
+      <div class="field">
+        <label>Precio venta <span class="tag">/bebida</span></label>
+        <input id="b_price" type="number" value="4.5" step="0.5" oninput="calcBatch()">
+      </div>
+    </div>
+    <div class="editrow show" id="b_alcrow">
+      <div class="field" style="margin-top:0">
+        <label>Costo alcohol <span class="tag">/bebida (si OTR provee)</span></label>
+        <input id="b_alccost" type="number" value="2.00" step="0.25" oninput="calcBatch()">
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="dot"></span>Add-ons con logo</h2>
+    <label class="opt"><input type="checkbox" id="b_cups" onchange="calcBatch()"><div class="ot"><div class="on">Vasos con logo</div><div class="od">costo ~$0.75/u</div></div><div class="op">+$1.50<span style="font-size:11px">/u</span></div></label>
+    <label class="opt"><input type="checkbox" id="b_straws" onchange="calcBatch()"><div class="ot"><div class="on">Straws con logo</div><div class="od">costo ~$0.10/u</div></div><div class="op">+$0.40<span style="font-size:11px">/u</span></div></label>
+    <label class="opt"><input type="checkbox" id="b_napkins" onchange="calcBatch()"><div class="ot"><div class="on">Servilletas con logo</div><div class="od">costo ~$0.08/u</div></div><div class="op">+$0.35<span style="font-size:11px">/u</span></div></label>
+
+    <div class="field" style="margin-top:12px;margin-bottom:0">
+      <label>Delivery fee <span class="tag">(drop-off de batch)</span></label>
+      <select id="b_delivery" onchange="calcBatch()">
+        <option value="0">Cliente recoge — $0</option>
+        <option value="25">0–20 millas — $25</option>
+        <option value="50">21–40 millas — $50</option>
+        <option value="75">41+ millas — $75</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="result">
+    <div class="rl">Total batch para el cliente</div>
+    <div class="big" id="b_total">$700</div>
+    <div class="pp"><span id="b_drinks">100 bebidas</span> · <b id="b_ppp">$14.00</b> por persona</div>
+  </div>
+
+  <details class="intern" open>
+    <summary><span>🔒 Vista interna — tu ganancia</span><span class="chev">▾</span></summary>
+    <div class="ibody">
+      <div class="irow"><span>Costo por bebida</span><span id="bi_cost">$1.90</span></div>
+      <div class="irow"><span>Total cobrado</span><span id="bi_charged">$700</span></div>
+      <div class="irow neg"><span>Costo total batch</span><span id="bi_totalcost">−$190</span></div>
+      <div class="irow tot"><span>Ganancia neta</span><span class="pf" id="bi_profit">$510</span></div>
+      <div style="text-align:center"><span class="margin-pill" id="bi_margin">Margen 73%</span></div>
+    </div>
+  </details>
+
+  <div class="ref">
+    <b>Tu referencia real (margarita frozen):</b> batch de $70.35 → rinde 30–42 vasos de 12oz → costo <b>$2.08–$2.75/bebida</b> (con alcohol incluido). Vendida a $7–$10 te dejó <b>$167–$333</b> de ganancia por batch.
+  </div>
+
+  <div class="card">
+    <h2><span class="dot"></span>Texto para el cliente</h2>
+    <div class="copybox" id="b_copy"></div>
+    <button class="copybtn" onclick="copyText('b_copy',this)">📋 Copiar oferta de batch</button>
+  </div>
+</div>
+
+<!-- ============ QUE INCLUYE ============ -->
+<div class="panel" id="incluye">
+  <div class="card">
+    <h2><span class="dot"></span>Lo que trae el bar móvil OTR</h2>
+    <p class="hint">Tu lista de valor. Cópiala en cotizaciones para que el cliente vea TODO lo que recibe.</p>
+    <div class="copybox" id="inc_copy"></div>
+    <button class="copybtn" onclick="copyText('inc_copy',this)">📋 Copiar lista de valor</button>
+  </div>
+</div>
+
+</div><!-- /wrap -->
+
+<script>
+const money = n => '$' + Math.round(n).toLocaleString('en-US');
+const money2 = n => '$' + n.toFixed(2);
+
+/* ===== CONSTANTES (tus costos reales) ===== */
+const COST = {
+  bartHr: 25,        // pago real por bartender/hora
+  supPP: 4.75,       // insumos por persona (mixers $3 + vasos $0.75 + hielo $1)
+  menu: 125,         // menú + personalizado fijo
+  brandCup: 0.75,    // costo vaso con logo (placeholder — confirmar)
+  brandStraw: 0.10,  // costo straw con logo (placeholder)
+  brandNap: 0.08     // costo servilleta con logo (placeholder)
+};
+const BILL = {
+  bartHr: 50,        // cobro por bartender/hora
+  setup: 500,        // bar + menú + TVs + toppers (menú incluido, no se cobra aparte)
+  frozen: 200, tower: 250, shots: 150,
+  cupPP: 1.50, strawPP: 0.50, napPP: 0.50,  // upcharge branding por persona
+  extraCocktail: 100,
+  frozenCost: 30, towerCost: 40, shotsCost: 25  // costos internos add-ons
+};
+const TARGET_MARGIN = 0.58;
+
+function val(id){return parseFloat(document.getElementById(id).value)||0}
+function bump(id,d){let e=document.getElementById(id);e.value=Math.max(0,(parseFloat(e.value)||0)+d);
+  (id.startsWith('b_')?calcBatch:calcEvent)();}
+
+/* ===== PAQUETES (config típica por evento) ===== */
+const PKG={
+  sweet15:{h:5,ck:3,setup:true},
+  forever:{h:4,ck:3,setup:true},
+  mimosa:{h:4,ck:3,setup:true},
+  corporate:{h:4,ck:3,setup:true},
+  ohbaby:{h:4,ck:2,setup:true},
+  bartender:{h:4,ck:2,setup:false}
+};
+function applyPkg(){
+  const p=PKG[document.getElementById('pkg').value];
+  if(!p) return;
+  document.getElementById('hours').value=p.h;
+  document.getElementById('cocktails').value=p.ck;
+  document.getElementById('ax_setup').checked=p.setup;
+  pppManual=false;
+  calcEvent();
+}
+
+/* ===== EVENTO ===== */
+let pppManual=false;
+function calcEvent(manual){
+  if(manual) pppManual=true;
+  const g=val('guests'), h=val('hours'), b=val('barts'), ck=val('cocktails');
+
+  // costos internos
+  const laborCost=b*COST.bartHr*h;
+  const supCost=g*COST.supPP;
+  let addCostInternal=0, addClient=0;
+  const cb=id=>document.getElementById(id).checked;
+  if(cb('ax_frozen')){addClient+=BILL.frozen; addCostInternal+=BILL.frozenCost;}
+  if(cb('ax_tower')){addClient+=BILL.tower; addCostInternal+=BILL.towerCost;}
+  if(cb('ax_shots')){addClient+=BILL.shots; addCostInternal+=BILL.shotsCost;}
+  // branding (por persona)
+  let brandClient=0, brandCost=0;
+  if(cb('ax_cups')){brandClient+=BILL.cupPP*g; brandCost+=COST.brandCup*g;}
+  if(cb('ax_straws')){brandClient+=BILL.strawPP*g; brandCost+=COST.brandStraw*g;}
+  if(cb('ax_napkins')){brandClient+=BILL.napPP*g; brandCost+=COST.brandNap*g;}
+  // cócteles extra (más de 2)
+  const extraCk=Math.max(0,ck-2)*BILL.extraCocktail;
+
+  const setupClient=cb('ax_setup')?BILL.setup:0;
+  const travel=val('travel');
+  const fixedClient=setupClient+addClient+brandClient+extraCk;
+  const totalCost=laborCost+supCost+COST.menu+addCostInternal+brandCost;
+
+  // precio sugerido por persona para llegar al margen objetivo (sin contar travel)
+  const targetTotal=totalCost/(1-TARGET_MARGIN);
+  let suggestedPPP=(targetTotal-fixedClient)/g;
+  suggestedPPP=Math.max(0,Math.round(suggestedPPP));
+  if(!pppManual){document.getElementById('ppp').value=suggestedPPP;}
+
+  const ppp=val('ppp');
+  const clientTotal=ppp*g+fixedClient+travel;
+  const profit=clientTotal-totalCost;
+  const margin=clientTotal>0?profit/clientTotal:0;
+
+  document.getElementById('ev_total').textContent=money(clientTotal);
+  document.getElementById('ev_pp').textContent=money2(clientTotal/g);
+  document.getElementById('ev_breakdown').textContent=g+' invitados · '+h+'h · '+b+' bartender'+(b!=1?'s':'');
+
+  // interna
+  document.getElementById('i_charged').textContent=money(clientTotal);
+  document.getElementById('i_labor_l').textContent='Bartenders ('+b+' × $25/hr × '+h+'h)';
+  document.getElementById('i_labor').textContent='−'+money(laborCost);
+  document.getElementById('i_sup_l').textContent='Insumos ('+g+' × $4.75)';
+  document.getElementById('i_sup').textContent='−'+money(supCost);
+  document.getElementById('i_addons').textContent='−'+money(addCostInternal+brandCost);
+  document.getElementById('i_profit').textContent=money(profit);
+  const mp=document.getElementById('i_margin');
+  mp.textContent='Margen '+Math.round(margin*100)+'%';
+  mp.className='margin-pill'+(margin>=0.55?'':margin>=0.45?' warn':' bad');
+
+  // texto cliente
+  let lines=[];
+  lines.push('🍸 ON THE ROCKS — Cotización');
+  lines.push('Bar móvil premium · '+g+' invitados · '+h+' horas');
+  lines.push('');
+  lines.push('INCLUYE:');
+  lines.push('• '+b+' bartender'+(b!=1?'s':'')+' profesional'+(b!=1?'es':''));
+  lines.push('• Menú personalizado de '+ck+' cócteles de autor');
+  lines.push('• Frutas frescas, jarabes artesanales e infusiones');
+  lines.push('• 3 mixers de tu preferencia, hielo, vasos y straws');
+  lines.push('• Flores comestibles y garnish premium');
+  if(cb('ax_setup')) lines.push('• Bar setup completo: menú en pantalla (TVs) + impreso + toppers');
+  if(cb('ax_frozen')) lines.push('• Máquina frozen + 1 bebida frozen');
+  if(cb('ax_tower')) lines.push('• Torre de cerveza self-serve');
+  if(cb('ax_shots')) lines.push('• Carrito de shots');
+  if(cb('ax_cups')||cb('ax_straws')||cb('ax_napkins')) lines.push('• Branding OTR (vasos/straws/servilletas con logo)');
+  if(travel>0) lines.push('• Travel fee (distancia): '+money(travel));
+  lines.push('');
+  lines.push('TOTAL: '+money(clientTotal)+'  ('+money2(clientTotal/g)+'/persona)');
+  lines.push('');
+  lines.push('* El cliente provee el alcohol y obtiene su Banquet License (ley ABC de Virginia). Nosotros traemos todo lo demás.');
+  document.getElementById('ev_copy').textContent=lines.join('\n');
+}
+
+/* ===== BATCH ===== */
+function calcBatch(){
+  const ppl=val('b_people'), per=val('b_per');
+  const drinks=ppl*per;
+  const mix=val('b_mix'), price=val('b_price');
+  const alc=document.getElementById('b_alc').value;
+  document.getElementById('b_alcrow').className='editrow'+(alc==='otr'?' show':'');
+  const alcCost=alc==='otr'?val('b_alccost'):0;
+
+  const cup=0.40; // vaso base
+  let perCost=mix+cup+alcCost;
+  let brandUp=0;
+  const cb=id=>document.getElementById(id).checked;
+  if(cb('b_cups')){perCost+=0.75; brandUp+=1.50;}
+  if(cb('b_straws')){perCost+=0.10; brandUp+=0.40;}
+  if(cb('b_napkins')){perCost+=0.08; brandUp+=0.35;}
+
+  const sellPer=price+brandUp;
+  const delivery=val('b_delivery');
+  const charged=sellPer*drinks+delivery;
+  const totalCost=perCost*drinks;
+  const profit=charged-totalCost;
+  const margin=charged>0?profit/charged:0;
+
+  document.getElementById('b_total').textContent=money(charged);
+  document.getElementById('b_drinks').textContent=drinks+' bebidas';
+  document.getElementById('b_ppp').textContent=money2(charged/ppl);
+  document.getElementById('bi_cost').textContent=money2(perCost);
+  document.getElementById('bi_charged').textContent=money(charged);
+  document.getElementById('bi_totalcost').textContent='−'+money(totalCost);
+  document.getElementById('bi_profit').textContent=money(profit);
+  const mp=document.getElementById('bi_margin');
+  mp.textContent='Margen '+Math.round(margin*100)+'%';
+  mp.className='margin-pill'+(margin>=0.55?'':margin>=0.45?' warn':' bad');
+
+  let l=[];
+  l.push('🍸 ON THE ROCKS — Cócteles en batch');
+  l.push('');
+  l.push(drinks+' bebidas para '+ppl+' personas ('+per+' por persona)');
+  l.push('Hechas con fruta fresca, jarabes artesanales y la receta de OTR.');
+  if(cb('b_cups')||cb('b_straws')||cb('b_napkins')) l.push('Incluye branding OTR con logo.');
+  if(delivery>0) l.push('Delivery: '+money(delivery));
+  l.push('');
+  l.push('TOTAL: '+money(charged)+'  ('+money2(charged/ppl)+'/persona)');
+  l.push('');
+  l.push('* El cliente provee el alcohol; OTR pone la mezcla, fruta, hielo y vasos.');
+  document.getElementById('b_copy').textContent=l.join('\n');
+}
+
+/* ===== INCLUYE ===== */
+document.getElementById('inc_copy').textContent=
+`🍸 ON THE ROCKS — Lo que traemos a tu evento
+
+No es solo un bartender. Es una experiencia de bar premium llave en mano.
+
+EL EQUIPO
+• Bartenders profesionales uniformados
+• Años de experiencia en coctelería y servicio
+• Montaje, operación y limpieza de la barra
+
+LA BARRA
+• Barra móvil completa con tu menú en pantalla (TVs)
+• Hielo, vasería y cocktail straws
+• Estación lista y profesional de principio a fin
+
+LOS CÓCTELES (lo que nos distingue)
+• Menú de cócteles de autor diseñado para tu evento
+• Fruta fresca cortada al momento
+• Jarabes artesanales hechos en casa
+• Infusiones y garnish premium
+• Flores comestibles
+• 3 mixers de tu preferencia para las botellas de tus invitados
+
+EL DETALLE OTR
+• Branding personalizado disponible (vasos, straws y servilletas con logo)
+• Menú impreso y digital a tu estilo
+• Asesoría de cócteles antes del evento
+
+CÓMO FUNCIONA (ley ABC de Virginia)
+Tú provees el alcohol y obtienes tu Banquet License — por eso te ayudamos con los 3 mixers de preferencia, la fruta fresca, los jarabes artesanales, las infusiones y toda la experiencia del equipo. Nosotros traemos todo lo demás; tú solo disfrutas tu fiesta.
+
+📲 @ontherocksrva · 804-502-6837`;
+
+calcEvent();
+calcBatch();
+</script>
+</body>
+</html>
