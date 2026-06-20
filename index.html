@@ -1005,6 +1005,7 @@ function setLang(lang) {
   if (btnEn) btnEn.className = 'lang-btn' + (lang==='en'?' active':'');
   document.documentElement.lang = lang;
   localStorage.setItem('otr-lang', lang);
+  if (typeof otrApplyLang === 'function') otrApplyLang();
 }
 
 // Auto-detect saved language on load
@@ -1071,11 +1072,11 @@ function showTab(id, btn) {
 </style>
 
 <div id="otr-greet-bubble" onclick="otrOpenFromBubble()"><span id="otr-greet-text">Bienvenido a On The Rocks. ¿Te ayudo a planear tu evento?</span><button id="otr-greet-x" onclick="otrDismissBubble(event)" aria-label="Cerrar">&times;</button></div>
-<button id="otr-chat-btn" onclick="otrToggleChat()" aria-label="Chat"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#00141b" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16l-8 9z"/><line x1="12" y1="13" x2="12" y2="20"/><line x1="8" y1="20" x2="16" y2="20"/></svg></button>
+<button id="otr-chat-btn" onclick="otrToggleChat()" aria-label="Chat"><svg viewBox="0 0 24 24" width="30" height="30" xmlns="http://www.w3.org/2000/svg"><g fill="#00141b"><ellipse cx="12" cy="7.9" rx="2.5" ry="4"/><ellipse cx="12" cy="7.9" rx="2.5" ry="4" transform="rotate(72 12 12)"/><ellipse cx="12" cy="7.9" rx="2.5" ry="4" transform="rotate(144 12 12)"/><ellipse cx="12" cy="7.9" rx="2.5" ry="4" transform="rotate(216 12 12)"/><ellipse cx="12" cy="7.9" rx="2.5" ry="4" transform="rotate(288 12 12)"/></g><circle cx="12" cy="12" r="2.2" fill="#F08100"/></svg></button>
 
 <div id="otr-chat-panel">
   <div class="otr-chat-head">
-    <div class="rocky-av"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#00141b" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16l-8 9z"/><line x1="12" y1="13" x2="12" y2="20"/><line x1="8" y1="20" x2="16" y2="20"/></svg></div>
+    <div class="rocky-av"><svg viewBox="0 0 24 24" width="24" height="24" xmlns="http://www.w3.org/2000/svg"><g fill="#00141b"><ellipse cx="12" cy="7.9" rx="2.5" ry="4"/><ellipse cx="12" cy="7.9" rx="2.5" ry="4" transform="rotate(72 12 12)"/><ellipse cx="12" cy="7.9" rx="2.5" ry="4" transform="rotate(144 12 12)"/><ellipse cx="12" cy="7.9" rx="2.5" ry="4" transform="rotate(216 12 12)"/><ellipse cx="12" cy="7.9" rx="2.5" ry="4" transform="rotate(288 12 12)"/></g><circle cx="12" cy="12" r="2.2" fill="#F08100"/></svg></div>
     <div>
       <div class="rocky-name">Rocky</div>
       <div class="rocky-sub" id="otr-rocky-sub">Asistente de On The Rocks</div>
