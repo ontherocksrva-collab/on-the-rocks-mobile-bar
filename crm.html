@@ -66,6 +66,8 @@ body { background:var(--dark); color:var(--white); font-family:'Montserrat',sans
     <h1>OTR <span>CRM</span></h1>
     <div class="spacer"></div>
     <button onclick="cargarLeads()">🔄 Actualizar</button>
+    <button onclick="exportarCSV()">📥 Exportar contactos</button>
+    <button onclick="verFirmados()">📄 Contratos firmados</button>
     <button onclick="logout()">Salir</button>
   </div>
   <div class="stats">
@@ -182,6 +184,83 @@ async function borrarLead(id) {
   await db.collection('leads').doc(id).delete();
   cargarLeads();
 }
+
+let firmadosCache = [];
+async function verFirmados() {
+  document.getElementById('firmados-modal').style.display = 'block';
+  const body = document.getElementById('firmados-body');
+  body.innerHTML = 'Cargando...';
+  try {
+    const snap = await db.collection('contratos_firmados').orderBy('creado','desc').limit(100).get();
+    if (snap.empty) { body.innerHTML = '<p style="color:#555;">Aún no hay contratos firmados guardados.</p>'; return; }
+    firmadosCache = [];
+    let html = '';
+    snap.forEach(doc => {
+      const d = doc.data(); firmadosCache.push(Object.assign({ id: doc.id }, d));
+      html += '<div style="border:1px solid #e0e6e8;border-radius:10px;padding:1rem;margin-bottom:1rem;">'
+        + '<div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem;">'
+        + '<div><strong>' + esc(d.clientName||'') + '</strong> · ' + esc(d.eventType||'') + '<br>'
+        + '<span style="font-size:.85rem;color:#555;">' + esc(d.eventDate||'') + ' · ' + esc(d.venue||'') + '</span></div>'
+        + '<div style="text-align:right;font-size:.85rem;color:#555;">Total: $' + ((d.total||0).toLocaleString()) + '<br>Firmado: ' + esc(d.firmadoEl||'') + '</div></div>'
+        + '<div style="margin-top:.6rem;font-size:.85rem;">Firmado por <strong>' + esc(d.firmadoPor||'') + '</strong></div>'
+        + (d.firmaImagen ? '<img src="' + d.firmaImagen + '" alt="firma" style="margin-top:.5rem;max-width:280px;border:1px solid #ddd;border-radius:6px;background:#fff;">' : '<em>Sin imagen de firma</em>')
+        + '<div style="margin-top:.7rem;"><button onclick="imprimirFirmado(\'' + doc.id + '\')" style="background:#F08100;color:#000;border:none;border-radius:7px;padding:.5rem .9rem;font-weight:700;cursor:pointer;">Imprimir / Guardar PDF</button></div></div>';
+    });
+    body.innerHTML = html;
+  } catch (e) { body.innerHTML = '<p style="color:#a00;">Error: ' + esc(e.message) + '</p>'; }
+}
+function cerrarFirmados() { document.getElementById('firmados-modal').style.display = 'none'; }
+function imprimirFirmado(id) {
+  const d = firmadosCache.find(x => x.id === id); if (!d) return;
+  const w = window.open('', '_blank');
+  w.document.write('<html><head><title>Contrato firmado - ' + esc(d.clientName||'') + '</title>'
+    + '<style>body{font-family:Arial,sans-serif;color:#0a1a1f;padding:2rem;max-width:700px;margin:0 auto;}'
+    + 'h1{color:#004E5E;border-bottom:3px solid #F08100;padding-bottom:.4rem;}'
+    + 'table{width:100%;border-collapse:collapse;margin:1rem 0;}td{padding:.4rem .6rem;border-bottom:1px solid #eee;}'
+    + 'td:first-child{color:#555;width:38%;}.sig{margin-top:1.5rem;}.sig img{border:1px solid #ccc;border-radius:6px;}</style></head>'
+    + '<body><h1>On The Rocks — Contrato Firmado</h1><table>'
+    + '<tr><td>Cliente</td><td>' + esc(d.clientName||'') + '</td></tr>'
+    + '<tr><td>Email</td><td>' + esc(d.clientEmail||'') + '</td></tr>'
+    + '<tr><td>Telefono</td><td>' + esc(d.clientPhone||'') + '</td></tr>'
+    + '<tr><td>Evento</td><td>' + esc(d.eventType||'') + ' — ' + esc(d.eventDate||'') + '</td></tr>'
+    + '<tr><td>Lugar</td><td>' + esc(d.venue||'') + '</td></tr>'
+    + '<tr><td>Invitados</td><td>' + esc(String(d.guests||'')) + '</td></tr>'
+    + '<tr><td>Total</td><td>$' + ((d.total||0).toLocaleString()) + '</td></tr>'
+    + '<tr><td>Deposito</td><td>$' + ((d.deposit||0).toLocaleString()) + '</td></tr>'
+    + '<tr><td>Saldo pendiente</td><td>$' + ((d.remain||0).toLocaleString()) + '</td></tr></table>'
+    + '<div class="sig"><p>Firmado por <strong>' + esc(d.firmadoPor||'') + '</strong> el ' + esc(d.firmadoEl||'') + '</p>'
+    + (d.firmaImagen ? '<img src="' + d.firmaImagen + '" width="300">' : '') + '</div></body></html>');
+  w.document.close();
+  setTimeout(function(){ w.print(); }, 400);
+}
+
+async function exportarCSV() {
+  try {
+    const snap = await db.collection('contactos').get();
+    if (snap.empty) { alert('Aún no hay contactos guardados en la base.'); return; }
+    const rows = [['Nombre','Email','Telefono','Tipo de evento','Fuente','Marketing','Idioma']];
+    snap.forEach(doc => {
+      const d = doc.data();
+      rows.push([ d.nombre||'', d.email||'', d.telefono||'', d.tipoEvento||'', d.fuente||'', (d.marketing ? 'Si':'No'), d.idioma||'' ]);
+    });
+    const csv = rows.map(r => r.map(c => '"' + String(c).replace(/"/g,'""') + '"').join(',')).join('\n');
+    const blob = new Blob(['\ufeff' + csv], { type:'text/csv;charset=utf-8;' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'OTR-contactos-' + new Date().toISOString().slice(0,10) + '.csv';
+    a.click();
+  } catch (e) { alert('Error al exportar: ' + e.message); }
+}
+
 </script>
+<div id="firmados-modal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,15,20,0.85);overflow:auto;padding:1.5rem;">
+  <div style="max-width:760px;margin:0 auto;background:#fff;color:#0a1a1f;border-radius:14px;overflow:hidden;">
+    <div style="background:#004E5E;color:#fff;padding:1rem 1.3rem;display:flex;justify-content:space-between;align-items:center;">
+      <strong style="font-size:1.05rem;">Contratos firmados</strong>
+      <button onclick="cerrarFirmados()" style="background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;line-height:1;">&times;</button>
+    </div>
+    <div id="firmados-body" style="padding:1.2rem;">Cargando...</div>
+  </div>
+</div>
 </body>
 </html>

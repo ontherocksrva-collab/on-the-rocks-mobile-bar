@@ -6,6 +6,8 @@
 <title>On The Rocks — Sistema de Contratos</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <style>
   :root {
     --green: #004E5E;
@@ -579,6 +581,18 @@ const ADMIN_PIN = 'otr2026';
 
 emailjs.init(EMAILJS_PUBKEY);
 
+// ===== FIREBASE — base de datos de contactos =====
+const OTR_FIREBASE = {
+  apiKey: "AIzaSyAv5s7pYbxQZ8ghbheZoz9bs-h7B7dqtjg",
+  authDomain: "otr-crm-77dc2.firebaseapp.com",
+  projectId: "otr-crm-77dc2",
+  storageBucket: "otr-crm-77dc2.firebasestorage.app",
+  messagingSenderId: "1060934914326",
+  appId: "1:1060934914326:web:e0040864d8891405b48037"
+};
+let otrContactosDB = null;
+try { firebase.initializeApp(OTR_FIREBASE); otrContactosDB = firebase.firestore(); } catch (e) {}
+
 // ===== STATE =====
 let activeServices = {};
 let contractData = {};
@@ -681,6 +695,18 @@ async function generateAndSend() {
     showStatus('Por favor completa nombre, email, tipo de evento y fecha.', 'error');
     return;
   }
+
+  // Guardar contacto en la base centralizada (marketing) — no bloquea el contrato
+  try {
+    if (otrContactosDB) {
+      const cid = (email || phone).replace(/[^a-zA-Z0-9]/g, '_');
+      if (cid) await otrContactosDB.collection('contactos').doc(cid).set({
+        nombre: name, email: email, telefono: phone,
+        tipoEvento: eventType, fuente: 'contrato', marketing: true,
+        idioma: 'es', actualizado: firebase.firestore.FieldValue.serverTimestamp()
+      }, { merge: true });
+    }
+  } catch (e) { /* el contrato sigue su curso */ }
 
   const guestsNum = parseInt(guests) || 0;
   const bartending = guestsNum * 20;
@@ -963,6 +989,29 @@ async function submitSignature() {
   const canvas = document.getElementById('sigCanvas');
   const sigImage = canvas.toDataURL('image/png');
   const acceptedDate = new Date().toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+  // Guardar el contrato firmado (con la firma) en Firebase — prueba permanente para los salones
+  try {
+    if (otrContactosDB) {
+      await otrContactosDB.collection('contratos_firmados').add({
+        clientName: contractData.clientName,
+        clientEmail: contractData.clientEmail,
+        clientPhone: contractData.clientPhone,
+        eventType: contractData.eventType,
+        eventDate: contractData.eventDateFormatted,
+        venue: contractData.venue || contractData.clientAddress,
+        guests: contractData.guests,
+        total: contractData.total,
+        deposit: contractData.deposit,
+        remain: contractData.remain,
+        firmadoPor: sigName,
+        firmadoEl: acceptedDate,
+        firmaImagen: sigImage,
+        contrato: JSON.stringify(contractData),
+        creado: firebase.firestore.FieldValue.serverTimestamp()
+      });
+    }
+  } catch (e) { console.log('Error guardando contrato firmado', e); }
 
   // Notify OTR
   try {
