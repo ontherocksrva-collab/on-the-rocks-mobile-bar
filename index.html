@@ -1218,7 +1218,13 @@ function otrDismissBubble(e) {
 function otrAddMsg(who, text) {
   const m = document.createElement('div');
   m.className = 'otr-msg ' + who;
-  m.textContent = text;
+  var safe = String(text).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  safe = safe.replace(/(https?:\/\/[^\s<]+)/g, function(u){
+    var tail=''; var mt=u.match(/[.,;:!?)]+$/); if(mt){ tail=mt[0]; u=u.slice(0,-tail.length); }
+    var label=u; if(/ebook-otr\.pdf/i.test(u)){ label=(typeof otrLang==='function'&&otrLang()==='en')?'View our catalog':'Ver catálogo'; }
+    return '<a href="'+u+'" target="_blank" rel="noopener" style="color:#F08100;font-weight:700;text-decoration:underline;word-break:break-word;">'+label+'</a>'+tail;
+  });
+  m.innerHTML = safe;
   document.getElementById('otr-chat-msgs').appendChild(m);
   m.scrollIntoView({ behavior:'smooth', block:'end' });
   return m;
