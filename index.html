@@ -989,6 +989,21 @@ function showTab(id, btn) {
 <script>
 (function(){
   var OTR_WORKER="https://otr-chatbot.ontherocksrva.workers.dev", WA="18045026837";
+  var OTR_FORM="https://docs.google.com/forms/d/e/1FAIpQLScaoDZYt8TCsI0G3oP9Zzrzr2NLlTLBfJlhAIEiiGjNagGqwQ/formResponse";
+  var FE={nombre:"entry.434087601",tel:"entry.1238588240",email:"entry.3159525",tipo:"entry.77124267",fecha:"entry.1658740120",personas:"entry.1460868803",origen:"entry.1840468613"};
+  function otrLogToSheet(d){
+    try{
+      var p=new URLSearchParams();
+      if(d.nombre)p.append(FE.nombre,d.nombre);
+      if(d.tel)p.append(FE.tel,d.tel);
+      if(d.email)p.append(FE.email,d.email);
+      if(d.tipo)p.append(FE.tipo,d.tipo);
+      if(d.fecha)p.append(FE.fecha,d.fecha);
+      if(d.personas)p.append(FE.personas,d.personas);
+      if(d.origen)p.append(FE.origen,d.origen);
+      fetch(OTR_FORM,{method:"POST",mode:"no-cors",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:p.toString()});
+    }catch(e){}
+  }
   var otrMsgs=[], otrOpened=false;
   function isEs(){return (typeof currentLang!=='undefined'?currentLang:'es')==='es';}
   function bodyEl(){return document.getElementById('otr-ch-body');}
@@ -1019,7 +1034,9 @@ function showTab(id, btn) {
       var hadLead=/\[LEAD_FORM\]/.test(reply);
       reply=reply.replace(/\[LEAD_FORM\]/g,'').trim();
       add('bot',reply);otrMsgs.push({role:'assistant',content:reply});
-      if(hadLead)leadCTA();
+      if(hadLead){leadCTA();
+        try{var tr=otrMsgs.map(function(mm){return (mm.role==="user"?"C: ":"R: ")+mm.content;}).join(" | ").slice(-450);otrLogToSheet({origen:"Chat Rocky — "+tr});}catch(e){}
+      }
     }catch(e){typing.remove();add('bot',isEs()?'Ups, hubo un problema de conexión. Escríbenos por WhatsApp al 804-502-6837.':'Oops, a connection issue. Reach us on WhatsApp at 804-502-6837.');}
   };
   // ----- Form "Solicita tu cotización" -> WhatsApp prellenado -----
@@ -1034,6 +1051,7 @@ function showTab(id, btn) {
       +(es?"Personas: ":"Guests: ")+guests+"\n"
       +(es?"Fecha: ":"Date: ")+date+"\n"
       +(es?"Mensaje: ":"Message: ")+msg;
+    otrLogToSheet({nombre:name,tipo:type,fecha:date,personas:guests,origen:"Formulario web"+(msg?" — "+msg:"")});
     window.open("https://wa.me/"+WA+"?text="+encodeURIComponent(text),'_blank');
   };
 })();
