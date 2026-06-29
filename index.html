@@ -979,6 +979,12 @@ function showTab(id, btn) {
 .otr-ch-foot{display:flex;gap:.4rem;padding:.6rem;border-top:1px solid #eee;background:#fff}
 .otr-ch-foot input{flex:1;border:1px solid #ddd;border-radius:20px;padding:.5rem .8rem;font:inherit;font-size:.85rem;outline:none;color:#1a1a1a}
 .otr-ch-foot button{background:#0e4f4f;color:#fff;border:none;border-radius:50%;width:38px;height:38px;cursor:pointer;font-size:1rem}
+.otr-quote-card{align-self:flex-start;background:#fff;border:1px solid #e3e3e0;border-radius:12px;padding:.6rem .7rem;max-width:90%;font-size:.8rem;color:#1a1a1a}
+.otr-q-head{font-weight:600;color:#0e4f4f;margin-bottom:.15rem}
+.otr-q-total{font-size:1.15rem;font-weight:700;color:#0e4f4f;margin-bottom:.4rem}
+.otr-q-row{display:flex;justify-content:space-between;gap:.6rem;border-top:1px solid #f0f0ee;padding:.2rem 0}
+.otr-q-row span:last-child{font-weight:600;white-space:nowrap}
+.otr-q-note{margin-top:.4rem;font-size:.68rem;color:#777}
 </style>
 <button id="otr-chat-btn" aria-label="Chat con Rocky" onclick="otrToggleChat()">💬</button>
 <div id="otr-chat-panel" role="dialog" aria-label="Rocky chat">
@@ -1009,6 +1015,19 @@ function showTab(id, btn) {
   function bodyEl(){return document.getElementById('otr-ch-body');}
   function scroll(){var b=bodyEl();b.scrollTop=b.scrollHeight;}
   function add(cls,txt){var d=document.createElement('div');d.className='otr-msg '+cls;d.textContent=txt;bodyEl().appendChild(d);scroll();return d;}
+  function esc(t){return String(t).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c];});}
+  function money(n){return "$"+Number(n).toLocaleString("en-US");}
+  function quoteCard(q){
+    try{
+      var es=isEs();
+      var rows=(q.lines||[]).map(function(l){return '<div class="otr-q-row"><span>'+esc(l.label)+'</span><span>'+money(l.amount)+'</span></div>';}).join("");
+      var c=document.createElement("div");c.className="otr-quote-card";
+      c.innerHTML='<div class="otr-q-head">'+(es?"Estimado":"Estimate")+' · '+esc(q.package)+'</div>'
+        +'<div class="otr-q-total">'+money(q.low)+' – '+money(q.high)+'</div>'+rows
+        +'<div class="otr-q-note">'+(es?"Estimado; Gio confirma la cotización final personalizada.":"Estimate; Gio confirms the final personalized quote.")+'</div>';
+      bodyEl().appendChild(c);scroll();
+    }catch(e){}
+  }
   window.otrToggleChat=function(){
     var p=document.getElementById('otr-chat-panel');p.classList.toggle('open');
     if(p.classList.contains('open')&&!otrOpened){otrOpened=true;
@@ -1033,7 +1052,9 @@ function showTab(id, btn) {
       var reply=(j&&j.reply)?j.reply:'...';
       var hadLead=/\[LEAD_FORM\]/.test(reply);
       reply=reply.replace(/\[LEAD_FORM\]/g,'').trim();
+      if(j&&j.quote){reply=reply.replace(/\n*— (Estimado aproximado|Estimated range)[\s\S]*$/,'').trim();}
       add('bot',reply);otrMsgs.push({role:'assistant',content:reply});
+      if(j&&j.quote)quoteCard(j.quote);
       if(hadLead){leadCTA();
         try{var tr=otrMsgs.map(function(mm){return (mm.role==="user"?"C: ":"R: ")+mm.content;}).join(" | ").slice(-450);otrLogToSheet({origen:"Chat Rocky — "+tr});}catch(e){}
       }
