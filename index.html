@@ -842,6 +842,23 @@ document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal();
 </script>
 
 <!-- PACKAGES -->
+<!-- GALERIA EN ACCION -->
+<section class="section" id="en-accion" style="background:#00141d;">
+  <div style="max-width:1100px;margin:0 auto;padding:0 1.5rem;text-align:center;">
+    <div class="hero-eyebrow" style="color:#F08100;">En acci&oacute;n</div>
+    <h2 style="font-size:clamp(2rem,5vw,3.2rem);font-weight:900;text-transform:uppercase;color:#F6F6F6;line-height:1;margin-bottom:0.7rem;">As&iacute; se vive On The Rocks</h2>
+    <p style="color:rgba(246,246,246,0.6);max-width:640px;margin:0 auto 2.5rem;">C&oacute;cteles artesanales, barra montada y el mejor ambiente para tu evento.</p>
+    <video class="otr-gv" autoplay muted loop playsinline preload="metadata" poster="images/exp-barra.jpg" style="width:100%;border-radius:18px;box-shadow:0 16px 50px rgba(0,0,0,0.55);margin-bottom:1.4rem;display:block;">
+      <source src="videos/nightlife_loop.mp4" type="video/mp4">
+    </video>
+    <div style="display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap;">
+      <video class="otr-gv" autoplay muted loop playsinline preload="metadata" poster="images/exp-carrito.jpg" style="width:240px;max-width:46vw;border-radius:14px;box-shadow:0 12px 40px rgba(0,0,0,0.5);"><source src="videos/frozen_loop.mp4" type="video/mp4"></video>
+      <video class="otr-gv" autoplay muted loop playsinline preload="metadata" poster="images/exp-equipo.jpg" style="width:240px;max-width:46vw;border-radius:14px;box-shadow:0 12px 40px rgba(0,0,0,0.5);"><source src="videos/wedding_loop.mp4" type="video/mp4"></video>
+      <video class="otr-gv" autoplay muted loop playsinline preload="metadata" poster="images/exp-ambiente.jpg" style="width:240px;max-width:46vw;border-radius:14px;box-shadow:0 12px 40px rgba(0,0,0,0.5);"><source src="videos/ambiente_loop.mp4" type="video/mp4"></video>
+    </div>
+  </div>
+</section>
+
 <section class="section packages-bg" id="packages">
   <div class="section-inner" style="position:relative;">
     <div class="section-label" data-i18n="packages-label">Experiencias personalizadas</div>
@@ -1121,5 +1138,9 @@ function showTab(id, btn) {
 </script>
 
 <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+<script>
+/* OTR: pausa videos de galeria fuera de pantalla para ahorrar recursos */
+(function(){try{var vs=document.querySelectorAll('video.otr-gv');if(!('IntersectionObserver'in window))return;var io=new IntersectionObserver(function(es){es.forEach(function(e){var v=e.target;if(e.isIntersecting){var p=v.play();if(p&&p.catch)p.catch(function(){});}else{v.pause();}});},{threshold:0.25});vs.forEach(function(v){io.observe(v);});}catch(e){}})();
+</script>
 </body>
 </html>
