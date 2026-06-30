@@ -332,9 +332,7 @@ footer { background:#000; border-top:1px solid rgba(240,129,0,0.15); padding:2.5
 
 <!-- HERO -->
 <section class="hero" id="home">
-  <video class="hero-video" autoplay muted loop playsinline poster="images/exp-barra.jpg">
-    <source src="videos/hero_loop.mp4" type="video/mp4">
-  </video>
+  <video class="hero-video" id="heroVid" autoplay muted playsinline poster="images/momento-06-cocteles-flor.jpg"></video>
   <div class="hero-video-overlay"></div>
   <div class="hero-content">
     <div class="hero-eyebrow" data-i18n="hero-eyebrow">Richmond, Virginia</div>
@@ -375,7 +373,7 @@ footer { background:#000; border-top:1px solid rgba(240,129,0,0.15); padding:2.5
         </div>
       </div>
       <div style="position:relative;border-radius:18px;overflow:hidden;box-shadow:0 14px 44px rgba(0,0,0,0.55);aspect-ratio:9/14;background:#000;">
-        <video class="otr-gv" autoplay muted loop playsinline preload="metadata" poster="images/otr-barra-montada-evento.jpg" style="width:100%;height:100%;object-fit:cover;display:block;"><source src="videos/evento-corporate.mp4" type="video/mp4"></video>
+        <video class="otr-gv" autoplay muted loop playsinline preload="metadata" poster="images/momento-06-cocteles-flor.jpg" style="width:100%;height:100%;object-fit:cover;display:block;"><source src="videos/evento-corporate.mp4" type="video/mp4"></video>
         <div style="position:absolute;left:0;right:0;bottom:0;padding:1.1rem 1.2rem;background:linear-gradient(transparent,rgba(0,0,0,0.88));text-align:left;">
           <div style="color:#F08100;font-size:0.65rem;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;">On The Rocks</div>
           <div style="color:#fff;font-weight:900;text-transform:uppercase;font-size:1.3rem;letter-spacing:0.02em;" data-i18n="tipos-corp">Corporativos</div>
@@ -420,7 +418,7 @@ footer { background:#000; border-top:1px solid rgba(240,129,0,0.15); padding:2.5
     <h2 class="section-title"><span data-i18n="services-title1">Nuestros</span><br><span data-i18n="services-title2">servicios.</span></h2>
     <div class="services-grid">
       <div class="svc-card">
-        <img src="images/otr-barra-montada-evento.jpg" alt="Barra móvil montada en evento" loading="lazy" style="width:100%;height:260px;object-fit:cover;object-position:center;display:block;">
+        <img src="images/momento-06-cocteles-flor.jpg" alt="Barra móvil montada en evento" loading="lazy" style="width:100%;height:260px;object-fit:cover;object-position:center;display:block;">
         <div class="svc-body">
           <div class="svc-num">01</div>
           <div class="svc-title" data-i18n="service1-title">Barra Móvil Completa</div>
@@ -428,7 +426,7 @@ footer { background:#000; border-top:1px solid rgba(240,129,0,0.15); padding:2.5
         </div>
       </div>
       <div class="svc-card">
-        <img src="images/otr-bartender-servicio.jpg" alt="Bartender profesional en servicio" loading="lazy" style="width:100%;height:260px;object-fit:cover;object-position:center;display:block;">
+        <img src="images/momento-02-bartender-coctel.jpg" alt="Bartender profesional en servicio" loading="lazy" style="width:100%;height:260px;object-fit:cover;object-position:center;display:block;">
         <div class="svc-body">
           <div class="svc-num">02</div>
           <div class="svc-title" data-i18n="service2-title">Bartender Profesional</div>
@@ -672,9 +670,6 @@ document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal();
     <div class="hero-eyebrow" style="color:#F08100;" data-i18n="accion-eyebrow">En acci&oacute;n</div>
     <h2 style="font-size:clamp(2rem,5vw,3.2rem);font-weight:900;text-transform:uppercase;color:#F6F6F6;line-height:1;margin-bottom:0.7rem;" data-i18n="accion-title">As&iacute; se vive On The Rocks</h2>
     <p style="color:rgba(246,246,246,0.6);max-width:640px;margin:0 auto 2.5rem;" data-i18n="accion-sub">C&oacute;cteles artesanales, barra montada y el mejor ambiente para tu evento.</p>
-    <video class="otr-gv" autoplay muted loop playsinline preload="metadata" poster="images/exp-barra.jpg" style="width:100%;border-radius:18px;box-shadow:0 16px 50px rgba(0,0,0,0.55);margin-bottom:1.4rem;display:block;">
-      <source src="videos/nightlife_loop.mp4" type="video/mp4">
-    </video>
     <div style="display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap;">
       <video class="otr-gv" autoplay muted loop playsinline preload="metadata" poster="images/exp-carrito.jpg" style="width:240px;max-width:46vw;border-radius:14px;box-shadow:0 12px 40px rgba(0,0,0,0.5);"><source src="videos/frozen_loop.mp4" type="video/mp4"></video>
       <video class="otr-gv" autoplay muted loop playsinline preload="metadata" poster="images/exp-equipo.jpg" style="width:240px;max-width:46vw;border-radius:14px;box-shadow:0 12px 40px rgba(0,0,0,0.5);"><source src="videos/wedding_loop.mp4" type="video/mp4"></video>
@@ -691,9 +686,9 @@ document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal();
       <div class="pkg-card"><div class="pkg-vid"><video class="otr-gv" autoplay muted loop playsinline preload="none" poster="images/poster-quince.jpg"><source src="videos/evento-quince.mp4" type="video/mp4"></video></div><div class="pkg-name">Sweet 15 Glam</div><div class="pkg-sub" data-i18n="pkg-sub-1">Quinceañeras</div><p class="pkg-desc">5 horas de servicio, bar setup clásico, menú digital personalizado, 2 cócteles especiales, 1 mocktail, bartenders, garnishes, flores comestibles, espejo personalizado.</p></div>
       <div class="pkg-card"><div class="pkg-vid"><video class="otr-gv" autoplay muted loop playsinline preload="none" poster="images/exp-ambiente.jpg"><source src="videos/ambiente_loop.mp4" type="video/mp4"></video></div><div class="pkg-name">Mimosa Moments</div><div class="pkg-sub" data-i18n="pkg-sub-2">Brunch & Baby Showers</div><p class="pkg-desc">4 horas de servicio, 3 sabores de mimosa, garnishes premium con flores comestibles, crystal toppers personalizados, glassware, ice, mixers y syrups artesanales.</p></div>
       <div class="pkg-card"><div class="pkg-vid"><video class="otr-gv" autoplay muted loop playsinline preload="none" poster="images/poster-boda.jpg"><source src="videos/evento-boda.mp4" type="video/mp4"></video></div><div class="pkg-name">Forever Toast</div><div class="pkg-sub" data-i18n="pkg-sub-3">Bodas & Aniversarios</div><p class="pkg-desc">4 horas de servicio, bar setup, 2 cócteles signature + extra, menú digital personalizado, crystal toppers, garnishes, flores, stir sticks personalizados, carrito de shots.</p></div>
-      <div class="pkg-card"><div class="pkg-vid"><video class="otr-gv" autoplay muted loop playsinline preload="none" poster="images/otr-barra-montada-evento.jpg"><source src="videos/evento-corporate.mp4" type="video/mp4"></video></div><div class="pkg-name">Corporate Cheers</div><div class="pkg-sub" data-i18n="pkg-sub-4">Eventos Corporativos</div><p class="pkg-desc">4 horas de servicio, bar setup con menú digital y crystal toppers, craft mixers, flores decorativas, fruta fresca, cups, ice, bar tools y bartender profesional.</p></div>
+      <div class="pkg-card"><div class="pkg-vid"><video class="otr-gv" autoplay muted loop playsinline preload="none" poster="images/momento-06-cocteles-flor.jpg"><source src="videos/evento-corporate.mp4" type="video/mp4"></video></div><div class="pkg-name">Corporate Cheers</div><div class="pkg-sub" data-i18n="pkg-sub-4">Eventos Corporativos</div><p class="pkg-desc">4 horas de servicio, bar setup con menú digital y crystal toppers, craft mixers, flores decorativas, fruta fresca, cups, ice, bar tools y bartender profesional.</p></div>
       <div class="pkg-card"><div class="pkg-vid"><video class="otr-gv" autoplay muted loop playsinline preload="none" poster="images/exp-toppers.jpg"><source src="videos/frozen_loop.mp4" type="video/mp4"></video></div><div class="pkg-name">Oh Baby</div><div class="pkg-sub" data-i18n="pkg-sub-5">Baby Showers</div><p class="pkg-desc">4 horas + setup, 2 cócteles temáticos (boy/girl), 3 mixers a elección, bartender, mixers, ice, fruta fresca, flores comestibles, cups y cocktail toppers personalizados.</p></div>
-      <div class="pkg-card"><div class="pkg-vid"><video class="otr-gv" autoplay muted loop playsinline preload="none" poster="images/exp-equipo.jpg"><source src="videos/nightlife_loop.mp4" type="video/mp4"></video></div><div class="pkg-name">Bartender Only</div><div class="pkg-sub" data-i18n="pkg-sub-6">Solo el profesional</div><p class="pkg-desc">Consulta pre-evento, 4 horas de servicio, 1 hora setup/breakdown, 2 signature drinks, bartender con herramientas, liquor liability & insurance, garnishes y menú impreso.</p></div>
+      <div class="pkg-card"><div class="pkg-vid"><video class="otr-gv" autoplay muted loop playsinline preload="none" poster="images/exp-equipo.jpg"><source src="videos/wedding_loop.mp4" type="video/mp4"></video></div><div class="pkg-name">Bartender Only</div><div class="pkg-sub" data-i18n="pkg-sub-6">Solo el profesional</div><p class="pkg-desc">Consulta pre-evento, 4 horas de servicio, 1 hora setup/breakdown, 2 signature drinks, bartender con herramientas, liquor liability & insurance, garnishes y menú impreso.</p></div>
     </div>
   </div>
 </section>
@@ -1079,6 +1074,17 @@ function showTab(id, btn) {
       animar(document.getElementById('st-eventos'),eventos,'+');
       animar(document.getElementById('st-cocteles'),cocteles,'+'); }
   }); },{threshold:.4}); io.observe(sec); }
+})();
+</script>
+<script>
+(function(){
+  var hv=document.getElementById('heroVid');
+  if(!hv) return;
+  var hp=['videos/ambiente_loop.mp4','videos/wedding_loop.mp4','videos/evento-boda.mp4','videos/evento-quince.mp4'];
+  var hi=0;
+  function load(){ hv.src=hp[hi]; hv.play().catch(function(){}); }
+  hv.addEventListener('ended',function(){ hi=(hi+1)%hp.length; load(); });
+  load();
 })();
 </script>
 </body>
