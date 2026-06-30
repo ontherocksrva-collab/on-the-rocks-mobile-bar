@@ -288,6 +288,7 @@ footer { background:#000; border-top:1px solid rgba(240,129,0,0.15); padding:2.5
   footer { flex-direction:column; text-align:center; }
 }
 </style>
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 </head>
 <body>
 
@@ -863,6 +864,7 @@ document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal();
           <div class="contact-item"><div class="contact-icon">📸</div><a href="https://instagram.com/ontherocksrva" target="_blank">@ontherocksrva</a></div>
         </div>
         <a href="https://wa.me/18045026837" class="btn btn-primary" data-i18n="contact-btn">WhatsApp directo</a>
+        <a href="#" onclick="Calendly.initPopupWidget({url:'https://calendly.com/ontherocksrva/event'});return false;" class="btn btn-outline" style="margin-top:0.6rem;" data-i18n="contact-cal">📅 Agenda una consulta</a>
       </div>
       <div class="contact-form">
         <div class="form-title" data-i18n="form-title">Solicita tu cotización</div>
@@ -1096,5 +1098,6 @@ function showTab(id, btn) {
 })();
 </script>
 
+<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
 </body>
 </html>
