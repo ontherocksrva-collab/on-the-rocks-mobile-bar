@@ -1032,21 +1032,32 @@ function showTab(id, btn) {
 </script>
 <!-- ====== MUSICA DE FONDO OTR ====== -->
 <audio id="otr-bgm" preload="none"></audio>
+<button id="otr-prev" aria-label="Canción anterior" onclick="otrPrev()" style="position:fixed;bottom:6.7rem;left:5.3rem;z-index:1000;width:40px;height:40px;border-radius:50%;border:none;background:#004E5E;color:#fff;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.4);display:none;align-items:center;justify-content:center;transition:transform .2s;">
+  <svg width="17" height="17" viewBox="0 0 24 24" fill="#fff"><path d="M19 4L9 12l10 8V4zM7 4H5v16h2z"/></svg>
+</button>
+<button id="otr-next" aria-label="Siguiente canción" onclick="otrNext()" style="position:fixed;bottom:6.7rem;left:8.1rem;z-index:1000;width:40px;height:40px;border-radius:50%;border:none;background:#004E5E;color:#fff;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.4);display:none;align-items:center;justify-content:center;transition:transform .2s;">
+  <svg width="17" height="17" viewBox="0 0 24 24" fill="#fff"><path d="M5 4l10 8-10 8V4zm12 0h2v16h-2z"/></svg>
+</button>
 <button id="otr-music-btn" aria-label="Música" onclick="otrToggleMusic()" style="position:fixed;bottom:2rem;left:6.6rem;z-index:1000;width:48px;height:48px;border-radius:50%;border:none;background:#EB5C0B;color:#fff;cursor:pointer;box-shadow:0 6px 18px rgba(235,92,11,.45);display:flex;align-items:center;justify-content:center;transition:transform .2s;">
   <svg id="otr-music-ic" width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/></svg>
 </button>
 <script>
 (function(){
   var a=document.getElementById('otr-bgm'), b=document.getElementById('otr-music-btn'), ic=document.getElementById('otr-music-ic'), playing=false;
+  var prevBtn=document.getElementById('otr-prev'), nextBtn=document.getElementById('otr-next');
   var ON='<path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/>';
   var OFF='<path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/><line x1="3" y1="3" x2="21" y2="21" stroke="#fff" stroke-width="2"/>';
   /* === PLAYLIST OTR (pink pool primero, luego rotan) === */
   var playlist=['otr-vibe-1-pinkpool.mp3','otr-vibe-2-summerhouse.mp3','otr-vibe-3-sunset.mp3','otr-vibe-4-vacation.mp3','otr-vibe-5-peru.mp3'];
   var idx=0; a.src=playlist[0];
+  function skips(s){ prevBtn.style.display=s?'flex':'none'; nextBtn.style.display=s?'flex':'none'; }
+  function playNow(){ a.volume=0.45; a.play().then(function(){ playing=true; ic.innerHTML=ON; b.style.background='#EB5C0B'; b.style.animation='otrPulse 2s infinite'; skips(true); }).catch(function(){}); }
   a.addEventListener('ended',function(){ idx=(idx+1)%playlist.length; a.src=playlist[idx]; if(playing){ a.play().catch(function(){}); } });
+  window.otrNext=function(){ idx=(idx+1)%playlist.length; a.src=playlist[idx]; playNow(); };
+  window.otrPrev=function(){ idx=(idx-1+playlist.length)%playlist.length; a.src=playlist[idx]; playNow(); };
   window.otrToggleMusic=function(){
-    if(playing){ a.pause(); playing=false; ic.innerHTML=OFF; b.style.background='#555'; b.style.animation='none'; }
-    else { a.volume=0.45; a.play().then(function(){ playing=true; ic.innerHTML=ON; b.style.background='#EB5C0B'; b.style.animation='otrPulse 2s infinite'; }).catch(function(){}); }
+    if(playing){ a.pause(); playing=false; ic.innerHTML=OFF; b.style.background='#555'; b.style.animation='none'; skips(false); }
+    else { playNow(); }
   };
 })();
 </script>
