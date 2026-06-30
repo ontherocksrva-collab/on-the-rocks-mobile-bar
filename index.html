@@ -1046,7 +1046,7 @@ function showTab(id, btn) {
   var ON='<path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/>';
   var OFF='<path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/><line x1="3" y1="3" x2="21" y2="21" stroke="#fff" stroke-width="2"/>';
   /* === PLAYLIST OTR (pink pool primero, luego rotan) === */
-  var playlist=['music/otr-vibe-1-pinkpool.mp3','music/otr-vibe-2-summerhouse.mp3','music/otr-vibe-3-sunset.mp3','music/otr-vibe-4-vacation.mp3','music/otr-vibe-5-peru.mp3'];
+  var playlist=['otr-vibe-1-pinkpool.mp3','otr-vibe-2-summerhouse.mp3','otr-vibe-3-sunset.mp3','otr-vibe-4-vacation.mp3','otr-vibe-5-peru.mp3'];
   var idx=0; a.src=playlist[0];
   a.addEventListener('ended',function(){ idx=(idx+1)%playlist.length; a.src=playlist[idx]; if(playing){ a.play().catch(function(){}); } });
   window.otrToggleMusic=function(){
