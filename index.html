@@ -979,8 +979,9 @@ function showTab(id, btn) {
 </script>
 <!-- ===== OTR Rocky chat widget + lead helper (auto-añadido) ===== -->
 <style id="otr-rocky-css">
-#otr-chat-btn{position:fixed;bottom:2rem;left:2rem;z-index:1000;width:54px;height:54px;border-radius:50%;background:#0e4f4f;color:#fff;border:none;cursor:pointer;font-size:1.5rem;box-shadow:0 4px 18px rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center;transition:transform .3s}
+#otr-chat-btn{position:fixed;bottom:2rem;left:2rem;z-index:1000;width:62px;height:62px;border-radius:50%;background:#F08100;color:#fff;border:none;cursor:pointer;font-size:1.7rem;box-shadow:0 6px 22px rgba(240,129,0,.5);display:flex;align-items:center;justify-content:center;transition:transform .3s;animation:otrPulse 2.4s infinite}
 #otr-chat-btn:hover{transform:scale(1.08)}
+@keyframes otrPulse{0%{box-shadow:0 6px 22px rgba(240,129,0,.5)}50%{box-shadow:0 6px 30px rgba(240,129,0,.85)}100%{box-shadow:0 6px 22px rgba(240,129,0,.5)}}
 #otr-chat-panel{position:fixed;bottom:6rem;left:2rem;z-index:1000;width:340px;max-width:calc(100vw - 2rem);height:460px;max-height:70vh;background:#fff;border-radius:16px;box-shadow:0 12px 40px rgba(0,0,0,.25);display:none;flex-direction:column;overflow:hidden}
 #otr-chat-panel.open{display:flex}
 .otr-ch-head{background:#0e4f4f;color:#fff;padding:.8rem 1rem;display:flex;align-items:center;justify-content:space-between}
