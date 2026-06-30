@@ -312,6 +312,7 @@ footer { background:#000; border-top:1px solid rgba(240,129,0,0.15); padding:2.5
     <li><a href="#services" data-i18n="nav-services">Servicios</a></li>
     <li><a href="#menu" data-i18n="nav-menu">Menú</a></li>
     <li><a href="#packages" data-i18n="nav-packages">Paquetes</a></li>
+    <li><a href="experiencia.html" data-i18n="nav-experience">Experiencia</a></li>
     <li><a href="#contact" class="nav-cta" data-i18n="nav-cta">Cotizar</a></li>
   </ul>
 </nav>
@@ -329,6 +330,7 @@ footer { background:#000; border-top:1px solid rgba(240,129,0,0.15); padding:2.5
     <div class="hero-btns">
       <a href="#contact" class="btn btn-primary" data-i18n="hero-btn1">Cotiza tu evento</a>
       <a href="#menu" class="btn btn-outline" data-i18n="hero-btn2">Ver menú</a>
+      <a href="experiencia.html" class="btn btn-outline" data-i18n="hero-btn3">Diseña tu experiencia</a>
     </div>
   </div>
 </section>
@@ -899,10 +901,10 @@ let currentLang = 'es';
 
 const t = {
   es: {
-    'nav-about':'Nosotros','nav-services':'Servicios','nav-menu':'Menú','nav-packages':'Paquetes','nav-cta':'Cotizar',
+    'nav-about':'Nosotros','nav-services':'Servicios','nav-menu':'Menú','nav-packages':'Paquetes','nav-experience':'Experiencia','nav-cta':'Cotizar',
     'hero-eyebrow':'Richmond, Virginia','hero-line1':"Let's drink",'hero-line2':'about it.',
     'hero-sub':'Barra móvil premium · Cócteles artesanales · Eventos únicos',
-    'hero-btn1':'Cotiza tu evento','hero-btn2':'Ver menú',
+    'hero-btn1':'Cotiza tu evento','hero-btn2':'Ver menú','hero-btn3':'Diseña tu experiencia',
     'about-label':'Sobre nosotros','about-title1':'Somos más que','about-title2':'una barra.',
     'about-p1':'On The Rocks es un servicio premium de barras móviles que ofrece experiencias únicas en eventos a través de cócteles personalizados y mixología profesional.',
     'about-p2':'Creemos que cada evento merece una barra que no solo sirva bebidas, sino que cree momentos memorables. Somos exclusivos, profesionales, auténticos, creativos y cercanos.',
@@ -923,10 +925,10 @@ const t = {
     'form-date-label':'Fecha del evento','form-msg-label':'Mensaje','form-btn':'Enviar por WhatsApp',
   },
   en: {
-    'nav-about':'About','nav-services':'Services','nav-menu':'Menu','nav-packages':'Packages','nav-cta':'Book Now',
+    'nav-about':'About','nav-services':'Services','nav-menu':'Menu','nav-packages':'Packages','nav-experience':'Experience','nav-cta':'Book Now',
     'hero-eyebrow':'Richmond, Virginia','hero-line1':"Let's drink",'hero-line2':'about it.',
     'hero-sub':'Premium mobile bar · Craft cocktails · Unforgettable events',
-    'hero-btn1':'Get a Quote','hero-btn2':'View Menu',
+    'hero-btn1':'Get a Quote','hero-btn2':'View Menu','hero-btn3':'Design Your Drink',
     'about-label':'About Us','about-title1':'We are more than','about-title2':'a bar.',
     'about-p1':'On The Rocks is a premium mobile bar service offering unique event experiences through personalized cocktails and professional mixology. We bring the party to you.',
     'about-p2':"We believe every event deserves a bar that doesn't just serve drinks, but creates unforgettable moments. We are exclusive, professional, authentic, creative and personal.",
@@ -983,6 +985,10 @@ function showTab(id, btn) {
 <style id="otr-rocky-css">
 #otr-chat-btn{position:fixed;bottom:2rem;left:2rem;z-index:1000;width:62px;height:62px;border-radius:50%;background:#F08100;color:#fff;border:none;cursor:pointer;font-size:1.7rem;box-shadow:0 6px 22px rgba(240,129,0,.5);display:flex;align-items:center;justify-content:center;transition:transform .3s;animation:otrPulse 2.4s infinite}
 #otr-chat-btn:hover{transform:scale(1.08)}
+#otr-greet-bubble{position:fixed;bottom:6.2rem;left:2rem;z-index:1000;max-width:240px;background:#fff;color:#00141b;padding:.7rem .9rem;border-radius:14px 14px 14px 3px;font-family:'Montserrat',sans-serif;font-size:.8rem;line-height:1.4;box-shadow:0 10px 30px rgba(0,0,0,.3);cursor:pointer;display:none;align-items:flex-start;gap:.4rem;border:1px solid rgba(240,129,0,.35)}
+#otr-greet-bubble.show{display:flex;animation:otrGreetIn .45s cubic-bezier(.2,.8,.3,1)}
+@keyframes otrGreetIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+#otr-greet-bubble .gx{background:none;border:none;color:#999;font-size:1rem;cursor:pointer;line-height:1;padding:0;margin-left:2px}
 @keyframes otrPulse{0%{box-shadow:0 6px 22px rgba(240,129,0,.5)}50%{box-shadow:0 6px 30px rgba(240,129,0,.85)}100%{box-shadow:0 6px 22px rgba(240,129,0,.5)}}
 #otr-chat-panel{position:fixed;bottom:6rem;left:2rem;z-index:1000;width:340px;max-width:calc(100vw - 2rem);height:460px;max-height:70vh;background:#fff;border-radius:16px;box-shadow:0 12px 40px rgba(0,0,0,.25);display:none;flex-direction:column;overflow:hidden}
 #otr-chat-panel.open{display:flex}
@@ -1006,7 +1012,8 @@ function showTab(id, btn) {
 .otr-q-row span:last-child{font-weight:600;white-space:nowrap}
 .otr-q-note{margin-top:.4rem;font-size:.68rem;color:#777}
 </style>
-<button id="otr-chat-btn" aria-label="Chat con Rocky" onclick="otrToggleChat()">💬</button>
+<button id="otr-chat-btn" aria-label="Chat con Rocky" onclick="otrToggleChat()"><svg viewBox="0 0 24 24" width="32" height="32" xmlns="http://www.w3.org/2000/svg"><g fill="#00141b"><ellipse cx="12" cy="7.9" rx="2.5" ry="4"/><ellipse cx="12" cy="7.9" rx="2.5" ry="4" transform="rotate(72 12 12)"/><ellipse cx="12" cy="7.9" rx="2.5" ry="4" transform="rotate(144 12 12)"/><ellipse cx="12" cy="7.9" rx="2.5" ry="4" transform="rotate(216 12 12)"/><ellipse cx="12" cy="7.9" rx="2.5" ry="4" transform="rotate(288 12 12)"/></g><circle cx="12" cy="12" r="2.2" fill="#fff"/></svg></button>
+<div id="otr-greet-bubble" onclick="otrToggleChat();this.classList.remove('show')"><span id="otr-greet-text">Bienvenido a On The Rocks. ¿Te ayudo a planear tu evento?</span><button class="gx" onclick="event.stopPropagation();document.getElementById('otr-greet-bubble').classList.remove('show')" aria-label="Cerrar">&times;</button></div>
 <div id="otr-chat-panel" role="dialog" aria-label="Rocky chat">
   <div class="otr-ch-head"><div><b>Rocky</b><small>On The Rocks · Asistente</small></div><button class="otr-ch-x" onclick="otrToggleChat()" aria-label="Cerrar">&times;</button></div>
   <div class="otr-ch-body" id="otr-ch-body"></div>
@@ -1095,6 +1102,15 @@ function showTab(id, btn) {
     otrLogToSheet({nombre:name,tipo:type,fecha:date,personas:guests,origen:"Formulario web"+(msg?" — "+msg:"")});
     window.open("https://wa.me/"+WA+"?text="+encodeURIComponent(text),'_blank');
   };
+  setTimeout(function(){
+    var gb=document.getElementById('otr-greet-bubble');
+    var gp=document.getElementById('otr-chat-panel');
+    if(gb && gp && !gp.classList.contains('open')){
+      var gt=document.getElementById('otr-greet-text');
+      if(gt) gt.textContent = isEs() ? "Bienvenido a On The Rocks. ¿Te ayudo a planear tu evento?" : "Welcome to On The Rocks. May I help with your event?";
+      gb.classList.add('show');
+    }
+  }, 3000);
 })();
 </script>
 

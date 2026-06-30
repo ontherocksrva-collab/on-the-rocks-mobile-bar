@@ -278,6 +278,7 @@
     <div class="lang-toggle">
       <button class="lang-btn active" id="admin-es" onclick="setLang('es')">ES</button>
       <button class="lang-btn" id="admin-en" onclick="setLang('en')">EN</button>
+      <button type="button" onclick="if(window.Calendly){Calendly.initPopupWidget({url:'https://calendly.com/ontherocksrva/event?hide_gdpr_banner=1&primary_color=f08100'});}else{window.open('https://calendly.com/ontherocksrva/event','_blank');}return false;" style="background:#EB5C0B;color:#fff;border:none;padding:8px 16px;border-radius:8px;font-weight:700;cursor:pointer;margin-right:8px;font-family:inherit;">📅 Calendario</button>
       <button class="btn-logout" onclick="logout()" id="btn-logout-txt">Cerrar sesión</button>
     </div>
   </div>
@@ -1275,3 +1276,5 @@ function setLang(lang) {
   }
 }
 </script>
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
