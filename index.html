@@ -38,7 +38,6 @@
 * { margin:0; padding:0; box-sizing:border-box; }
 body { font-family:'Montserrat',sans-serif; background:#002a35; color:#F6F6F6; overflow-x:hidden; }
 a { text-decoration:none; }
-
 /* NAV */
 nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:1rem 2rem; display:flex; align-items:center; justify-content:space-between; background:rgba(0,20,28,0.85); backdrop-filter:blur(12px); border-bottom:1px solid rgba(240,129,0,0.2); }
 .nav-logo img { height:48px; }
@@ -46,7 +45,6 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:1rem 2rem; di
 .nav-links a { color:rgba(246,246,246,0.8); font-size:0.72rem; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; transition:color 0.3s; }
 .nav-links a:hover { color:#F08100; }
 .nav-cta { background:#F08100 !important; color:#000 !important; padding:0.55rem 1.4rem; }
-
 /* HAMBURGER (todo en sandwich) */
 .hamburger { position:fixed; top:1.05rem; right:1.5rem; display:flex; flex-direction:column; justify-content:center; gap:6px; width:46px; height:46px; background:transparent; border:none; cursor:pointer; padding:0; z-index:10001; }
 .hamburger span { display:block; width:28px; height:2px; background:#F6F6F6; border-radius:2px; margin:0 auto; transition:transform .35s ease, opacity .25s ease, background .3s ease; }
@@ -60,12 +58,10 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:1rem 2rem; di
 .menu-overlay a:hover { color:#F08100; }
 .menu-overlay .menu-cta { background:#F08100; color:#000 !important; padding:0.8rem 2.6rem; border-radius:3px; font-size:1.2rem; margin-top:0.4rem; box-shadow:0 0 24px rgba(240,129,0,0.35); }
 .menu-lang { display:flex; border:2px solid #F08100; overflow:hidden; border-radius:3px; margin-top:1.4rem; box-shadow:0 0 15px rgba(240,129,0,0.35); }
-
 /* LANG TOGGLE */
 #lang-toggle { display:flex; border:2px solid #F08100; overflow:hidden; border-radius:3px; box-shadow:0 0 15px rgba(240,129,0,0.35); }
 .lang-btn { background:transparent; color:#F08100; font-family:'Montserrat',sans-serif; font-size:0.7rem; font-weight:800; letter-spacing:0.1em; padding:0.45rem 0.85rem; border:none; cursor:pointer; transition:all 0.25s; }
 .lang-btn.active { background:#F08100; color:#000; }
-
 /* HERO */
 .hero { min-height:100vh; background:linear-gradient(135deg,#002030 0%,#004E5E 50%,#003040 100%); display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; padding-top:80px; }
 .hero::before { content:''; position:absolute; inset:0; z-index:1; background:radial-gradient(ellipse at 70% 50%,rgba(240,129,0,0.12),transparent 60%); }
@@ -87,7 +83,6 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:1rem 2rem; di
 .btn-primary:hover { background:#EB5C0B; transform:translateY(-2px); }
 .btn-outline { background:transparent; color:#F6F6F6; border:1px solid rgba(246,246,246,0.35); }
 .btn-outline:hover { border-color:#F08100; color:#F08100; }
-
 /* SECTIONS */
 .section { padding:6rem 3rem; }
 .section-inner { max-width:1200px; margin:0 auto; }
@@ -95,7 +90,6 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:1rem 2rem; di
 .section-label::after { content:''; width:50px; height:1px; background:#F08100; }
 .section-title { font-size:clamp(2.2rem,5vw,4rem); font-weight:900; text-transform:uppercase; line-height:0.95; letter-spacing:-0.02em; margin-bottom:2.5rem; }
 .section-title span { color:#F08100; }
-
 /* ABOUT */
 .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center; }
 .about-text p { color:rgba(246,246,246,0.65); font-size:0.95rem; line-height:1.8; margin-bottom:1.2rem; }
@@ -112,7 +106,6 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:1rem 2rem; di
 .gio-frame { position:relative; overflow:hidden; border-top:3px solid #F08100; }
 .gio-frame img { width:100%; display:block; }
 .gio-overlay { position:absolute; bottom:0; left:0; right:0; background:linear-gradient(to top,rgba(0,20,28,0.95),transparent); padding:1.5rem; }
-
 /* SERVICES */
 .services-bg { background:#004E5E; position:relative; overflow:hidden; }
 .services-bg::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 80% 20%,rgba(240,129,0,0.08),transparent 60%); }
@@ -125,7 +118,6 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:1rem 2rem; di
 .svc-num { font-size:4rem; font-weight:900; color:rgba(240,129,0,0.08); line-height:1; margin-bottom:0.8rem; }
 .svc-title { font-size:1.3rem; font-weight:900; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:0.8rem; }
 .svc-desc { color:rgba(246,246,246,0.55); font-size:0.88rem; line-height:1.7; }
-
 /* MENU */
 .menu-bg { background:transparent; }
 .menu-tabs { display:flex; border-bottom:1px solid rgba(240,129,0,0.2); margin-bottom:2rem; overflow-x:auto; gap:0; }
@@ -136,7 +128,6 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:1rem 2rem; di
 .menu-panel.active { display:grid; }
 .menu-note { font-size:0.82rem; color:rgba(246,246,246,0.5); margin-bottom:2rem; }
 .menu-note strong { color:#F08100; }
-
 /* TARJETAS DEL MENÚ - FOTOS FLOTANTES LIBRES */
 .drink-card {
   background: transparent;
@@ -228,7 +219,6 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:1rem 2rem; di
   text-transform: uppercase;
   flex-shrink: 0;
 }
-
 .mocktail-bar { margin-top:2.5rem; background:rgba(240,129,0,0.08); border:1px solid rgba(240,129,0,0.25); border-left:4px solid #F08100; padding:1.2rem 2rem; display:flex; align-items:center; gap:1.2rem; }
 .mocktail-bar h4 { font-size:0.78rem; font-weight:800; letter-spacing:0.15em; text-transform:uppercase; color:#F08100; margin-bottom:0.2rem; }
 .mocktail-bar p { color:rgba(246,246,246,0.6); font-size:0.82rem; }
@@ -240,7 +230,6 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:1rem 2rem; di
 .also-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.8rem; }
 .also-item strong { color:#F6F6F6; font-size:0.82rem; display:block; margin-bottom:0.2rem; }
 .also-item p { color:rgba(246,246,246,0.5); font-size:0.78rem; line-height:1.5; }
-
 /* GALLERY */
 .gallery-bg { background:#001820; }
 .gallery-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:4px; }
@@ -249,7 +238,6 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:1rem 2rem; di
 .gallery-grid div:hover img { transform:scale(1.06); }
 .gallery-wide { grid-column:span 2 !important; }
 .gallery-tall { height:400px !important; }
-
 /* PACKAGES */
 .packages-bg { background:#A91821; position:relative; }
 .packages-bg::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg,#8a1018,#A91821,#7a1015); }
@@ -265,7 +253,6 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:1rem 2rem; di
 .pkg-name { font-size:1.1rem; font-weight:900; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:0.4rem; }
 .pkg-sub { font-size:0.65rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#F08100; margin-bottom:1rem; }
 .pkg-desc { color:rgba(246,246,246,0.6); font-size:0.82rem; line-height:1.65; }
-
 /* CONTACT */
 .contact-bg { background:#001820; }
 .contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center; }
@@ -283,23 +270,15 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:1rem 2rem; di
 .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color:#F08100; }
 .form-group select option { background:#004E5E; }
 .form-group textarea { height:90px; resize:none; }
-
 /* FOOTER */
 footer { background:#000; border-top:1px solid rgba(240,129,0,0.15); padding:2.5rem 3rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1.5rem; }
 .footer-copy { color:rgba(246,246,246,0.3); font-size:0.72rem; text-align:center; }
 .social-links { display:flex; gap:0.8rem; }
 .social-link { width:38px; height:38px; border:1px solid rgba(246,246,246,0.15); display:flex; align-items:center; justify-content:center; color:rgba(246,246,246,0.5); font-size:1rem; transition:all 0.3s; }
 .social-link:hover { border-color:#F08100; color:#F08100; }
-
 /* WHATSAPP */
-
-
-
-
-
 /* LANG HINT */
 @keyframes fade-hint { 0% { opacity:0; transform:translateX(8px); } 15% { opacity:1; transform:translateX(0); } 80% { opacity:1; } 100% { opacity:0; } }
-
 /* RESPONSIVE */
 @media(max-width:1100px) {
   .menu-panel { grid-template-columns:repeat(2,1fr); }
@@ -322,19 +301,15 @@ footer { background:#000; border-top:1px solid rgba(240,129,0,0.15); padding:2.5
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 </head>
 <body>
-
 <!-- LANG TOGGLE movido al menú hamburguesa -->
-
 <!-- NAV -->
 <nav>
   <div class="nav-logo"><img src="images/logo-otr.png" alt="On The Rocks"></div>
 </nav>
-
 <!-- HAMBURGER (fijo, encima de todo) -->
 <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menú" aria-expanded="false">
   <span></span><span></span><span></span>
 </button>
-
 <!-- MENU OVERLAY (sandwich) -->
 <div class="menu-overlay" id="menuOverlay">
   <a href="#about" data-i18n="nav-about" onclick="closeMenu()">Nosotros</a>
@@ -350,7 +325,6 @@ footer { background:#000; border-top:1px solid rgba(240,129,0,0.15); padding:2.5
     <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
   </div>
 </div>
-
 <!-- HERO -->
 <section class="hero" id="home">
   <video class="hero-video" id="heroVid" autoplay muted playsinline poster="images/setup-pantalla.jpg"></video>
@@ -370,7 +344,6 @@ footer { background:#000; border-top:1px solid rgba(240,129,0,0.15); padding:2.5
     </div>
   </div>
 </section>
-
 <!-- ABOUT -->
 <section class="section" id="about" style="background:#001e28;">
   <div class="section-inner">
@@ -399,7 +372,6 @@ footer { background:#000; border-top:1px solid rgba(240,129,0,0.15); padding:2.5
     </div>
   </div>
 </section>
-
 <!-- SERVICES -->
 <section class="section services-bg" id="services">
   <div class="section-inner" style="position:relative;">
@@ -425,7 +397,6 @@ footer { background:#000; border-top:1px solid rgba(240,129,0,0.15); padding:2.5
     </div>
   </div>
 </section>
-
 <!-- INTERACTIVE MENU -->
 <section style="background:#000d14;padding:6rem 0;" id="menu">
   <div style="max-width:1200px;margin:0 auto;padding:0 3rem;">
@@ -434,7 +405,56 @@ footer { background:#000; border-top:1px solid rgba(240,129,0,0.15); padding:2.5
       <h2 style="font-size:clamp(2.2rem,5vw,4rem);font-weight:900;text-transform:uppercase;line-height:0.95;letter-spacing:-0.02em;"><span data-i18n="menu-title-a">El menú</span><br><span style="color:#F08100;" data-i18n="menu-title-b">completo.</span></h2>
       <p style="color:rgba(246,246,246,0.5);margin-top:1rem;font-size:0.9rem;" data-i18n="menu-click">Haz click en cualquier bebida para ver los detalles</p>
     </div>
-
+    <!-- ARMÁ TU BEBIDA (interactivo · protagonista) -->
+    <div class="otr-build">
+      <div style="text-align:center;margin-bottom:1.4rem;">
+        <div class="ob-eyebrow" data-i18n="build-eye">Experiencia interactiva</div>
+        <h3 class="ob-title" data-i18n="build-title">Armá tu propia bebida</h3>
+        <p class="ob-sub" data-i18n="build-sub">Elegí tu base, tu sabor y tu toque — y en tu evento la preparás vos con nosotros.</p>
+      </div>
+      <div class="ob-step"><span class="ob-label" data-i18n="build-base">Base</span>
+        <div class="ob-chips" id="ob-base">
+          <button class="ob-chip on" onclick="obPick('base',this)" data-i18n="ob-margarita">Margarita</button>
+          <button class="ob-chip" onclick="obPick('base',this)" data-i18n="ob-paloma">Paloma</button>
+          <button class="ob-chip" onclick="obPick('base',this)" data-i18n="ob-mojito">Mojito</button>
+          <button class="ob-chip" onclick="obPick('base',this)" data-i18n="ob-frozen">Frozen</button>
+          <button class="ob-chip" onclick="obPick('base',this)" data-i18n="ob-cantarito">Cantarito</button>
+        </div>
+      </div>
+      <div class="ob-step"><span class="ob-label" data-i18n="build-flavor">Sabor</span>
+        <div class="ob-chips" id="ob-flavor">
+          <button class="ob-chip on" onclick="obPick('flavor',this)" data-i18n="ob-mango">Mango</button>
+          <button class="ob-chip" onclick="obPick('flavor',this)" data-i18n="ob-fresa">Fresa</button>
+          <button class="ob-chip" onclick="obPick('flavor',this)" data-i18n="ob-sandia">Sandía</button>
+          <button class="ob-chip" onclick="obPick('flavor',this)" data-i18n="ob-pina">Piña</button>
+          <button class="ob-chip" onclick="obPick('flavor',this)" data-i18n="ob-coco">Coco</button>
+          <button class="ob-chip" onclick="obPick('flavor',this)" data-i18n="ob-maracuya">Maracuyá</button>
+          <button class="ob-chip" onclick="obPick('flavor',this)" data-i18n="ob-jamaica">Jamaica</button>
+        </div>
+      </div>
+      <div class="ob-step"><span class="ob-label" data-i18n="build-rim">El toque</span>
+        <div class="ob-chips" id="ob-rim">
+          <button class="ob-chip on" onclick="obPick('rim',this)" data-i18n="ob-tajin">Tajín</button>
+          <button class="ob-chip" onclick="obPick('rim',this)" data-i18n="ob-chamoy">Chamoy</button>
+          <button class="ob-chip" onclick="obPick('rim',this)" data-i18n="ob-sal">Sal</button>
+          <button class="ob-chip" onclick="obPick('rim',this)" data-i18n="ob-flor">Flor comestible</button>
+          <button class="ob-chip" onclick="obPick('rim',this)" data-i18n="ob-sinborde">Sin borde</button>
+        </div>
+      </div>
+      <div class="ob-result">
+        <div class="ob-r-label" data-i18n="build-your">Tu creación</div>
+        <div class="ob-r-name" id="ob-name">Mango Margarita</div>
+        <div class="ob-r-desc" id="ob-desc"></div>
+        <a class="ob-cta" id="ob-cta" target="_blank" data-i18n="build-cta">La quiero en mi evento</a>
+      </div>
+    </div>
+    <!-- Toggle menú completo (sandwich) -->
+    <div style="text-align:center;margin:2.6rem 0 1.6rem;">
+      <button id="menu-toggle" class="menu-fulltoggle" onclick="toggleMenuFull()">
+        <span data-i18n="menu-see">Ver el menú completo</span> (22) <span id="menu-toggle-arrow">▾</span>
+      </button>
+    </div>
+    <div id="menu-full" class="menu-collapse">
     <!-- Category Filter -->
     <div style="display:flex;justify-content:center;gap:0.5rem;flex-wrap:wrap;margin-bottom:3rem;" id="cat-filters">
       <button onclick="filterMenu('all',this)" class="filter-btn filter-active" data-i18n="filter-all">Todo</button>
@@ -444,106 +464,82 @@ footer { background:#000; border-top:1px solid rgba(240,129,0,0.15); padding:2.5
       <button onclick="filterMenu('mojito',this)" class="filter-btn">Mojitos</button>
       <button onclick="filterMenu('other',this)" class="filter-btn" data-i18n="filter-more">Más</button>
     </div>
-
     <!-- Menu Grid -->
     <div id="menu-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.5rem;">
-
       <!-- MARGARITAS -->
       <div class="menu-item" data-cat="margarita" onclick="openDrink('Raspberry Margarita','Lime, raspberry purée, tequila, Cointreau.','Una margarita elegante con frambuesa fresca. El color rojo vibrante y el sabor cítrico hacen de esta una de las favoritas.',['Cocktail','Mocktail'],'images/raspberry-margarita.jpg')">
         <div class="menu-card"><div class="menu-img-wrapper"><img src="images/raspberry-margarita.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Margarita</span><div class="menu-name">Raspberry Margarita</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap" data-i18n="tap-explore">Tap to explore →</div></div>
       </div>
-
       <div class="menu-item" data-cat="margarita" onclick="openDrink('Passion Mango Margarita','Tajin, chamoy, tequila, lime, peach schnapps, mango, passion fruit.','Tropical y audaz. El chamoy y tajin en el borde crean una experiencia única que nadie olvida.',['Cocktail','Mocktail'],'images/passion-mango-margarita.jpg')">
         <div class="menu-card"><div class="menu-img-wrapper"><img src="images/passion-mango-margarita.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Margarita</span><div class="menu-name">Passion Mango Margarita</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap" data-i18n="tap-explore">Tap to explore →</div></div>
       </div>
-
       <div class="menu-item" data-cat="margarita frozen" onclick="openDrink('Strawberry Mango Frozen Margarita','Tequila, strawberry, mango, lime.','El color en capas rojo y amarillo es visualmente espectacular. Frozen, frutal y refrescante.',['Cocktail','Mocktail'],'images/strawberry-mango-frozen.jpg')">
         <div class="menu-card"><div class="menu-img-wrapper"><img src="images/strawberry-mango-frozen.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Margarita · Frozen</span><div class="menu-name">Strawberry Mango Frozen</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap" data-i18n="tap-explore">Tap to explore →</div></div>
       </div>
-
       <div class="menu-item" data-cat="margarita" onclick="openDrink('Aperol Coconut Margarita','Tequila, aperol, lime, cream of coconut.','La combinación de aperol y coco crea un balance perfecto entre lo amargo y lo tropical.',['Cocktail','Mocktail'],'images/aperol-coconut-margarita.jpg')">
         <div class="menu-card"><div class="menu-img-wrapper"><img src="images/aperol-coconut-margarita.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Margarita</span><div class="menu-name">Aperol Coconut Margarita</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap" data-i18n="tap-explore">Tap to explore →</div></div>
       </div>
-
       <div class="menu-item" data-cat="margarita" onclick="openDrink('Watermelon Margarita ','Tequila, watermelon, lime, agave.','Refrescante y colorida. Solo disponible por temporada — cuando está, vuela.',['Seasonal','Cocktail','Mocktail'],'images/watermelon-margarita.jpg')">
         <div class="menu-card"><div class="menu-img-wrapper"><img src="images/watermelon-margarita.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat" style="background:#671243;color:#F6F6F6;">Seasonal</span><div class="menu-name">Watermelon Margarita</div><div class="menu-tags-sm"><span>Seasonal</span><span>Mocktail</span></div></div><div class="menu-tap" data-i18n="tap-explore">Tap to explore →</div></div>
       </div>
-
       <!-- FROZEN -->
       <div class="menu-item" data-cat="frozen" onclick="openDrink('Frozen Mangoneada','Mango, chamoy, tequila, tajín.','La mangoneada es un ícono. Mango frozen con chamoy y tajin — dulce, picante y completamente adictiva.',['Cocktail','Mocktail'],'images/frozen-mangoneada.jpg')">
         <div class="menu-card"><div class="menu-img-wrapper"><img src="images/frozen-mangoneada.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Frozen</span><div class="menu-name">Frozen Mangoneada</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap" data-i18n="tap-explore">Tap to explore →</div></div>
       </div>
-
       <div class="menu-item" data-cat="frozen" onclick="openDrink('Frozen Mango Colada','Mango, cream of coconut, white rum, coconut rum.','Tropical y cremosa. El mango y el coco frozen es la combinación perfecta para cualquier evento.',['Cocktail','Mocktail'],'images/frozen-mango-colada.jpg')">
         <div class="menu-card"><div class="menu-img-wrapper"><img src="images/frozen-mango-colada.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Frozen</span><div class="menu-name">Frozen Mango Colada</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap" data-i18n="tap-explore">Tap to explore →</div></div>
       </div>
-
       <div class="menu-item" data-cat="frozen" onclick="openDrink('Piña Colada','Pineapple, cream of coconut, coconut rum, spiced rum.','El clásico de siempre. Cremosa, tropical y perfecta para cualquier ocasión.',['Cocktail','Mocktail'],'images/pina-colada.jpg')">
         <div class="menu-card"><div class="menu-img-wrapper"><img src="images/pina-colada.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Frozen</span><div class="menu-name">Piña Colada</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap" data-i18n="tap-explore">Tap to explore →</div></div>
       </div>
-
       <div class="menu-item" data-cat="frozen" onclick="openDrink('Tequila Jungle Bird','Coconut 1800, pineapple, blueberries, lime.','Azul vibrante y tropical. El Coconut 1800 con piña y blueberries crea un sabor único e Instagram-worthy.',['Cocktail','Mocktail'],'images/tequila-jungle-bird.jpg')">
         <div class="menu-card"><div class="menu-img-wrapper"><img src="images/tequila-jungle-bird.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Frozen</span><div class="menu-name">Tequila Jungle Bird</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap" data-i18n="tap-explore">Tap to explore →</div></div>
       </div>
-
       <!-- PALOMAS -->
       <div class="menu-item" data-cat="paloma" onclick="openDrink('Classic Paloma','Lime, tequila, salt, orange, grapefruit, squirt, chamoy & tajín.','La paloma clásica elevada. Con chamoy y tajin en el borde — auténtica y refrescante.',['Cocktail','Mocktail'],'images/classic-paloma.jpg')">
         <div class="menu-card"><div class="menu-img-wrapper"><img src="images/classic-paloma.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Paloma</span><div class="menu-name">Classic Paloma</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap" data-i18n="tap-explore">Tap to explore →</div></div>
       </div>
-
       <div class="menu-item" data-cat="paloma" onclick="openDrink('Pineapple Paloma','Tequila, lime, tajin, pineapple, grapefruit soda, chamoy rim.','El toque tropical de la piña hace de esta paloma algo completamente diferente y adictivo.',['Cocktail','Mocktail'],'images/pineapple-paloma.jpg')">
         <div class="menu-card"><div class="menu-img-wrapper"><img src="images/pineapple-paloma.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Paloma</span><div class="menu-name">Pineapple Paloma</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap" data-i18n="tap-explore">Tap to explore →</div></div>
       </div>
-
       <div class="menu-item" data-cat="paloma" onclick="openDrink('Strawberry Paloma','Tequila, lime, tajin, strawberry, grapefruit soda, chamoy rim.','Color rojo vibrante y sabor frutal. Una de las más pedidas en eventos.',['Cocktail','Mocktail'],'images/strawberry-paloma.jpg')">
         <div class="menu-card"><div class="menu-img-wrapper"><img src="images/strawberry-paloma.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Paloma</span><div class="menu-name">Strawberry Paloma</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap" data-i18n="tap-explore">Tap to explore →</div></div>
       </div>
-
       <div class="menu-item" data-cat="paloma" onclick="openDrink('Mango Paloma','Tequila, lime, tajin, mango, grapefruit soda, chamoy rim.','Mango fresco con la base de paloma. Dulce, cítrico y con ese kick de tajin.',['Cocktail','Mocktail'],'images/mango-paloma.jpg')">
         <div class="menu-card"><div class="menu-img-wrapper"><img src="images/mango-paloma.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Paloma</span><div class="menu-name">Mango Paloma</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap" data-i18n="tap-explore">Tap to explore →</div></div>
       </div>
-
       <div class="menu-item" data-cat="paloma" onclick="openDrink('Watermelon Paloma ','Lime, watermelon, agave nectar, tequila, squirt.','Seasonal y especial. Sandía fresca con la base de paloma — verano en un vaso.',['Seasonal','Cocktail','Mocktail'],'images/watermelon-paloma.jpg')">
         <div class="menu-card"><div class="menu-img-wrapper"><img src="images/watermelon-paloma.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat" style="background:#671243;color:#F6F6F6;">Seasonal</span><div class="menu-name">Watermelon Paloma</div><div class="menu-tags-sm"><span>Seasonal</span></div></div><div class="menu-tap" data-i18n="tap-explore">Tap to explore →</div></div>
       </div>
-
       <!-- MOJITOS -->
       <div class="menu-item" data-cat="mojito" onclick="openDrink('Strawberry Mojito','Lime, mint, white rum, strawberry, soda water.','Fresa fresca, menta y ron blanco. Refrescante y elegante — perfecto para cualquier evento.',['Cocktail','Mocktail'],'images/strawberry-mojito.jpg')">
         <div class="menu-card"><div class="menu-img-wrapper"><img src="images/strawberry-mojito.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Mojito</span><div class="menu-name">Strawberry Mojito</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap" data-i18n="tap-explore">Tap to explore →</div></div>
       </div>
-
       <div class="menu-item" data-cat="mojito" onclick="openDrink('Watermelon Mojito ','Lime, mint, white rum, watermelon, soda water.','Sandía fresca con menta — verano en cada sorbo. Seasonal.',['Seasonal','Cocktail','Mocktail'],'images/watermelon-mojito.jpg')">
         <div class="menu-card"><div class="menu-img-wrapper"><img src="images/watermelon-mojito.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat" style="background:#671243;color:#F6F6F6;">Seasonal</span><div class="menu-name">Watermelon Mojito</div><div class="menu-tags-sm"><span>Seasonal</span></div></div><div class="menu-tap" data-i18n="tap-explore">Tap to explore →</div></div>
       </div>
-
       <div class="menu-item" data-cat="mojito" onclick="openDrink('Coconut Mojito','Lime, mint, white rum, coconut, soda water.','Coco tropical con la frescura de la menta. Suave y delicioso.',['Cocktail','Mocktail'],'images/coconut-mojito.jpg')">
         <div class="menu-card"><div class="menu-img-wrapper"><img src="images/coconut-mojito.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Mojito</span><div class="menu-name">Coconut Mojito</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap" data-i18n="tap-explore">Tap to explore →</div></div>
       </div>
-
       <div class="menu-item" data-cat="mojito" onclick="openDrink('Blueberry Mojito','Lime, mint, white rum, blueberry, soda water.','Color morado intenso y sabor frutal único. Uno de los más fotogénicos del menú.',['Cocktail','Mocktail'],'images/blueberry-mojito.jpg')">
         <div class="menu-card"><div class="menu-img-wrapper"><img src="images/blueberry-mojito.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Mojito</span><div class="menu-name">Blueberry Mojito</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap" data-i18n="tap-explore">Tap to explore →</div></div>
       </div>
-
       <!-- OTHER -->
       <div class="menu-item" data-cat="other" onclick="openDrink('Ranch Water','Tequila, lime, sea salt, Topo Chico.','Simple, refrescante y perfecto. El tequila con Topo Chico es la combinación ideal para el verano.',['Cocktail','Mocktail'],'images/ranch-water.jpg')">
         <div class="menu-card"><div class="menu-img-wrapper"><img src="images/ranch-water.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Signature</span><div class="menu-name">Ranch Water</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap" data-i18n="tap-explore">Tap to explore →</div></div>
       </div>
-
       <div class="menu-item" data-cat="other" onclick="openDrink('Cantarito','Lime, tequila, salt, orange, grapefruit, squirt, chamoy & tajín.','Servido en vasito personalizado de On The Rocks. Un ícono que todo el mundo quiere en su evento.',['Cocktail','Mocktail'],'images/cantarito.jpg')">
         <div class="menu-card"><div class="menu-img-wrapper"><img src="images/cantarito.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Signature</span><div class="menu-name">Cantarito</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap" data-i18n="tap-explore">Tap to explore →</div></div>
       </div>
-
       <div class="menu-item" data-cat="other" onclick="openDrink('Malibú Sunrise','Lime, pineapple, orange, white rum, coconut rum, peach schnapps, grenadine.','El degradado de colores hace de este un cóctel visualmente impresionante. Dulce y tropical.',['Cocktail','Mocktail'],'images/malibu-sunrise.jpg')">
         <div class="menu-card"><div class="menu-img-wrapper"><img src="images/malibu-sunrise.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Signature</span><div class="menu-name">Malibú Sunrise</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap" data-i18n="tap-explore">Tap to explore →</div></div>
       </div>
-
       <div class="menu-item" data-cat="other" onclick="openDrink('Blue Tiki','Coconut 1800, Cointreau, lime, pineapple, agave.','Azul tropical y refrescante. El Coconut 1800 con piña crea una experiencia única.',['Cocktail','Mocktail'],'images/blue-tiki.jpg')">
         <div class="menu-card"><div class="menu-img-wrapper"><img src="images/blue-tiki.jpg" class="menu-img" alt=""></div><div class="menu-info"><span class="menu-cat">Signature</span><div class="menu-name">Blue Tiki</div><div class="menu-tags-sm"><span>Cocktail</span><span>Mocktail</span></div></div><div class="menu-tap" data-i18n="tap-explore">Tap to explore →</div></div>
       </div>
-
+    </div>
     </div>
   </div>
-
   <!-- MODAL -->
   <div id="drink-modal" style="display:none;position:fixed;inset:0;z-index:9998;background:rgba(0,10,18,0.92);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:2rem;" onclick="closeModal(event)">
     <div style="background:#002a35;max-width:600px;width:100%;border-top:3px solid #F08100;overflow:hidden;position:relative;animation:modal-in 0.35s ease;max-height:90vh;overflow-y:auto;" onclick="event.stopPropagation()">
@@ -562,14 +558,35 @@ footer { background:#000; border-top:1px solid rgba(240,129,0,0.15); padding:2.5
     </div>
   </div>
 </section>
-
 <style>
 @keyframes modal-in { from { opacity:0;transform:translateY(20px); } to { opacity:1;transform:translateY(0); } }
+/* ARMÁ TU BEBIDA (builder) */
+.otr-build{max-width:680px;margin:0 auto;background:linear-gradient(150deg,#00323d,#001a22);border:1px solid rgba(240,129,0,.28);border-radius:22px;padding:1.7rem;box-shadow:0 16px 50px rgba(0,0,0,.45)}
+.ob-eyebrow{color:#F08100;font-weight:800;letter-spacing:.24em;font-size:.62rem;text-transform:uppercase;margin-bottom:.4rem}
+.ob-title{font-family:'Bebas Neue',Impact,sans-serif;font-size:clamp(1.9rem,5.5vw,2.8rem);letter-spacing:.5px;color:#fff;line-height:1}
+.ob-sub{color:rgba(246,246,246,.6);font-size:.86rem;margin-top:.45rem;line-height:1.45;max-width:460px;margin-left:auto;margin-right:auto}
+.ob-step{margin-bottom:1.05rem}
+.ob-label{display:block;font-size:.6rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:#9fbcc2;margin-bottom:.5rem}
+.ob-chips{display:flex;flex-wrap:wrap;gap:.5rem}
+.ob-chip{border:1px solid rgba(246,246,246,.2);background:rgba(255,255,255,.03);color:#f6f6f6;border-radius:30px;padding:.5rem .95rem;font-family:'Montserrat',sans-serif;font-size:.8rem;font-weight:700;cursor:pointer;transition:all .2s}
+.ob-chip:hover{border-color:#F08100}
+.ob-chip.on{background:#F08100;color:#000;border-color:#F08100}
+.ob-result{margin-top:1.4rem;text-align:center;background:rgba(0,0,0,.28);border:1px dashed rgba(240,129,0,.45);border-radius:16px;padding:1.3rem 1rem}
+.ob-r-label{color:#F08100;font-weight:800;letter-spacing:.2em;font-size:.6rem;text-transform:uppercase}
+.ob-r-name{font-family:'Bebas Neue',Impact,sans-serif;font-size:clamp(1.9rem,6.5vw,3rem);color:#fff;letter-spacing:.5px;line-height:1;margin:.35rem 0}
+.ob-r-desc{color:rgba(246,246,246,.6);font-size:.82rem;margin-bottom:1.1rem;min-height:1rem}
+.ob-cta{display:inline-block;background:#F08100;color:#000;font-weight:800;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;padding:.85rem 1.7rem;border-radius:4px;text-decoration:none;transition:background .2s}
+.ob-cta:hover{background:#EB5C0B}
+/* Toggle menú completo (sandwich) */
+.menu-fulltoggle{background:transparent;border:1px solid rgba(240,129,0,.5);color:#F08100;font-family:'Montserrat',sans-serif;font-weight:700;font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;padding:.75rem 1.7rem;border-radius:30px;cursor:pointer;transition:all .2s}
+.menu-fulltoggle:hover{background:#F08100;color:#000}
+.menu-collapse{display:none}
+.menu-collapse.open{display:block;animation:fadeIn .4s ease}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
 .filter-btn { background:transparent;border:1px solid rgba(246,246,246,0.2);color:rgba(246,246,246,0.5);font-family:'Montserrat',sans-serif;font-size:0.68rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:0.55rem 1.2rem;cursor:pointer;transition:all 0.25s;border-radius:2px; }
 .filter-btn:hover, .filter-active { background:#F08100;border-color:#F08100;color:#000; }
 .menu-card { background:transparent;overflow:visible;cursor:pointer;transition:transform 0.3s;border:none;position:relative; }
 .menu-card:hover { transform:translateY(-4px); }
-
 /* Wrapper transparente - fotos flotan libres */
 .menu-img-wrapper {
   background: transparent;
@@ -590,7 +607,6 @@ footer { background:#000; border-top:1px solid rgba(240,129,0,0.15); padding:2.5
   transition: transform 0.5s;
 }
 .menu-card:hover .menu-img { transform:scale(1.06); }
-
 .menu-info { padding:1rem 0.3rem 0.5rem; text-align:center; }
 .menu-cat { font-size:0.58rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;background:#F08100;color:#000;padding:0.2rem 0.6rem;display:inline-block;margin-bottom:0.5rem; }
 .menu-name { font-size:1rem;font-weight:800;text-transform:uppercase;letter-spacing:0.04em;color:#F6F6F6;line-height:1.2; }
@@ -601,7 +617,6 @@ footer { background:#000; border-top:1px solid rgba(240,129,0,0.15); padding:2.5
 .menu-item { transition:opacity 0.3s,transform 0.3s; }
 .menu-item.hidden { display:none; }
 </style>
-
 <script>
 function filterMenu(cat, btn) {
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('filter-active'));
@@ -614,7 +629,6 @@ function filterMenu(cat, btn) {
     }
   });
 }
-
 function openDrink(name, ingredients, desc, tags, imgSrc) {
   document.getElementById('modal-name').textContent = name;
   document.getElementById('modal-ingredients').textContent = '' + ingredients;
@@ -625,17 +639,14 @@ function openDrink(name, ingredients, desc, tags, imgSrc) {
   document.getElementById('drink-modal').style.display = 'flex';
   document.body.style.overflow = 'hidden';
 }
-
 function closeModal(e) {
   if (!e || e.target === document.getElementById('drink-modal')) {
     document.getElementById('drink-modal').style.display = 'none';
     document.body.style.overflow = '';
   }
 }
-
 document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal(); });
 </script>
-
 <!-- PACKAGES -->
 <!-- GALERIA EN ACCION -->
 <!-- GALERIA UNIFICADA: fotos + videos -->
@@ -670,7 +681,6 @@ document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal();
     <video class="otr-gv" muted loop playsinline preload="none" poster="images/setup-pantalla.jpg"><source src="videos/evento-corporate.mp4" type="video/mp4"></video>
   </div>
 </section>
-
 <!-- ===== CONFIAN EN NOSOTROS / CLIENTES & ALIADOS ===== -->
 <section class="otr-cust">
   <style>
@@ -713,7 +723,6 @@ document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal();
     </div>
   </div>
 </section>
-
 <section class="section packages-bg" id="packages">
   <div class="section-inner" style="position:relative;">
     <div class="section-label" data-i18n="packages-label">Experiencias personalizadas</div>
@@ -728,7 +737,6 @@ document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal();
     </div>
   </div>
 </section>
-
 <!-- ====== ZONA DE SERVICIO / MAPA DE RANGO ====== -->
 <style>
 #zona{background:#001019;padding:5.5rem 0 5rem}
@@ -778,7 +786,6 @@ document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal();
     </div>
   </div>
 </section>
-
 <!-- CONTACT -->
 <section class="section contact-bg" id="contact">
   <div class="section-inner">
@@ -811,7 +818,6 @@ document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal();
     </div>
   </div>
 </section>
-
 <!-- FOOTER -->
 <footer>
   <img src="images/logo-otr.png" alt="On The Rocks" style="height:46px;opacity:0.85;">
@@ -822,9 +828,7 @@ document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal();
     <a href="mailto:ontherocksrva@gmail.com" class="social-link"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F08100" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg></a>
   </div>
 </footer>
-
 <!-- Botones de contacto movidos al speed-dial (abajo a la derecha) -->
-
 <script>
 /* MENU HAMBURGUESA */
 function toggleMenu(){
@@ -845,10 +849,8 @@ function closeMenu(){
 }
 document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeMenu(); });
 </script>
-
 <script>
 let currentLang = 'es';
-
 const t = {
   es: {
     'customers-eyebrow':'Nuestros aliados','customers-title':'Confían en nosotros',
@@ -856,6 +858,8 @@ const t = {
     'zona-eyebrow':'¿Llegamos a vos?','zona-t1':'NUESTRA ZONA','zona-t2':'DE SERVICIO','zona-sub':'Con base en Richmond, VA — viajamos hasta Virginia Beach, Washington DC y Carolina del Norte. Mirá hasta dónde llegamos.','zona-t-1':'0–20 millas','zona-t-6':'110+ mi / fuera del estado','zona-p-6':'Cotización','zona-p-1':'GRATIS','zona-cta':'Reservá tu fecha','zona-note':'Tarifa de viaje según distancia desde Richmond, VA. ¿Fuera del rango? Escribinos.',
     'switch-lang':'Cambiar idioma','tipos-eyebrow':'Tipos de evento','tipos-title':'Para cada celebración','tipos-sub':'Bodas, quinceañeras y eventos corporativos — llevamos la barra premium a donde estés.','tipos-boda':'Bodas','tipos-quince':'Quinceañeras','tipos-corp':'Corporativos','hb-label':'Head Bartender','hb-sub':'10+ años · Richmond, VA','menu-eyebrow':'Explora todo','menu-title-a':'El menú','menu-title-b':'completo.','menu-click':'Haz click en cualquier bebida para ver los detalles','filter-all':'Todo','filter-more':'Más','gallery-eyebrow':'Galería','gallery-title':'Momentos On The Rocks','accion-eyebrow':'En acción','accion-title':'Así se vive On The Rocks','accion-sub':'Cócteles artesanales, barra montada y el mejor ambiente para tu evento.','tap-explore':'Toca para ver →','pkg-sub-1':'Quinceañeras','pkg-sub-2':'Brunch & Baby Showers','pkg-sub-3':'Bodas & Aniversarios','pkg-sub-4':'Eventos Corporativos','pkg-sub-5':'Baby Showers','pkg-sub-6':'Solo el profesional',
     'nav-about':'Nosotros','nav-services':'Servicios','nav-menu':'Menú','nav-packages':'Paquetes','nav-mixo':'Mixología','nav-calc':'Calculadora','nav-experience':'Experiencia','nav-cta':'Cotizar',
+    'build-eye':'Experiencia interactiva','build-title':'Armá tu propia bebida','build-sub':'Elegí tu base, tu sabor y tu toque — y en tu evento la preparás vos con nosotros.','build-base':'Base','build-flavor':'Sabor','build-rim':'El toque','build-your':'Tu creación','build-cta':'La quiero en mi evento','menu-see':'Ver el menú completo',
+    'ob-margarita':'Margarita','ob-paloma':'Paloma','ob-mojito':'Mojito','ob-frozen':'Frozen','ob-cantarito':'Cantarito','ob-mango':'Mango','ob-fresa':'Fresa','ob-sandia':'Sandía','ob-pina':'Piña','ob-coco':'Coco','ob-maracuya':'Maracuyá','ob-jamaica':'Jamaica','ob-tajin':'Tajín','ob-chamoy':'Chamoy','ob-sal':'Sal','ob-flor':'Flor comestible','ob-sinborde':'Sin borde',
     'hero-eyebrow':'Richmond, Virginia','hero-line1':"Let's drink",'hero-line2':'about it.',
     'hero-sub':'Barra móvil premium · Cócteles artesanales · Eventos únicos',
     'hero-btn1':'Cotiza tu evento','hero-btn2':'Ver menú','hero-btn3':'Diseña tu experiencia',
@@ -884,6 +888,8 @@ const t = {
     'zona-eyebrow':'Do we reach you?','zona-t1':'OUR SERVICE','zona-t2':'AREA','zona-sub':'Based in Richmond, VA — we travel to Virginia Beach, Washington DC and North Carolina. See how far we go.','zona-t-1':'0–20 miles','zona-t-6':'110+ mi / out of state','zona-p-6':'Custom quote','zona-p-1':'FREE','zona-cta':'Book your date','zona-note':'Travel fee based on distance from Richmond, VA. Outside the range? Reach out.',
     'switch-lang':'Switch language','tipos-eyebrow':'Event Types','tipos-title':'For Every Celebration','tipos-sub':'Weddings, quinceañeras and corporate events — we bring the premium bar wherever you are.','tipos-boda':'Weddings','tipos-quince':'Sweet 15s','tipos-corp':'Corporate','hb-label':'Head Bartender','hb-sub':'10+ years · Richmond, VA','menu-eyebrow':'Explore it all','menu-title-a':'The full','menu-title-b':'menu.','menu-click':'Click any drink to see the details','filter-all':'All','filter-more':'More','gallery-eyebrow':'Gallery','gallery-title':'On The Rocks Moments','accion-eyebrow':'In Action','accion-title':'This is On The Rocks','accion-sub':'Craft cocktails, full bar setup and the best vibe for your event.','tap-explore':'Tap to explore →','pkg-sub-1':'Sweet 15s','pkg-sub-2':'Brunch & Baby Showers','pkg-sub-3':'Weddings & Anniversaries','pkg-sub-4':'Corporate Events','pkg-sub-5':'Baby Showers','pkg-sub-6':'Just the Pro',
     'nav-about':'About','nav-services':'Services','nav-menu':'Menu','nav-packages':'Packages','nav-mixo':'Mixology','nav-calc':'Calculator','nav-experience':'Experience','nav-cta':'Book Now',
+    'build-eye':'Interactive experience','build-title':'Build your own drink','build-sub':'Pick your base, your flavor and your finishing touch — and at your event you build it with us.','build-base':'Base','build-flavor':'Flavor','build-rim':'The touch','build-your':'Your creation','build-cta':'I want this at my event','menu-see':'See the full menu',
+    'ob-margarita':'Margarita','ob-paloma':'Paloma','ob-mojito':'Mojito','ob-frozen':'Frozen','ob-cantarito':'Cantarito','ob-mango':'Mango','ob-fresa':'Strawberry','ob-sandia':'Watermelon','ob-pina':'Pineapple','ob-coco':'Coconut','ob-maracuya':'Passion fruit','ob-jamaica':'Hibiscus','ob-tajin':'Tajín','ob-chamoy':'Chamoy','ob-sal':'Salt','ob-flor':'Edible flower','ob-sinborde':'No rim',
     'hero-eyebrow':'Richmond, Virginia','hero-line1':"Let's drink",'hero-line2':'about it.',
     'hero-sub':'Premium mobile bar · Craft cocktails · Unforgettable events',
     'hero-btn1':'Get a Quote','hero-btn2':'View Menu','hero-btn3':'Design Your Drink',
@@ -907,7 +913,6 @@ const t = {
     'form-date-label':'Event date','form-msg-label':'Message','form-btn':'Send via WhatsApp',
   }
 };
-
 function setLang(lang) {
   currentLang = lang;
   document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -920,14 +925,13 @@ function setLang(lang) {
   if (btnEn) btnEn.className = 'lang-btn' + (lang==='en'?' active':'');
   document.documentElement.lang = lang;
   localStorage.setItem('otr-lang', lang);
+  if (typeof obRender === 'function') obRender();
 }
-
 // Auto-detect saved language on load
 document.addEventListener('DOMContentLoaded', function() {
   var saved = localStorage.getItem('otr-lang');
   if (saved && saved !== 'es') setLang(saved);
 });
-
 function showTab(id, btn) {
   ['margaritas','frozen','palomas','mojitos','more'].forEach(p => {
     const el = document.getElementById(p);
@@ -1071,7 +1075,6 @@ function showTab(id, btn) {
   }, 3000);
 })();
 </script>
-
 <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
 <script>
 /* OTR: pausa videos de galeria fuera de pantalla para ahorrar recursos */
@@ -1079,60 +1082,27 @@ function showTab(id, btn) {
 </script>
 <!-- ====== MUSICA DE FONDO OTR ====== -->
 <audio id="otr-bgm" preload="none"></audio>
-
 <!-- ====== SPEED-DIAL: WhatsApp · Mensaje · Música ====== -->
-<div id="otr-fab" class="otr-fab">
-  <div class="otr-fab-items">
-    <a href="https://wa.me/18045026837" target="_blank" class="otr-fab-item" aria-label="WhatsApp">
-      <span class="otr-fab-lbl">WhatsApp</span>
-      <span class="otr-fab-ic" style="background:#25D366;"><svg width="24" height="24" viewBox="0 0 24 24" fill="#fff"><path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 0 1 8.413 3.488 11.824 11.824 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 0 0 1.51 5.26l-.999 3.648 3.728-.979zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.247-.694.247-1.289.173-1.413z"/></svg></span>
-    </a>
-    <a href="sms:18045026837" class="otr-fab-item" aria-label="Mensaje / iMessage">
-      <span class="otr-fab-lbl">Mensaje</span>
-      <span class="otr-fab-ic" style="background:#0a84ff;"><svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M20 2H4a2 2 0 0 0-2 2v18l4-4h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2z"/></svg></span>
-    </a>
-    <div class="otr-fab-item otr-fab-music">
-      <span class="otr-fab-lbl">Música</span>
-      <button id="otr-prev" aria-label="Canción anterior" onclick="otrPrev()" class="otr-fab-skip" style="display:none;"><svg width="14" height="14" viewBox="0 0 24 24" fill="#fff"><path d="M19 4L9 12l10 8V4zM7 4H5v16h2z"/></svg></button>
-      <button id="otr-music-btn" aria-label="Música" onclick="otrToggleMusic()" class="otr-fab-ic otr-fab-mbtn" style="background:#EB5C0B;"><svg id="otr-music-ic" width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/></svg></button>
-      <button id="otr-next" aria-label="Siguiente canción" onclick="otrNext()" class="otr-fab-skip" style="display:none;"><svg width="14" height="14" viewBox="0 0 24 24" fill="#fff"><path d="M5 4l10 8-10 8V4zm12 0h2v16h-2z"/></svg></button>
-    </div>
+<!-- HOSTS: Música (protagonista) + WhatsApp de apoyo -->
+<div class="otr-hosts">
+  <a href="https://wa.me/18045026837" target="_blank" class="otr-wa-mini" aria-label="WhatsApp"><svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 0 1 8.413 3.488 11.824 11.824 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 0 0 1.51 5.26l-.999 3.648 3.728-.979zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.247-.694.247-1.289.173-1.413z"/></svg></a>
+  <div class="otr-music-host">
+    <button id="otr-prev" aria-label="Canción anterior" onclick="otrPrev()" class="otr-host-skip" style="display:none;"><svg width="15" height="15" viewBox="0 0 24 24" fill="#fff"><path d="M19 4L9 12l10 8V4zM7 4H5v16h2z"/></svg></button>
+    <button id="otr-music-btn" aria-label="Música" onclick="otrToggleMusic()" class="otr-host-btn" style="background:#EB5C0B;"><svg id="otr-music-ic" width="26" height="26" viewBox="0 0 24 24" fill="#fff"><path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/></svg></button>
+    <button id="otr-next" aria-label="Siguiente canción" onclick="otrNext()" class="otr-host-skip" style="display:none;"><svg width="15" height="15" viewBox="0 0 24 24" fill="#fff"><path d="M5 4l10 8-10 8V4zm12 0h2v16h-2z"/></svg></button>
   </div>
-  <button id="otr-fab-main" class="otr-fab-main" aria-label="Contacto y música" aria-expanded="false" onclick="otrToggleFab()">
-    <svg class="otr-fab-open" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-    <svg class="otr-fab-close" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
-  </button>
 </div>
 <style>
-.otr-fab{position:fixed;bottom:2rem;right:2rem;z-index:1000;display:flex;flex-direction:column;align-items:flex-end;gap:0.9rem;}
-.otr-fab-items{display:flex;flex-direction:column;align-items:flex-end;gap:0.85rem;opacity:0;visibility:hidden;transform:translateY(12px) scale(.92);transform-origin:bottom right;transition:opacity .28s ease,transform .28s ease,visibility .28s;pointer-events:none;}
-.otr-fab.open .otr-fab-items{opacity:1;visibility:visible;transform:none;pointer-events:auto;}
-.otr-fab-item{display:flex;align-items:center;gap:.55rem;text-decoration:none;}
-.otr-fab-lbl{background:rgba(0,20,28,.92);color:#fff;font-family:'Montserrat',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.03em;padding:.36rem .72rem;border-radius:20px;white-space:nowrap;box-shadow:0 4px 14px rgba(0,0,0,.3);}
-.otr-fab-ic{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(0,0,0,.35);border:none;cursor:pointer;flex:0 0 auto;padding:0;transition:transform .2s;}
-.otr-fab-ic:hover{transform:scale(1.08);}
-.otr-fab-music{gap:.4rem;}
-.otr-fab-skip{width:34px;height:34px;border-radius:50%;border:none;background:#004E5E;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,.4);flex:0 0 auto;}
-.otr-fab-main{width:60px;height:60px;border-radius:50%;border:none;cursor:pointer;background:linear-gradient(135deg,#F08100,#EB5C0B);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 22px rgba(240,129,0,.5);transition:transform .3s,background .3s;animation:otrPulse 2.4s infinite;}
-.otr-fab-main:hover{transform:scale(1.08);}
-.otr-fab.open .otr-fab-main{animation:none;background:#00343f;}
-.otr-fab-close{display:none;}
-.otr-fab.open .otr-fab-open{display:none;}
-.otr-fab.open .otr-fab-close{display:block;}
-@media(max-width:640px){.otr-fab{bottom:1.4rem;right:1.4rem;}}
+.otr-hosts{position:fixed;bottom:2rem;right:2rem;z-index:1000;display:flex;flex-direction:column;align-items:flex-end;gap:.7rem;}
+.otr-wa-mini{width:44px;height:44px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(37,211,102,.4);transition:transform .2s;}
+.otr-wa-mini:hover{transform:scale(1.08);}
+.otr-music-host{display:flex;align-items:center;gap:.4rem;}
+.otr-host-btn{width:60px;height:60px;border-radius:50%;border:none;cursor:pointer;background:#EB5C0B;color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 22px rgba(235,92,11,.5);transition:transform .3s;}
+.otr-host-btn:hover{transform:scale(1.08);}
+.otr-host-skip{width:36px;height:36px;border-radius:50%;border:none;background:#004E5E;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,.4);flex:0 0 auto;}
+.otr-host-skip:hover{background:#00647a;}
+@media(max-width:640px){.otr-hosts{bottom:1.4rem;right:1.4rem;}}
 </style>
-<script>
-function otrToggleFab(){
-  var f=document.getElementById('otr-fab');
-  var open=f.classList.toggle('open');
-  var m=document.getElementById('otr-fab-main');
-  if(m) m.setAttribute('aria-expanded', open?'true':'false');
-}
-document.addEventListener('click',function(e){
-  var f=document.getElementById('otr-fab');
-  if(f&&f.classList.contains('open')&&!f.contains(e.target)) f.classList.remove('open');
-});
-</script>
 <script>
 (function(){
   var a=document.getElementById('otr-bgm'), b=document.getElementById('otr-music-btn'), ic=document.getElementById('otr-music-ic'), playing=false;
@@ -1248,6 +1218,32 @@ document.addEventListener('click',function(e){
   if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded',initZMap); }
   else { initZMap(); }
 })();
+</script>
+<script>
+/* ARMÁ TU BEBIDA (builder interactivo) */
+function obPick(k,el){
+  el.parentElement.querySelectorAll('.ob-chip').forEach(function(c){c.classList.remove('on')});
+  el.classList.add('on'); obRender();
+}
+function obSel(id){var e=document.querySelector('#'+id+' .ob-chip.on');return e?e.textContent.trim():'';}
+function obRender(){
+  var nm=document.getElementById('ob-name'); if(!nm) return;
+  var base=obSel('ob-base'), flavor=obSel('ob-flavor'), rim=obSel('ob-rim');
+  nm.textContent=(flavor+' '+base).trim();
+  var es=(typeof currentLang!=='undefined'?currentLang:'es')==='es';
+  var noRim=(rim==='Sin borde'||rim==='No rim');
+  var desc, msg;
+  if(es){ desc=noRim?'Sin borde.':'Con borde de '+rim+'.'; msg='Hola On The Rocks, en mi evento quiero armar mi propia bebida: '+(flavor+' '+base)+(noRim?'':' con borde de '+rim)+'. ¿Me cuentan más?'; }
+  else { desc=noRim?'No rim.':'With a '+rim+' rim.'; msg='Hi On The Rocks, at my event I want to build my own drink: '+(flavor+' '+base)+(noRim?'':' with a '+rim+' rim')+'. Tell me more?'; }
+  document.getElementById('ob-desc').textContent=desc;
+  document.getElementById('ob-cta').href='https://wa.me/18045026837?text='+encodeURIComponent(msg);
+}
+function toggleMenuFull(){
+  var f=document.getElementById('menu-full'); if(!f) return;
+  var open=f.classList.toggle('open');
+  var a=document.getElementById('menu-toggle-arrow'); if(a) a.textContent=open?'▴':'▾';
+}
+obRender();
 </script>
 </body>
 </html>
