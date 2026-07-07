@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>On The Rocks Mobile Bar | Richmond, VA</title>
 <meta name="description" content="Barra móvil premium en Richmond, VA. Cócteles artesanales para bodas, quinceañeras, baby showers y todo tipo de eventos. Cotiza al instante con nuestro asistente. Premium mobile bar serving craft cocktails for weddings, quinceañeras and events in Richmond, VA.">
+<link rel="canonical" href="https://ontherocksrva.com/">
 <link rel="icon" href="icon-otr.png">
 <link rel="apple-touch-icon" href="icon-otr.png">
 <meta property="og:type" content="website">
@@ -13,15 +14,17 @@
 <meta property="og:locale:alternate" content="en_US">
 <meta property="og:title" content="On The Rocks Mobile Bar | Richmond, VA">
 <meta property="og:description" content="Barra móvil premium · Cócteles artesanales · Eventos únicos en Richmond, VA. Cotiza tu evento al instante.">
-<meta property="og:url" content="https://ontherocksrva-collab.github.io/on-the-rocks-mobile-bar/">
-<meta property="og:image" content="https://ontherocksrva-collab.github.io/on-the-rocks-mobile-bar/og-image.jpg">
+<meta property="og:url" content="https://ontherocksrva.com/">
+<meta property="og:image" content="https://ontherocksrva.com/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="On The Rocks Mobile Bar | Richmond, VA">
 <meta name="twitter:description" content="Barra móvil premium · Cócteles artesanales · Eventos únicos en Richmond, VA.">
-<meta name="twitter:image" content="https://ontherocksrva-collab.github.io/on-the-rocks-mobile-bar/og-image.jpg">
+<meta name="twitter:image" content="https://ontherocksrva.com/og-image.jpg">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="" defer></script>
 <style>
 :root {
   --green: #004E5E;
@@ -37,12 +40,26 @@ body { font-family:'Montserrat',sans-serif; background:#002a35; color:#F6F6F6; o
 a { text-decoration:none; }
 
 /* NAV */
-nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:1rem 3rem 1rem 3rem; display:flex; align-items:center; justify-content:space-between; background:rgba(0,20,28,0.85); backdrop-filter:blur(12px); border-bottom:1px solid rgba(240,129,0,0.2); padding-right:9rem; }
+nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:1rem 2rem; display:flex; align-items:center; justify-content:space-between; background:rgba(0,20,28,0.85); backdrop-filter:blur(12px); border-bottom:1px solid rgba(240,129,0,0.2); }
 .nav-logo img { height:48px; }
 .nav-links { display:flex; gap:2rem; list-style:none; }
 .nav-links a { color:rgba(246,246,246,0.8); font-size:0.72rem; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; transition:color 0.3s; }
 .nav-links a:hover { color:#F08100; }
 .nav-cta { background:#F08100 !important; color:#000 !important; padding:0.55rem 1.4rem; }
+
+/* HAMBURGER (todo en sandwich) */
+.hamburger { position:fixed; top:1.05rem; right:1.5rem; display:flex; flex-direction:column; justify-content:center; gap:6px; width:46px; height:46px; background:transparent; border:none; cursor:pointer; padding:0; z-index:10001; }
+.hamburger span { display:block; width:28px; height:2px; background:#F6F6F6; border-radius:2px; margin:0 auto; transition:transform .35s ease, opacity .25s ease, background .3s ease; }
+.hamburger:hover span { background:#F08100; }
+.hamburger.open span:nth-child(1) { transform:translateY(8px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity:0; }
+.hamburger.open span:nth-child(3) { transform:translateY(-8px) rotate(-45deg); }
+.menu-overlay { position:fixed; inset:0; background:rgba(0,16,24,0.97); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); z-index:10000; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1.7rem; opacity:0; visibility:hidden; transition:opacity .4s ease, visibility .4s ease; }
+.menu-overlay.open { opacity:1; visibility:visible; }
+.menu-overlay a { color:rgba(246,246,246,0.92); font-size:1.5rem; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; transition:color .3s; }
+.menu-overlay a:hover { color:#F08100; }
+.menu-overlay .menu-cta { background:#F08100; color:#000 !important; padding:0.8rem 2.6rem; border-radius:3px; font-size:1.2rem; margin-top:0.4rem; box-shadow:0 0 24px rgba(240,129,0,0.35); }
+.menu-lang { display:flex; border:2px solid #F08100; overflow:hidden; border-radius:3px; margin-top:1.4rem; box-shadow:0 0 15px rgba(240,129,0,0.35); }
 
 /* LANG TOGGLE */
 #lang-toggle { display:flex; border:2px solid #F08100; overflow:hidden; border-radius:3px; box-shadow:0 0 15px rgba(240,129,0,0.35); }
@@ -52,8 +69,10 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:1rem 3rem 1re
 /* HERO */
 .hero { min-height:100vh; background:linear-gradient(135deg,#002030 0%,#004E5E 50%,#003040 100%); display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; padding-top:80px; }
 .hero::before { content:''; position:absolute; inset:0; z-index:1; background:radial-gradient(ellipse at 70% 50%,rgba(240,129,0,0.12),transparent 60%); }
-.hero-video { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0; }
-.hero-video-overlay { position:absolute; inset:0; z-index:1; background:linear-gradient(135deg,rgba(0,32,48,0.74) 0%,rgba(0,48,64,0.60) 50%,rgba(0,16,24,0.78) 100%); }
+.hero-video { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0; filter:saturate(1.12) contrast(1.06) brightness(0.92); transform:scale(1.06); animation:heroKen 26s ease-in-out infinite alternate; }
+@keyframes heroKen { from { transform:scale(1.06); } to { transform:scale(1.17); } }
+.hero-video-overlay { position:absolute; inset:0; z-index:1; background:linear-gradient(to bottom,rgba(0,8,14,0.90) 0%,rgba(0,18,26,0.42) 34%,rgba(0,18,26,0.46) 62%,rgba(0,6,10,0.94) 100%),radial-gradient(ellipse 92% 82% at 50% 47%,transparent 30%,rgba(0,6,10,0.52) 100%); }
+@media(prefers-reduced-motion:reduce){ .hero-video{ animation:none; transform:none; } }
 .hero-content { position:relative; z-index:2; text-align:center; padding:2rem; max-width:860px; }
 .hero-eyebrow { font-size:0.68rem; font-weight:700; letter-spacing:0.35em; text-transform:uppercase; color:#F08100; margin-bottom:1.5rem; }
 .hero-logo { width:260px; margin:0 auto 2rem; filter:drop-shadow(0 0 30px rgba(240,129,0,0.5)); animation:glow 3s ease-in-out infinite; }
@@ -273,14 +292,13 @@ footer { background:#000; border-top:1px solid rgba(240,129,0,0.15); padding:2.5
 .social-link:hover { border-color:#F08100; color:#F08100; }
 
 /* WHATSAPP */
-.wa-float { position:fixed; bottom:2rem; right:2rem; z-index:999; width:54px; height:54px; background:#25D366; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.4rem; box-shadow:0 4px 18px rgba(37,211,102,0.4); transition:transform 0.3s; }
-.im-float{position:fixed;bottom:2rem;right:5.4rem;z-index:999;width:54px;height:54px;background:#0a84ff;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 18px rgba(10,132,255,.4);transition:transform .3s;}
-.im-float:hover{transform:scale(1.1);}
-.wa-float:hover { transform:scale(1.1); }
+
+
+
+
 
 /* LANG HINT */
 @keyframes fade-hint { 0% { opacity:0; transform:translateX(8px); } 15% { opacity:1; transform:translateX(0); } 80% { opacity:1; } 100% { opacity:0; } }
-#lang-hint { animation:fade-hint 4s ease forwards; animation-delay:1.5s; opacity:0; pointer-events:none; }
 
 /* RESPONSIVE */
 @media(max-width:1100px) {
@@ -305,30 +323,33 @@ footer { background:#000; border-top:1px solid rgba(240,129,0,0.15); padding:2.5
 </head>
 <body>
 
-<!-- LANG TOGGLE - fixed in nav -->
-<div style="position:fixed;top:1.1rem;right:1.5rem;z-index:9999;">
-  <div id="lang-toggle" style="display:flex;border:2px solid #F08100;overflow:hidden;border-radius:3px;box-shadow:0 0 15px rgba(240,129,0,0.35);">
-    <button class="lang-btn active" id="btn-es" onclick="setLang('es')">ES</button>
-    <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
-  </div>
-</div>
-<!-- LANG HINT - appears below nav -->
-<div style="position:fixed;top:4rem;right:1.5rem;z-index:9999;">
-  <div id="lang-hint" style="background:rgba(0,20,28,0.9);border:1px solid rgba(240,129,0,0.4);color:#F6F6F6;font-family:'Montserrat',sans-serif;font-size:0.62rem;font-weight:600;letter-spacing:0.08em;padding:0.38rem 0.75rem;border-radius:2px;white-space:nowrap;" data-i18n="switch-lang">Switch language</div>
-</div>
+<!-- LANG TOGGLE movido al menú hamburguesa -->
 
 <!-- NAV -->
 <nav>
   <div class="nav-logo"><img src="images/logo-otr.png" alt="On The Rocks"></div>
-  <ul class="nav-links">
-    <li><a href="#about" data-i18n="nav-about">Nosotros</a></li>
-    <li><a href="#services" data-i18n="nav-services">Servicios</a></li>
-    <li><a href="#menu" data-i18n="nav-menu">Menú</a></li>
-    <li><a href="#packages" data-i18n="nav-packages">Paquetes</a></li>
-    <li><a href="experiencia.html" data-i18n="nav-experience">Experiencia</a></li>
-    <li><a href="#contact" class="nav-cta" data-i18n="nav-cta">Cotizar</a></li>
-  </ul>
 </nav>
+
+<!-- HAMBURGER (fijo, encima de todo) -->
+<button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menú" aria-expanded="false">
+  <span></span><span></span><span></span>
+</button>
+
+<!-- MENU OVERLAY (sandwich) -->
+<div class="menu-overlay" id="menuOverlay">
+  <a href="#about" data-i18n="nav-about" onclick="closeMenu()">Nosotros</a>
+  <a href="#services" data-i18n="nav-services" onclick="closeMenu()">Servicios</a>
+  <a href="#menu" data-i18n="nav-menu" onclick="closeMenu()">Menú</a>
+  <a href="#packages" data-i18n="nav-packages" onclick="closeMenu()">Paquetes</a>
+  <a href="paquete-mixologia.html" data-i18n="nav-mixo">Mixología</a>
+  <a href="calculadora-alcohol.html" data-i18n="nav-calc">Calculadora</a>
+  <a href="experiencia.html" data-i18n="nav-experience">Experiencia</a>
+  <a href="#contact" class="menu-cta" data-i18n="nav-cta" onclick="closeMenu()">Cotizar</a>
+  <div class="menu-lang">
+    <button class="lang-btn active" id="btn-es" onclick="setLang('es')">ES</button>
+    <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+  </div>
+</div>
 
 <!-- HERO -->
 <section class="hero" id="home">
@@ -351,38 +372,6 @@ footer { background:#000; border-top:1px solid rgba(240,129,0,0.15); padding:2.5
 </section>
 
 <!-- ABOUT -->
-<!-- TIPOS DE EVENTO (videos protagonistas) -->
-<section class="section" id="tipos-evento" style="background:#000d14;padding:5rem 0;">
-  <div style="max-width:1180px;margin:0 auto;padding:0 1.5rem;text-align:center;">
-    <div class="hero-eyebrow" style="color:#F08100;" data-i18n="tipos-eyebrow">Tipos de evento</div>
-    <h2 style="font-size:clamp(2rem,5vw,3.2rem);font-weight:900;text-transform:uppercase;color:#F6F6F6;line-height:1;margin-bottom:0.7rem;" data-i18n="tipos-title">Para cada celebraci&oacute;n</h2>
-    <p style="color:rgba(246,246,246,0.6);max-width:680px;margin:0 auto 2.5rem;" data-i18n="tipos-sub">Bodas, quincea&ntilde;eras y eventos corporativos &mdash; llevamos la barra premium a donde est&eacute;s.</p>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1.2rem;">
-      <div style="position:relative;border-radius:18px;overflow:hidden;box-shadow:0 14px 44px rgba(0,0,0,0.55);aspect-ratio:9/14;background:#000;">
-        <video class="otr-gv" autoplay muted loop playsinline preload="metadata" poster="images/poster-boda.jpg" style="width:100%;height:100%;object-fit:cover;display:block;"><source src="videos/evento-boda.mp4" type="video/mp4"></video>
-        <div style="position:absolute;left:0;right:0;bottom:0;padding:1.1rem 1.2rem;background:linear-gradient(transparent,rgba(0,0,0,0.88));text-align:left;">
-          <div style="color:#F08100;font-size:0.65rem;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;">On The Rocks</div>
-          <div style="color:#fff;font-weight:900;text-transform:uppercase;font-size:1.3rem;letter-spacing:0.02em;" data-i18n="tipos-boda">Bodas</div>
-        </div>
-      </div>
-      <div style="position:relative;border-radius:18px;overflow:hidden;box-shadow:0 14px 44px rgba(0,0,0,0.55);aspect-ratio:9/14;background:#000;">
-        <video class="otr-gv" autoplay muted loop playsinline preload="metadata" poster="images/poster-quince.jpg" style="width:100%;height:100%;object-fit:cover;display:block;"><source src="videos/evento-quince.mp4" type="video/mp4"></video>
-        <div style="position:absolute;left:0;right:0;bottom:0;padding:1.1rem 1.2rem;background:linear-gradient(transparent,rgba(0,0,0,0.88));text-align:left;">
-          <div style="color:#F08100;font-size:0.65rem;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;">On The Rocks</div>
-          <div style="color:#fff;font-weight:900;text-transform:uppercase;font-size:1.3rem;letter-spacing:0.02em;" data-i18n="tipos-quince">Quincea&ntilde;eras</div>
-        </div>
-      </div>
-      <div style="position:relative;border-radius:18px;overflow:hidden;box-shadow:0 14px 44px rgba(0,0,0,0.55);aspect-ratio:9/14;background:#000;">
-        <video class="otr-gv" autoplay muted loop playsinline preload="metadata" poster="images/setup-pantalla.jpg" style="width:100%;height:100%;object-fit:cover;display:block;"><source src="videos/evento-corporate.mp4" type="video/mp4"></video>
-        <div style="position:absolute;left:0;right:0;bottom:0;padding:1.1rem 1.2rem;background:linear-gradient(transparent,rgba(0,0,0,0.88));text-align:left;">
-          <div style="color:#F08100;font-size:0.65rem;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;">On The Rocks</div>
-          <div style="color:#fff;font-weight:900;text-transform:uppercase;font-size:1.3rem;letter-spacing:0.02em;" data-i18n="tipos-corp">Corporativos</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <section class="section" id="about" style="background:#001e28;">
   <div class="section-inner">
     <div class="about-grid">
@@ -397,7 +386,7 @@ footer { background:#000; border-top:1px solid rgba(240,129,0,0.15); padding:2.5
           <div class="stat"><div class="stat-num"><span class="live-stars">★★★★★</span></div><div class="stat-lbl" data-i18n="stat-label3">5.0 · Calificación</div></div>
           <div class="stat"><div class="stat-num">RVA</div><div class="stat-lbl" data-i18n="stat-label4">Richmond, Virginia</div></div>
         </div>
-        <a href="#" onclick="if(window.Calendly){Calendly.initPopupWidget({url:'https://calendly.com/ontherocksrva/event?hide_gdpr_banner=1&primary_color=f08100'});}else{window.open('https://calendly.com/ontherocksrva/event','_blank');}return false;" class="stats-cal-btn" data-i18n="stats-cal">Mirá disponibilidad en vivo</a>
+        <a href="https://wa.me/18045026837?text=Hola%20On%20The%20Rocks%2C%20quiero%20consultar%20disponibilidad%20para%20mi%20evento" target="_blank" class="stats-cal-btn" data-i18n="stats-cal">Mirá disponibilidad en vivo</a>
       </div>
       <div class="gio-frame">
         <img src="images/img_03.jpg" alt="Giovanni Martinez" style="width:100%;display:block;">
@@ -649,32 +638,36 @@ document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal();
 
 <!-- PACKAGES -->
 <!-- GALERIA EN ACCION -->
-<!-- CARRUSEL DE FOTOS -->
+<!-- GALERIA UNIFICADA: fotos + videos -->
 <section style="background:#001019;padding:4.5rem 0;overflow:hidden;">
   <style>
-    .otr-marquee{width:100%;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);}
-    .otr-track{display:flex;gap:1rem;width:max-content;animation:otrScroll 45s linear infinite;}
-    .otr-track img{height:320px;border-radius:14px;object-fit:cover;box-shadow:0 10px 30px rgba(0,0,0,0.5);}
+    .otr-marquee{width:100%;overflow:hidden;min-height:320px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);}
+    .otr-track{display:flex;gap:1rem;width:max-content;animation:otrScroll 45s linear infinite;will-change:transform;backface-visibility:hidden;-webkit-backface-visibility:hidden;}
+    .otr-track img{height:320px;width:auto;border-radius:14px;object-fit:cover;box-shadow:0 10px 30px rgba(0,0,0,0.5);flex:0 0 auto;}
     .otr-marquee:hover .otr-track{animation-play-state:paused;}
     @keyframes otrScroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+    .otr-vids{display:flex;gap:1.1rem;justify-content:center;flex-wrap:wrap;max-width:1100px;margin:2.8rem auto 0;padding:0 1.5rem;}
+    .otr-vids video{width:210px;max-width:44vw;aspect-ratio:4/5;object-fit:cover;border-radius:14px;box-shadow:0 12px 40px rgba(0,0,0,0.5);background:#000;display:block;}
+    @media(max-width:768px){
+      .otr-marquee{min-height:220px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent);mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent);}
+      .otr-track{gap:0.6rem;animation-duration:32s;}
+      .otr-track img{height:220px;border-radius:10px;}
+      .otr-vids{gap:0.7rem;margin-top:2rem;}
+      .otr-vids video{width:150px;}
+    }
   </style>
   <div style="text-align:center;margin-bottom:2.2rem;padding:0 1.5rem;">
     <div class="hero-eyebrow" style="color:#F08100;" data-i18n="gallery-eyebrow">Galer&iacute;a</div>
     <h2 style="font-size:clamp(1.8rem,4vw,2.6rem);font-weight:900;text-transform:uppercase;color:#F6F6F6;" data-i18n="gallery-title">Momentos On The Rocks</h2>
   </div>
-  <div class="otr-marquee"><div class="otr-track"><img src="images/momento-01-equipo-servicio.jpg" alt="Equipo On The Rocks sirviendo cócteles" loading="lazy"><img src="images/momento-02-bartender-coctel.jpg" alt="Bartender preparando un cóctel" loading="lazy"><img src="images/momento-03-equipo-barra.jpg" alt="Equipo en la barra montada" loading="lazy"><img src="images/momento-04-equipo-quince.jpg" alt="Servicio en una quinceañera" loading="lazy"><img src="images/momento-05-flair.jpg" alt="Bartender haciendo flair" loading="lazy"><img src="images/momento-06-cocteles-flor.jpg" alt="Cócteles con flores comestibles" loading="lazy"><img src="images/momento-07-orquidea.jpg" alt="Cóctel con orquídea" loading="lazy"><img src="images/momento-08-margarita-rosa.jpg" alt="Margarita rosa con flor" loading="lazy"><img src="images/momento-09-palomas.jpg" alt="Palomas con rim de tajín" loading="lazy"><img src="images/momento-10-coco.jpg" alt="Cóctel de coco" loading="lazy"><img src="images/momento-11-flores-comestibles.jpg" alt="Cócteles premium con flores" loading="lazy"><img src="images/momento-12-evento.jpg" alt="Evento On The Rocks" loading="lazy"><img src="images/momento-01-equipo-servicio.jpg" alt="Equipo On The Rocks sirviendo cócteles" loading="lazy"><img src="images/momento-02-bartender-coctel.jpg" alt="Bartender preparando un cóctel" loading="lazy"><img src="images/momento-03-equipo-barra.jpg" alt="Equipo en la barra montada" loading="lazy"><img src="images/momento-04-equipo-quince.jpg" alt="Servicio en una quinceañera" loading="lazy"><img src="images/momento-05-flair.jpg" alt="Bartender haciendo flair" loading="lazy"><img src="images/momento-06-cocteles-flor.jpg" alt="Cócteles con flores comestibles" loading="lazy"><img src="images/momento-07-orquidea.jpg" alt="Cóctel con orquídea" loading="lazy"><img src="images/momento-08-margarita-rosa.jpg" alt="Margarita rosa con flor" loading="lazy"><img src="images/momento-09-palomas.jpg" alt="Palomas con rim de tajín" loading="lazy"><img src="images/momento-10-coco.jpg" alt="Cóctel de coco" loading="lazy"><img src="images/momento-11-flores-comestibles.jpg" alt="Cócteles premium con flores" loading="lazy"><img src="images/momento-12-evento.jpg" alt="Evento On The Rocks" loading="lazy"></div></div>
-</section>
-
-<section class="section" id="en-accion" style="background:#00141d;">
-  <div style="max-width:1100px;margin:0 auto;padding:0 1.5rem;text-align:center;">
-    <div class="hero-eyebrow" style="color:#F08100;" data-i18n="accion-eyebrow">En acci&oacute;n</div>
-    <h2 style="font-size:clamp(2rem,5vw,3.2rem);font-weight:900;text-transform:uppercase;color:#F6F6F6;line-height:1;margin-bottom:0.7rem;" data-i18n="accion-title">As&iacute; se vive On The Rocks</h2>
-    <p style="color:rgba(246,246,246,0.6);max-width:640px;margin:0 auto 2.5rem;" data-i18n="accion-sub">C&oacute;cteles artesanales, barra montada y el mejor ambiente para tu evento.</p>
-    <div style="display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap;">
-      <video class="otr-gv" autoplay muted loop playsinline preload="metadata" poster="images/exp-carrito.jpg" style="width:240px;max-width:46vw;border-radius:14px;box-shadow:0 12px 40px rgba(0,0,0,0.5);"><source src="videos/frozen_loop.mp4" type="video/mp4"></video>
-      <video class="otr-gv" autoplay muted loop playsinline preload="metadata" poster="images/exp-equipo.jpg" style="width:240px;max-width:46vw;border-radius:14px;box-shadow:0 12px 40px rgba(0,0,0,0.5);"><source src="videos/wedding_loop.mp4" type="video/mp4"></video>
-      <video class="otr-gv" autoplay muted loop playsinline preload="metadata" poster="images/exp-ambiente.jpg" style="width:240px;max-width:46vw;border-radius:14px;box-shadow:0 12px 40px rgba(0,0,0,0.5);"><source src="videos/ambiente_loop.mp4" type="video/mp4"></video>
-    </div>
+  <div class="otr-marquee"><div class="otr-track"><img src="images/momento-01-equipo-servicio.jpg" alt="Equipo On The Rocks sirviendo cócteles"><img src="images/momento-02-bartender-coctel.jpg" alt="Bartender preparando un cóctel"><img src="images/momento-03-equipo-barra.jpg" alt="Equipo en la barra montada"><img src="images/momento-04-equipo-quince.jpg" alt="Servicio en una quinceañera"><img src="images/momento-05-flair.jpg" alt="Bartender haciendo flair"><img src="images/momento-06-cocteles-flor.jpg" alt="Cócteles con flores comestibles"><img src="images/momento-07-orquidea.jpg" alt="Cóctel con orquídea"><img src="images/momento-08-margarita-rosa.jpg" alt="Margarita rosa con flor"><img src="images/momento-09-palomas.jpg" alt="Palomas con rim de tajín"><img src="images/momento-10-coco.jpg" alt="Cóctel de coco"><img src="images/momento-11-flores-comestibles.jpg" alt="Cócteles premium con flores"><img src="images/momento-12-evento.jpg" alt="Evento On The Rocks"><img src="images/momento-01-equipo-servicio.jpg" alt="Equipo On The Rocks sirviendo cócteles"><img src="images/momento-02-bartender-coctel.jpg" alt="Bartender preparando un cóctel"><img src="images/momento-03-equipo-barra.jpg" alt="Equipo en la barra montada"><img src="images/momento-04-equipo-quince.jpg" alt="Servicio en una quinceañera"><img src="images/momento-05-flair.jpg" alt="Bartender haciendo flair"><img src="images/momento-06-cocteles-flor.jpg" alt="Cócteles con flores comestibles"><img src="images/momento-07-orquidea.jpg" alt="Cóctel con orquídea"><img src="images/momento-08-margarita-rosa.jpg" alt="Margarita rosa con flor"><img src="images/momento-09-palomas.jpg" alt="Palomas con rim de tajín"><img src="images/momento-10-coco.jpg" alt="Cóctel de coco"><img src="images/momento-11-flores-comestibles.jpg" alt="Cócteles premium con flores"><img src="images/momento-12-evento.jpg" alt="Evento On The Rocks"></div></div>
+  <div class="otr-vids" id="otrVids">
+    <video class="otr-gv" muted loop playsinline preload="none" poster="images/exp-equipo.jpg"><source src="videos/wedding_loop.mp4" type="video/mp4"></video>
+    <video class="otr-gv" muted loop playsinline preload="none" poster="images/poster-boda.jpg"><source src="videos/evento-boda.mp4" type="video/mp4"></video>
+    <video class="otr-gv" muted loop playsinline preload="none" poster="images/exp-ambiente.jpg"><source src="videos/ambiente_loop.mp4" type="video/mp4"></video>
+    <video class="otr-gv" muted loop playsinline preload="none" poster="images/poster-quince.jpg"><source src="videos/evento-quince.mp4" type="video/mp4"></video>
+    <video class="otr-gv" muted loop playsinline preload="none" poster="images/exp-carrito.jpg"><source src="videos/frozen_loop.mp4" type="video/mp4"></video>
+    <video class="otr-gv" muted loop playsinline preload="none" poster="images/setup-pantalla.jpg"><source src="videos/evento-corporate.mp4" type="video/mp4"></video>
   </div>
 </section>
 
@@ -745,7 +738,14 @@ document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal();
 #zona .z-h2 b{color:#EB5C0B;font-weight:400}
 #zona .z-sub{color:#9fbcc2;max-width:560px;margin:.8rem auto 0;font-size:.95rem;line-height:1.5}
 #zona .z-wrap{max-width:1080px;margin:0 auto;padding:0 1.5rem;display:grid;grid-template-columns:1fr;gap:2.2rem;align-items:center}
-#zona .z-map{width:100%;max-width:460px;margin:0 auto}
+#zona .z-map{width:100%;max-width:460px;margin:0 auto;height:420px;border-radius:18px;overflow:hidden;border:1px solid rgba(240,129,0,.25);box-shadow:0 14px 44px rgba(0,0,0,.5);background:#001019;}
+#zona .z-map .leaflet-container{background:#001019;font-family:'Montserrat',sans-serif;}
+#zona .z-map .leaflet-tooltip{background:#00141b;color:#fff;border:1px solid rgba(240,129,0,.5);border-radius:8px;font-weight:700;font-size:.72rem;box-shadow:0 4px 14px rgba(0,0,0,.5);}
+#zona .z-map .leaflet-tooltip:before{display:none;}
+#zona .z-map .leaflet-control-zoom a{background:#00343f;color:#fff;border:none;}
+#zona .z-map .leaflet-control-zoom a:hover{background:#F08100;color:#000;}
+#zona .z-map .leaflet-bar{border:none;box-shadow:0 4px 14px rgba(0,0,0,.4);}
+@media(max-width:640px){#zona .z-map{height:340px;}}
 #zona .z-tiers{display:flex;flex-direction:column;gap:.7rem}
 #zona .z-tier{display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.04);border-left:4px solid var(--c);border-radius:10px;padding:.85rem 1.1rem}
 #zona .z-tier .z-mi{color:#fff;font-weight:700;font-size:.95rem}
@@ -763,25 +763,7 @@ document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal();
     <p class="z-sub" data-i18n="zona-sub">Con base en Richmond, VA — viajamos hasta Virginia Beach, Washington DC y Carolina del Norte. Mirá hasta dónde llegamos.</p>
   </div>
   <div class="z-wrap">
-    <svg class="z-map" viewBox="0 0 460 460" xmlns="http://www.w3.org/2000/svg">
-      <defs><radialGradient id="zg" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#0a3a44"/><stop offset="100%" stop-color="#001019"/></radialGradient></defs>
-      <rect width="460" height="460" fill="url(#zg)" rx="20"/>
-      <circle cx="230" cy="230" r="215" fill="none" stroke="#A91821" stroke-width="2" stroke-dasharray="3 5" opacity=".55"/>
-      <circle cx="230" cy="230" r="170" fill="none" stroke="#671243" stroke-width="2" stroke-dasharray="3 5" opacity=".7"/>
-      <circle cx="230" cy="230" r="125" fill="none" stroke="#EB5C0B" stroke-width="2" stroke-dasharray="3 5" opacity=".75"/>
-      <circle cx="230" cy="230" r="82" fill="none" stroke="#F08100" stroke-width="2" stroke-dasharray="3 5" opacity=".8"/>
-      <circle cx="230" cy="230" r="45" fill="#004E5E" fill-opacity=".35" stroke="#21d07a" stroke-width="2"/>
-      <!-- etiquetas de millas -->
-      <text x="230" y="35" fill="#A91821" font-family="Montserrat,sans-serif" font-size="12" font-weight="800" text-anchor="middle">76+ mi</text>
-      <text x="230" y="78" fill="#9c2060" font-family="Montserrat,sans-serif" font-size="12" font-weight="800" text-anchor="middle">51-75</text>
-      <text x="230" y="122" fill="#EB5C0B" font-family="Montserrat,sans-serif" font-size="12" font-weight="800" text-anchor="middle">36-50</text>
-      <text x="230" y="166" fill="#F08100" font-family="Montserrat,sans-serif" font-size="12" font-weight="800" text-anchor="middle">21-35</text>
-      <!-- centro Richmond -->
-      <circle cx="230" cy="230" r="7" fill="#F08100"/>
-      <circle cx="230" cy="230" r="13" fill="none" stroke="#F08100" stroke-width="1.5" opacity=".6"><animate attributeName="r" values="13;20;13" dur="2.2s" repeatCount="indefinite"/><animate attributeName="opacity" values=".6;0;.6" dur="2.2s" repeatCount="indefinite"/></circle>
-      <text x="230" y="252" fill="#fff" font-family="'Bebas Neue',Impact,sans-serif" font-size="17" letter-spacing="1" text-anchor="middle">RICHMOND, VA</text>
-      <text x="230" y="218" fill="#21d07a" font-family="Montserrat,sans-serif" font-size="10" font-weight="800" text-anchor="middle">GRATIS 0-20 mi</text>
-    </svg>
+    <div id="otr-zmap" class="z-map" aria-label="Mapa de zona de servicio de On The Rocks"></div>
     <div>
       <div class="z-tiers">
         <div class="z-tier" style="--c:#21d07a"><div><div class="z-mi" data-i18n="zona-t-1">0–20 millas</div><div class="z-city">Richmond · Henrico · Chesterfield · Midlothian</div></div><div class="z-price" data-i18n="zona-p-1">GRATIS</div></div>
@@ -791,7 +773,7 @@ document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal();
         <div class="z-tier" style="--c:#A91821"><div><div class="z-mi">76–110 millas</div><div class="z-city">Norfolk · Virginia Beach · Washington DC</div></div><div class="z-price">$200</div></div>
         <div class="z-tier" style="--c:#EB5C0B"><div><div class="z-mi" data-i18n="zona-t-6">110+ mi / fuera del estado</div><div class="z-city">North Carolina · Northern VA · Maryland</div></div><div class="z-price" style="font-size:1rem" data-i18n="zona-p-6">Cotización</div></div>
       </div>
-      <a href="#" onclick="if(window.Calendly){Calendly.initPopupWidget({url:'https://calendly.com/ontherocksrva/event?hide_gdpr_banner=1&primary_color=f08100'});}else{window.open('https://calendly.com/ontherocksrva/event','_blank');}return false;" class="z-cta" data-i18n="zona-cta">Reservá tu fecha</a>
+      <a href="https://wa.me/18045026837?text=Hola%20On%20The%20Rocks%2C%20quiero%20reservar%20una%20fecha%20para%20mi%20evento" target="_blank" class="z-cta" data-i18n="zona-cta">Reservá tu fecha</a>
       <p class="z-note" data-i18n="zona-note">Tarifa de viaje según distancia desde Richmond, VA. ¿Fuera del rango? Escribinos.</p>
     </div>
   </div>
@@ -813,7 +795,7 @@ document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal();
         </div>
         <a href="sms:18045026837" class="btn btn-primary" data-i18n="contact-btn-sms">Mensaje de texto</a>
         <a href="https://wa.me/18045026837" class="btn btn-primary" data-i18n="contact-btn">WhatsApp directo</a>
-        <a href="#" onclick="Calendly.initPopupWidget({url:'https://calendly.com/ontherocksrva/event'});return false;" class="btn btn-outline" style="margin-top:0.6rem;" data-i18n="contact-cal">Agenda una consulta</a>
+        <a href="https://wa.me/18045026837?text=Hola%20On%20The%20Rocks%2C%20quiero%20agendar%20una%20consulta" target="_blank" class="btn btn-outline" style="margin-top:0.6rem;" data-i18n="contact-cal">Agenda una consulta</a>
       </div>
       <div class="contact-form">
         <div class="form-title" data-i18n="form-title">Solicita tu cotización</div>
@@ -841,8 +823,28 @@ document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal();
   </div>
 </footer>
 
-<a href="sms:18045026837" class="im-float" aria-label="Mensaje de texto / iMessage"><svg width="26" height="26" viewBox="0 0 24 24" fill="#fff"><path d="M20 2H4a2 2 0 0 0-2 2v18l4-4h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2z"/></svg></a>
-<a href="https://wa.me/18045026837" class="wa-float" target="_blank"><svg width="26" height="26" viewBox="0 0 24 24" fill="#fff"><path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 0 1 8.413 3.488 11.824 11.824 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 0 0 1.51 5.26l-.999 3.648 3.728-.979zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.247-.694.247-1.289.173-1.413z"/></svg></a>
+<!-- Botones de contacto movidos al speed-dial (abajo a la derecha) -->
+
+<script>
+/* MENU HAMBURGUESA */
+function toggleMenu(){
+  var h=document.getElementById('hamburger');
+  var o=document.getElementById('menuOverlay');
+  var open=o.classList.toggle('open');
+  h.classList.toggle('open');
+  h.setAttribute('aria-expanded', open?'true':'false');
+  document.body.style.overflow = open?'hidden':'';
+}
+function closeMenu(){
+  var h=document.getElementById('hamburger');
+  var o=document.getElementById('menuOverlay');
+  o.classList.remove('open');
+  h.classList.remove('open');
+  h.setAttribute('aria-expanded','false');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeMenu(); });
+</script>
 
 <script>
 let currentLang = 'es';
@@ -853,7 +855,7 @@ const t = {
     'contact-btn-sms':'Mensaje de texto',
     'zona-eyebrow':'¿Llegamos a vos?','zona-t1':'NUESTRA ZONA','zona-t2':'DE SERVICIO','zona-sub':'Con base en Richmond, VA — viajamos hasta Virginia Beach, Washington DC y Carolina del Norte. Mirá hasta dónde llegamos.','zona-t-1':'0–20 millas','zona-t-6':'110+ mi / fuera del estado','zona-p-6':'Cotización','zona-p-1':'GRATIS','zona-cta':'Reservá tu fecha','zona-note':'Tarifa de viaje según distancia desde Richmond, VA. ¿Fuera del rango? Escribinos.',
     'switch-lang':'Cambiar idioma','tipos-eyebrow':'Tipos de evento','tipos-title':'Para cada celebración','tipos-sub':'Bodas, quinceañeras y eventos corporativos — llevamos la barra premium a donde estés.','tipos-boda':'Bodas','tipos-quince':'Quinceañeras','tipos-corp':'Corporativos','hb-label':'Head Bartender','hb-sub':'10+ años · Richmond, VA','menu-eyebrow':'Explora todo','menu-title-a':'El menú','menu-title-b':'completo.','menu-click':'Haz click en cualquier bebida para ver los detalles','filter-all':'Todo','filter-more':'Más','gallery-eyebrow':'Galería','gallery-title':'Momentos On The Rocks','accion-eyebrow':'En acción','accion-title':'Así se vive On The Rocks','accion-sub':'Cócteles artesanales, barra montada y el mejor ambiente para tu evento.','tap-explore':'Toca para ver →','pkg-sub-1':'Quinceañeras','pkg-sub-2':'Brunch & Baby Showers','pkg-sub-3':'Bodas & Aniversarios','pkg-sub-4':'Eventos Corporativos','pkg-sub-5':'Baby Showers','pkg-sub-6':'Solo el profesional',
-    'nav-about':'Nosotros','nav-services':'Servicios','nav-menu':'Menú','nav-packages':'Paquetes','nav-experience':'Experiencia','nav-cta':'Cotizar',
+    'nav-about':'Nosotros','nav-services':'Servicios','nav-menu':'Menú','nav-packages':'Paquetes','nav-mixo':'Mixología','nav-calc':'Calculadora','nav-experience':'Experiencia','nav-cta':'Cotizar',
     'hero-eyebrow':'Richmond, Virginia','hero-line1':"Let's drink",'hero-line2':'about it.',
     'hero-sub':'Barra móvil premium · Cócteles artesanales · Eventos únicos',
     'hero-btn1':'Cotiza tu evento','hero-btn2':'Ver menú','hero-btn3':'Diseña tu experiencia',
@@ -881,7 +883,7 @@ const t = {
     'contact-btn-sms':'Text message',
     'zona-eyebrow':'Do we reach you?','zona-t1':'OUR SERVICE','zona-t2':'AREA','zona-sub':'Based in Richmond, VA — we travel to Virginia Beach, Washington DC and North Carolina. See how far we go.','zona-t-1':'0–20 miles','zona-t-6':'110+ mi / out of state','zona-p-6':'Custom quote','zona-p-1':'FREE','zona-cta':'Book your date','zona-note':'Travel fee based on distance from Richmond, VA. Outside the range? Reach out.',
     'switch-lang':'Switch language','tipos-eyebrow':'Event Types','tipos-title':'For Every Celebration','tipos-sub':'Weddings, quinceañeras and corporate events — we bring the premium bar wherever you are.','tipos-boda':'Weddings','tipos-quince':'Sweet 15s','tipos-corp':'Corporate','hb-label':'Head Bartender','hb-sub':'10+ years · Richmond, VA','menu-eyebrow':'Explore it all','menu-title-a':'The full','menu-title-b':'menu.','menu-click':'Click any drink to see the details','filter-all':'All','filter-more':'More','gallery-eyebrow':'Gallery','gallery-title':'On The Rocks Moments','accion-eyebrow':'In Action','accion-title':'This is On The Rocks','accion-sub':'Craft cocktails, full bar setup and the best vibe for your event.','tap-explore':'Tap to explore →','pkg-sub-1':'Sweet 15s','pkg-sub-2':'Brunch & Baby Showers','pkg-sub-3':'Weddings & Anniversaries','pkg-sub-4':'Corporate Events','pkg-sub-5':'Baby Showers','pkg-sub-6':'Just the Pro',
-    'nav-about':'About','nav-services':'Services','nav-menu':'Menu','nav-packages':'Packages','nav-experience':'Experience','nav-cta':'Book Now',
+    'nav-about':'About','nav-services':'Services','nav-menu':'Menu','nav-packages':'Packages','nav-mixo':'Mixology','nav-calc':'Calculator','nav-experience':'Experience','nav-cta':'Book Now',
     'hero-eyebrow':'Richmond, Virginia','hero-line1':"Let's drink",'hero-line2':'about it.',
     'hero-sub':'Premium mobile bar · Craft cocktails · Unforgettable events',
     'hero-btn1':'Get a Quote','hero-btn2':'View Menu','hero-btn3':'Design Your Drink',
@@ -1077,15 +1079,60 @@ function showTab(id, btn) {
 </script>
 <!-- ====== MUSICA DE FONDO OTR ====== -->
 <audio id="otr-bgm" preload="none"></audio>
-<button id="otr-prev" aria-label="Canción anterior" onclick="otrPrev()" style="position:fixed;bottom:6.7rem;left:5.3rem;z-index:1000;width:40px;height:40px;border-radius:50%;border:none;background:#004E5E;color:#fff;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.4);display:none;align-items:center;justify-content:center;transition:transform .2s;">
-  <svg width="17" height="17" viewBox="0 0 24 24" fill="#fff"><path d="M19 4L9 12l10 8V4zM7 4H5v16h2z"/></svg>
-</button>
-<button id="otr-next" aria-label="Siguiente canción" onclick="otrNext()" style="position:fixed;bottom:6.7rem;left:8.1rem;z-index:1000;width:40px;height:40px;border-radius:50%;border:none;background:#004E5E;color:#fff;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.4);display:none;align-items:center;justify-content:center;transition:transform .2s;">
-  <svg width="17" height="17" viewBox="0 0 24 24" fill="#fff"><path d="M5 4l10 8-10 8V4zm12 0h2v16h-2z"/></svg>
-</button>
-<button id="otr-music-btn" aria-label="Música" onclick="otrToggleMusic()" style="position:fixed;bottom:2rem;left:6.6rem;z-index:1000;width:48px;height:48px;border-radius:50%;border:none;background:#EB5C0B;color:#fff;cursor:pointer;box-shadow:0 6px 18px rgba(235,92,11,.45);display:flex;align-items:center;justify-content:center;transition:transform .2s;">
-  <svg id="otr-music-ic" width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/></svg>
-</button>
+
+<!-- ====== SPEED-DIAL: WhatsApp · Mensaje · Música ====== -->
+<div id="otr-fab" class="otr-fab">
+  <div class="otr-fab-items">
+    <a href="https://wa.me/18045026837" target="_blank" class="otr-fab-item" aria-label="WhatsApp">
+      <span class="otr-fab-lbl">WhatsApp</span>
+      <span class="otr-fab-ic" style="background:#25D366;"><svg width="24" height="24" viewBox="0 0 24 24" fill="#fff"><path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 0 1 8.413 3.488 11.824 11.824 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 0 0 1.51 5.26l-.999 3.648 3.728-.979zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.247-.694.247-1.289.173-1.413z"/></svg></span>
+    </a>
+    <a href="sms:18045026837" class="otr-fab-item" aria-label="Mensaje / iMessage">
+      <span class="otr-fab-lbl">Mensaje</span>
+      <span class="otr-fab-ic" style="background:#0a84ff;"><svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M20 2H4a2 2 0 0 0-2 2v18l4-4h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2z"/></svg></span>
+    </a>
+    <div class="otr-fab-item otr-fab-music">
+      <span class="otr-fab-lbl">Música</span>
+      <button id="otr-prev" aria-label="Canción anterior" onclick="otrPrev()" class="otr-fab-skip" style="display:none;"><svg width="14" height="14" viewBox="0 0 24 24" fill="#fff"><path d="M19 4L9 12l10 8V4zM7 4H5v16h2z"/></svg></button>
+      <button id="otr-music-btn" aria-label="Música" onclick="otrToggleMusic()" class="otr-fab-ic otr-fab-mbtn" style="background:#EB5C0B;"><svg id="otr-music-ic" width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/></svg></button>
+      <button id="otr-next" aria-label="Siguiente canción" onclick="otrNext()" class="otr-fab-skip" style="display:none;"><svg width="14" height="14" viewBox="0 0 24 24" fill="#fff"><path d="M5 4l10 8-10 8V4zm12 0h2v16h-2z"/></svg></button>
+    </div>
+  </div>
+  <button id="otr-fab-main" class="otr-fab-main" aria-label="Contacto y música" aria-expanded="false" onclick="otrToggleFab()">
+    <svg class="otr-fab-open" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+    <svg class="otr-fab-close" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+  </button>
+</div>
+<style>
+.otr-fab{position:fixed;bottom:2rem;right:2rem;z-index:1000;display:flex;flex-direction:column;align-items:flex-end;gap:0.9rem;}
+.otr-fab-items{display:flex;flex-direction:column;align-items:flex-end;gap:0.85rem;opacity:0;visibility:hidden;transform:translateY(12px) scale(.92);transform-origin:bottom right;transition:opacity .28s ease,transform .28s ease,visibility .28s;pointer-events:none;}
+.otr-fab.open .otr-fab-items{opacity:1;visibility:visible;transform:none;pointer-events:auto;}
+.otr-fab-item{display:flex;align-items:center;gap:.55rem;text-decoration:none;}
+.otr-fab-lbl{background:rgba(0,20,28,.92);color:#fff;font-family:'Montserrat',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.03em;padding:.36rem .72rem;border-radius:20px;white-space:nowrap;box-shadow:0 4px 14px rgba(0,0,0,.3);}
+.otr-fab-ic{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(0,0,0,.35);border:none;cursor:pointer;flex:0 0 auto;padding:0;transition:transform .2s;}
+.otr-fab-ic:hover{transform:scale(1.08);}
+.otr-fab-music{gap:.4rem;}
+.otr-fab-skip{width:34px;height:34px;border-radius:50%;border:none;background:#004E5E;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,.4);flex:0 0 auto;}
+.otr-fab-main{width:60px;height:60px;border-radius:50%;border:none;cursor:pointer;background:linear-gradient(135deg,#F08100,#EB5C0B);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 22px rgba(240,129,0,.5);transition:transform .3s,background .3s;animation:otrPulse 2.4s infinite;}
+.otr-fab-main:hover{transform:scale(1.08);}
+.otr-fab.open .otr-fab-main{animation:none;background:#00343f;}
+.otr-fab-close{display:none;}
+.otr-fab.open .otr-fab-open{display:none;}
+.otr-fab.open .otr-fab-close{display:block;}
+@media(max-width:640px){.otr-fab{bottom:1.4rem;right:1.4rem;}}
+</style>
+<script>
+function otrToggleFab(){
+  var f=document.getElementById('otr-fab');
+  var open=f.classList.toggle('open');
+  var m=document.getElementById('otr-fab-main');
+  if(m) m.setAttribute('aria-expanded', open?'true':'false');
+}
+document.addEventListener('click',function(e){
+  var f=document.getElementById('otr-fab');
+  if(f&&f.classList.contains('open')&&!f.contains(e.target)) f.classList.remove('open');
+});
+</script>
 <script>
 (function(){
   var a=document.getElementById('otr-bgm'), b=document.getElementById('otr-music-btn'), ic=document.getElementById('otr-music-ic'), playing=false;
@@ -1136,11 +1183,70 @@ function showTab(id, btn) {
 (function(){
   var hv=document.getElementById('heroVid');
   if(!hv) return;
-  var hp=['videos/ambiente_loop.mp4','videos/wedding_loop.mp4','videos/evento-boda.mp4','videos/evento-quince.mp4'];
+  var hp=['videos/wedding_loop.mp4','videos/evento-boda.mp4','videos/ambiente_loop.mp4','videos/evento-quince.mp4'];
   var hi=0;
   function load(){ hv.src=hp[hi]; hv.play().catch(function(){}); }
   hv.addEventListener('ended',function(){ hi=(hi+1)%hp.length; load(); });
   load();
+})();
+</script>
+<script>
+/* Galería: reproducir videos solo cuando están en pantalla (rendimiento) */
+(function(){
+  var vids = document.querySelectorAll('#otrVids video');
+  if(!vids.length || !('IntersectionObserver' in window)) {
+    vids.forEach(function(v){ v.setAttribute('autoplay',''); v.play().catch(function(){}); });
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      var v = e.target;
+      if(e.isIntersecting){ v.play().catch(function(){}); }
+      else { v.pause(); }
+    });
+  }, { threshold:0.25 });
+  vids.forEach(function(v){ io.observe(v); });
+})();
+</script>
+<script>
+/* ===== MAPA DE ZONA DE SERVICIO (Leaflet) ===== */
+(function(){
+  var tries=0;
+  function initZMap(){
+    var el=document.getElementById('otr-zmap');
+    if(!el) return;
+    if(typeof L==='undefined'){ if(tries++<25){ return setTimeout(initZMap,300); } return; }
+    if(el._leaflet_id){ return; }
+    var RVA=[37.5407,-77.4360]; // Richmond, VA
+    var MI=1609.34;
+    var map=L.map(el,{ scrollWheelZoom:false, zoomControl:true, attributionControl:true }).setView(RVA,7);
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{
+      subdomains:'abcd', maxZoom:19,
+      attribution:'&copy; OpenStreetMap &copy; CARTO'
+    }).addTo(map);
+    // anillos: de mayor a menor para que el relleno chico quede encima
+    var tiers=[
+      {mi:110, color:'#A91821', label:'76–110 mi · $200'},
+      {mi:75,  color:'#9c2060', label:'51–75 mi · $150'},
+      {mi:50,  color:'#EB5C0B', label:'36–50 mi · $100'},
+      {mi:35,  color:'#F08100', label:'21–35 mi · $75'},
+      {mi:20,  color:'#21d07a', label:'0–20 mi · GRATIS'}
+    ];
+    var outer;
+    tiers.forEach(function(t){
+      var c=L.circle(RVA,{ radius:t.mi*MI, color:t.color, weight:2, opacity:.9, dashArray:'4 6',
+        fillColor:t.color, fillOpacity:.08 }).addTo(map);
+      c.bindTooltip(t.label,{sticky:true});
+      if(t.mi===110) outer=c;
+    });
+    // marcador Richmond
+    var dot=L.divIcon({className:'', html:'<div style="width:16px;height:16px;border-radius:50%;background:#F08100;box-shadow:0 0 0 4px rgba(240,129,0,.35),0 0 14px rgba(240,129,0,.8);"></div>', iconSize:[16,16], iconAnchor:[8,8]});
+    L.marker(RVA,{icon:dot}).addTo(map).bindTooltip('Richmond, VA · Base',{permanent:false,direction:'top'});
+    if(outer){ map.fitBounds(outer.getBounds(),{padding:[20,20]}); }
+    setTimeout(function(){ map.invalidateSize(); },250);
+  }
+  if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded',initZMap); }
+  else { initZMap(); }
 })();
 </script>
 </body>
