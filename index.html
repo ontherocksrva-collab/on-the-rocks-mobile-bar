@@ -689,12 +689,12 @@ document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal();
     .otr-cust .cust-eyebrow{color:#F08100;font-weight:800;letter-spacing:.22em;font-size:.72rem;text-transform:uppercase;margin-bottom:.45rem;}
     .otr-cust .cust-title{font-family:'Bebas Neue',Impact,sans-serif;color:#002a35;font-size:clamp(1.7rem,4.5vw,2.6rem);letter-spacing:1px;line-height:1;}
     .cust-marquee{width:100%;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);}
-    .cust-track{display:flex;align-items:center;gap:3.2rem;width:max-content;animation:custScroll 40s linear infinite;}
-    .cust-track img{height:70px;width:auto;filter:grayscale(100%) opacity(.6);transition:filter .35s ease;}
-    .cust-track img:hover{filter:grayscale(0) opacity(1);}
+    .cust-track{display:flex;align-items:center;gap:2.4rem;width:max-content;animation:custScroll 40s linear infinite;}
+    .cust-track img{width:150px;height:58px;object-fit:contain;filter:grayscale(100%) brightness(.6) opacity(.9);transition:filter .35s ease;}
+    .cust-track img:hover{filter:none;}
     .cust-marquee:hover .cust-track{animation-play-state:paused;}
     @keyframes custScroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
-    @media(max-width:640px){.cust-track img{height:52px;}.cust-track{gap:2.2rem;}}
+    @media(max-width:640px){.cust-track img{width:112px;height:48px;}.cust-track{gap:1.7rem;}}
   </style>
   <div class="cust-head">
     <div class="cust-eyebrow" data-i18n="customers-eyebrow">Nuestros aliados</div>
@@ -702,24 +702,22 @@ document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal();
   </div>
   <div class="cust-marquee">
     <div class="cust-track">
-        <img src="images/mainstreet-station.png" alt="Main Street Station" loading="lazy">
-        <img src="images/mosto-tequila.png" alt="Mosto Tequila" loading="lazy">
-        <img src="images/abuelitas.png" alt="Abuelita's" loading="lazy">
-        <img src="images/los-panchos.png" alt="Los Panchos" loading="lazy">
-        <img src="images/alana-kai.png" alt="Alana Kai Salon" loading="lazy">
-        <img src="images/lb-beauty-spa.png" alt="LB Beauty Spa" loading="lazy">
-        <img src="images/avonlea-farms.png" alt="Avonlea Farms" loading="lazy">
-        <img src="images/hidden-oaks.png" alt="The Hidden Oaks" loading="lazy">
-        <img src="images/sergios.png" alt="Sergio's" loading="lazy">
-        <img src="images/mainstreet-station.png" alt="Main Street Station" loading="lazy">
-        <img src="images/mosto-tequila.png" alt="Mosto Tequila" loading="lazy">
-        <img src="images/abuelitas.png" alt="Abuelita's" loading="lazy">
-        <img src="images/los-panchos.png" alt="Los Panchos" loading="lazy">
-        <img src="images/alana-kai.png" alt="Alana Kai Salon" loading="lazy">
-        <img src="images/lb-beauty-spa.png" alt="LB Beauty Spa" loading="lazy">
-        <img src="images/avonlea-farms.png" alt="Avonlea Farms" loading="lazy">
-        <img src="images/hidden-oaks.png" alt="The Hidden Oaks" loading="lazy">
-        <img src="images/sergios.png" alt="Sergio's" loading="lazy">
+        <img src="images/mainstreet-station.png" alt="Main Street Station">
+        <img src="images/mosto-tequila.png" alt="Mosto Tequila">
+        <img src="images/abuelitas.png" alt="Abuelita's">
+        <img src="images/alana-kai.png" alt="Alana Kai Salon">
+        <img src="images/lb-beauty-spa.png" alt="LB Beauty Spa">
+        <img src="images/avonlea-farms.png" alt="Avonlea Farms">
+        <img src="images/hidden-oaks.png" alt="The Hidden Oaks">
+        <img src="images/sergios.png" alt="Sergio's">
+        <img src="images/mainstreet-station.png" alt="Main Street Station">
+        <img src="images/mosto-tequila.png" alt="Mosto Tequila">
+        <img src="images/abuelitas.png" alt="Abuelita's">
+        <img src="images/alana-kai.png" alt="Alana Kai Salon">
+        <img src="images/lb-beauty-spa.png" alt="LB Beauty Spa">
+        <img src="images/avonlea-farms.png" alt="Avonlea Farms">
+        <img src="images/hidden-oaks.png" alt="The Hidden Oaks">
+        <img src="images/sergios.png" alt="Sergio's">
     </div>
   </div>
 </section>
