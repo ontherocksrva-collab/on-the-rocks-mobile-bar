@@ -344,7 +344,30 @@ footer { background:#000; border-top:1px solid rgba(240,129,0,0.15); padding:2.5
     </div>
   </div>
 </section>
-<!-- ABOUT -->
+<!-- BANNER CALCULADORA (visible rápido) -->
+<a href="calculadora-alcohol.html" class="calc-banner">
+  <div class="calc-banner-inner">
+    <div class="calc-banner-ic">🍸</div>
+    <div class="calc-banner-txt">
+      <span class="calc-banner-eye" data-i18n="calc-eye">Herramienta gratis</span>
+      <span class="calc-banner-title" data-i18n="calc-title">¿Cuánto alcohol comprar para tu evento?</span>
+      <span class="calc-banner-sub" data-i18n="calc-sub">Calculá botellas, mixers, hielo y vasos en segundos.</span>
+    </div>
+    <span class="calc-banner-btn" data-i18n="calc-btn">Abrir calculadora →</span>
+  </div>
+</a>
+<style>
+.calc-banner{display:block;text-decoration:none;background:linear-gradient(120deg,#004E5E,#00323d);border-top:1px solid rgba(240,129,0,.3);border-bottom:1px solid rgba(240,129,0,.3);}
+.calc-banner-inner{max-width:1100px;margin:0 auto;padding:1.3rem 1.5rem;display:flex;align-items:center;gap:1.1rem;flex-wrap:wrap;justify-content:center;text-align:center;}
+.calc-banner-ic{font-size:2rem;line-height:1;flex:0 0 auto}
+.calc-banner-txt{display:flex;flex-direction:column;gap:.15rem;align-items:flex-start;text-align:left}
+.calc-banner-eye{color:#F08100;font-weight:800;letter-spacing:.18em;font-size:.6rem;text-transform:uppercase}
+.calc-banner-title{color:#fff;font-weight:800;font-size:clamp(1rem,2.6vw,1.25rem);line-height:1.1}
+.calc-banner-sub{color:#9fbcc2;font-size:.8rem}
+.calc-banner-btn{background:#F08100;color:#000;font-weight:800;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;padding:.75rem 1.5rem;border-radius:4px;white-space:nowrap;flex:0 0 auto;transition:background .2s}
+.calc-banner:hover .calc-banner-btn{background:#EB5C0B}
+@media(max-width:600px){.calc-banner-txt{align-items:center;text-align:center}.calc-banner-ic{display:none}}
+</style>
 <section class="section" id="about" style="background:#001e28;">
   <div class="section-inner">
     <div class="about-grid">
@@ -856,7 +879,7 @@ const t = {
     'zona-eyebrow':'¿Llegamos a vos?','zona-t1':'NUESTRA ZONA','zona-t2':'DE SERVICIO','zona-sub':'Con base en Richmond, VA — viajamos hasta Virginia Beach, Washington DC y Carolina del Norte. Mirá hasta dónde llegamos.','zona-t-1':'0–20 millas','zona-t-6':'110+ mi / fuera del estado','zona-p-6':'Cotización','zona-p-1':'GRATIS','zona-cta':'Reservá tu fecha','zona-note':'Tarifa de viaje según distancia desde Richmond, VA. ¿Fuera del rango? Escribinos.',
     'switch-lang':'Cambiar idioma','tipos-eyebrow':'Tipos de evento','tipos-title':'Para cada celebración','tipos-sub':'Bodas, quinceañeras y eventos corporativos — llevamos la barra premium a donde estés.','tipos-boda':'Bodas','tipos-quince':'Quinceañeras','tipos-corp':'Corporativos','hb-label':'Head Bartender','hb-sub':'10+ años · Richmond, VA','menu-eyebrow':'Explora todo','menu-title-a':'El menú','menu-title-b':'completo.','menu-click':'Haz click en cualquier bebida para ver los detalles','filter-all':'Todo','filter-more':'Más','gallery-eyebrow':'Galería','gallery-title':'Momentos On The Rocks','accion-eyebrow':'En acción','accion-title':'Así se vive On The Rocks','accion-sub':'Cócteles artesanales, barra montada y el mejor ambiente para tu evento.','tap-explore':'Toca para ver →','pkg-sub-1':'Quinceañeras','pkg-sub-2':'Brunch & Baby Showers','pkg-sub-3':'Bodas & Aniversarios','pkg-sub-4':'Eventos Corporativos','pkg-sub-5':'Baby Showers','pkg-sub-6':'Solo el profesional',
     'nav-about':'Nosotros','nav-services':'Servicios','nav-menu':'Menú','nav-packages':'Paquetes','nav-mixo':'Mixología','nav-calc':'Calculadora','nav-experience':'Experiencia','nav-cta':'Cotizar',
-    'build-eye':'Experiencia interactiva','build-title':'Armá tu propia bebida','build-sub':'Elegí tu base, tu sabor y tu toque — y en tu evento la preparás vos con nosotros.','build-base':'Base','build-flavor':'Sabor','build-rim':'El toque','build-your':'Tu creación','build-cta':'La quiero en mi evento','menu-see':'Ver el menú completo',
+    'calc-eye':'Herramienta gratis','calc-title':'¿Cuánto alcohol comprar para tu evento?','calc-sub':'Calculá botellas, mixers, hielo y vasos en segundos.','calc-btn':'Abrir calculadora →','build-eye':'Experiencia interactiva','build-title':'Armá tu propia bebida','build-sub':'Elegí tu base, tu sabor y tu toque — y en tu evento la preparás vos con nosotros.','build-base':'Base','build-flavor':'Sabor','build-rim':'El toque','build-your':'Tu creación','build-cta':'La quiero en mi evento','menu-see':'Ver el menú completo',
     'ob-margarita':'Margarita','ob-paloma':'Paloma','ob-mojito':'Mojito','ob-frozen':'Frozen','ob-cantarito':'Cantarito','ob-mango':'Mango','ob-fresa':'Fresa','ob-sandia':'Sandía','ob-pina':'Piña','ob-coco':'Coco','ob-maracuya':'Maracuyá','ob-jamaica':'Jamaica','ob-tajin':'Tajín','ob-chamoy':'Chamoy','ob-sal':'Sal','ob-flor':'Flor comestible','ob-sinborde':'Sin borde',
     'hero-eyebrow':'Richmond, Virginia','hero-line1':"Let's drink",'hero-line2':'about it.',
     'hero-sub':'Barra móvil premium · Cócteles artesanales · Eventos únicos',
@@ -886,7 +909,7 @@ const t = {
     'zona-eyebrow':'Do we reach you?','zona-t1':'OUR SERVICE','zona-t2':'AREA','zona-sub':'Based in Richmond, VA — we travel to Virginia Beach, Washington DC and North Carolina. See how far we go.','zona-t-1':'0–20 miles','zona-t-6':'110+ mi / out of state','zona-p-6':'Custom quote','zona-p-1':'FREE','zona-cta':'Book your date','zona-note':'Travel fee based on distance from Richmond, VA. Outside the range? Reach out.',
     'switch-lang':'Switch language','tipos-eyebrow':'Event Types','tipos-title':'For Every Celebration','tipos-sub':'Weddings, quinceañeras and corporate events — we bring the premium bar wherever you are.','tipos-boda':'Weddings','tipos-quince':'Sweet 15s','tipos-corp':'Corporate','hb-label':'Head Bartender','hb-sub':'10+ years · Richmond, VA','menu-eyebrow':'Explore it all','menu-title-a':'The full','menu-title-b':'menu.','menu-click':'Click any drink to see the details','filter-all':'All','filter-more':'More','gallery-eyebrow':'Gallery','gallery-title':'On The Rocks Moments','accion-eyebrow':'In Action','accion-title':'This is On The Rocks','accion-sub':'Craft cocktails, full bar setup and the best vibe for your event.','tap-explore':'Tap to explore →','pkg-sub-1':'Sweet 15s','pkg-sub-2':'Brunch & Baby Showers','pkg-sub-3':'Weddings & Anniversaries','pkg-sub-4':'Corporate Events','pkg-sub-5':'Baby Showers','pkg-sub-6':'Just the Pro',
     'nav-about':'About','nav-services':'Services','nav-menu':'Menu','nav-packages':'Packages','nav-mixo':'Mixology','nav-calc':'Calculator','nav-experience':'Experience','nav-cta':'Book Now',
-    'build-eye':'Interactive experience','build-title':'Build your own drink','build-sub':'Pick your base, your flavor and your finishing touch — and at your event you build it with us.','build-base':'Base','build-flavor':'Flavor','build-rim':'The touch','build-your':'Your creation','build-cta':'I want this at my event','menu-see':'See the full menu',
+    'calc-eye':'Free tool','calc-title':'How much alcohol to buy for your event?','calc-sub':'Calculate bottles, mixers, ice and cups in seconds.','calc-btn':'Open calculator →','build-eye':'Interactive experience','build-title':'Build your own drink','build-sub':'Pick your base, your flavor and your finishing touch — and at your event you build it with us.','build-base':'Base','build-flavor':'Flavor','build-rim':'The touch','build-your':'Your creation','build-cta':'I want this at my event','menu-see':'See the full menu',
     'ob-margarita':'Margarita','ob-paloma':'Paloma','ob-mojito':'Mojito','ob-frozen':'Frozen','ob-cantarito':'Cantarito','ob-mango':'Mango','ob-fresa':'Strawberry','ob-sandia':'Watermelon','ob-pina':'Pineapple','ob-coco':'Coconut','ob-maracuya':'Passion fruit','ob-jamaica':'Hibiscus','ob-tajin':'Tajín','ob-chamoy':'Chamoy','ob-sal':'Salt','ob-flor':'Edible flower','ob-sinborde':'No rim',
     'hero-eyebrow':'Richmond, Virginia','hero-line1':"Let's drink",'hero-line2':'about it.',
     'hero-sub':'Premium mobile bar · Craft cocktails · Unforgettable events',
@@ -1083,7 +1106,14 @@ function showTab(id, btn) {
 <!-- ====== SPEED-DIAL: WhatsApp · Mensaje · Música ====== -->
 <!-- HOSTS: Música (protagonista) + WhatsApp de apoyo -->
 <div class="otr-hosts">
-  <a href="https://wa.me/18045026837" target="_blank" class="otr-wa-mini" aria-label="WhatsApp"><svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 0 1 8.413 3.488 11.824 11.824 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 0 0 1.51 5.26l-.999 3.648 3.728-.979zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.247-.694.247-1.289.173-1.413z"/></svg></a>
+  <!-- BURBUJA DE CONTACTO (WhatsApp + iMessage) -->
+  <div class="otr-contact" id="otr-contact">
+    <div class="otr-co-opts" id="otr-co-opts">
+      <a href="https://wa.me/18045026837" target="_blank" class="otr-co-opt" style="background:#25D366;" aria-label="WhatsApp"><svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 0 1 8.413 3.488 11.824 11.824 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 0 0 1.51 5.26l-.999 3.648 3.728-.979zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.247-.694.247-1.289.173-1.413z"/></svg></a>
+      <a href="sms:18045026837" class="otr-co-opt" style="background:#0a84ff;" aria-label="Mensaje / iMessage"><svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M20 2H4a2 2 0 0 0-2 2v18l4-4h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2z"/></svg></a>
+    </div>
+    <button class="otr-co-bubble" id="otr-co-bubble" onclick="otrToggleContact()" aria-label="Contacto" aria-expanded="false"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></button>
+  </div>
   <div class="otr-music-host">
     <button id="otr-prev" aria-label="Canción anterior" onclick="otrPrev()" class="otr-host-skip" style="display:none;"><svg width="15" height="15" viewBox="0 0 24 24" fill="#fff"><path d="M19 4L9 12l10 8V4zM7 4H5v16h2z"/></svg></button>
     <button id="otr-music-btn" aria-label="Música" onclick="otrToggleMusic()" class="otr-host-btn" style="background:#EB5C0B;"><svg id="otr-music-ic" width="26" height="26" viewBox="0 0 24 24" fill="#fff"><path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/></svg></button>
@@ -1092,8 +1122,14 @@ function showTab(id, btn) {
 </div>
 <style>
 .otr-hosts{position:fixed;bottom:2rem;right:2rem;z-index:1000;display:flex;flex-direction:column;align-items:flex-end;gap:.7rem;}
-.otr-wa-mini{width:44px;height:44px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(37,211,102,.4);transition:transform .2s;}
-.otr-wa-mini:hover{transform:scale(1.08);}
+.otr-contact{display:flex;flex-direction:column;align-items:flex-end;gap:.55rem;}
+.otr-co-opts{display:flex;flex-direction:column;gap:.55rem;opacity:0;visibility:hidden;transform:translateY(10px) scale(.9);transform-origin:bottom right;transition:opacity .25s ease,transform .25s ease,visibility .25s;pointer-events:none;}
+.otr-contact.open .otr-co-opts{opacity:1;visibility:visible;transform:none;pointer-events:auto;}
+.otr-co-opt{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(0,0,0,.35);transition:transform .2s;}
+.otr-co-opt:hover{transform:scale(1.08);}
+.otr-co-bubble{width:48px;height:48px;border-radius:50%;border:none;cursor:pointer;background:#004E5E;color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(0,0,0,.4);transition:transform .2s,background .3s;}
+.otr-co-bubble:hover{transform:scale(1.08);}
+.otr-contact.open .otr-co-bubble{background:#F08100;}
 .otr-music-host{display:flex;align-items:center;gap:.4rem;}
 .otr-host-btn{width:60px;height:60px;border-radius:50%;border:none;cursor:pointer;background:#EB5C0B;color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 22px rgba(235,92,11,.5);transition:transform .3s;}
 .otr-host-btn:hover{transform:scale(1.08);}
@@ -1101,6 +1137,17 @@ function showTab(id, btn) {
 .otr-host-skip:hover{background:#00647a;}
 @media(max-width:640px){.otr-hosts{bottom:1.4rem;right:1.4rem;}}
 </style>
+<script>
+function otrToggleContact(){
+  var c=document.getElementById('otr-contact'); if(!c) return;
+  var open=c.classList.toggle('open');
+  var b=document.getElementById('otr-co-bubble'); if(b) b.setAttribute('aria-expanded',open?'true':'false');
+}
+document.addEventListener('click',function(e){
+  var c=document.getElementById('otr-contact');
+  if(c&&c.classList.contains('open')&&!c.contains(e.target)) c.classList.remove('open');
+});
+</script>
 <script>
 (function(){
   var a=document.getElementById('otr-bgm'), b=document.getElementById('otr-music-btn'), ic=document.getElementById('otr-music-ic'), playing=false;
